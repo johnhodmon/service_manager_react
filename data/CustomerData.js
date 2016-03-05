@@ -1,4 +1,4 @@
-var products=require('ProductData.js').products;
+var products=require('./ProductData.js').products;
 var customers= [
     {
         name:'Stella Byrne',

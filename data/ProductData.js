@@ -1,5 +1,5 @@
-var parts=require('PartData.js').parts;
-var manufacturers=require('ManufacturerData.js').manufacturers;
+var parts=require('./PartData.js').parts;
+var manufacturers=require('./ManufacturerData').manufacturers;
 var products=[
 
     {
@@ -130,10 +130,8 @@ var products=[
             }
 
         ]
-    },
-    {
+    },git
 
-    },
     {
         manufacturer:manufacturers[4],
         product_number:'IWSD61251',
@@ -199,7 +197,7 @@ var products=[
         ]
     },
     {
-        manufacturer:manufacturers[6],
+        manufacturer:manufacturers[4],
         product_number:'WMBF944G',
         description:'Washing machine, 9KG, A+++, 1400 Spin',
         bom:[

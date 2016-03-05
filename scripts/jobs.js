@@ -1,6 +1,6 @@
 var ReactDOM = require('react-dom');
 var React = require('react');
-var jobs=require('data/JobData.js').jobs;
+var jobs=require('../data/JobData.js').jobs;
 
 
 
@@ -11,7 +11,7 @@ var JobPage=React.createClass(
                 return(
                    <div className="container">
                    <Navbar />
-                   <PageContent/>
+                   <PageContent jobs={this.props.jobs} />
                        </div>
 
 
@@ -29,7 +29,7 @@ var PageContent=React.createClass({
         return(
             <div className="row">
                 <div className="col-md-4">
-                    <SideBar/>
+                    <SideBar jobs={this.props.jobs}/>
 
                 </div>
                 <div className="col-md-8">
@@ -69,40 +69,53 @@ var SideBar=React.createClass({
         return(
             <div>
             <Searchbox/>
-            <List/>
+            <List jobs={this.props.jobs}/>
             </div>
 
         );
     }
 });
 
+var MainPane=React.createClass({
+    render:function(){
+        return(
+            <div>
+                Main Pane
+            </div>
+
+        );
+    }
+});
+
+
 var Searchbox=React.createClass({
     render: function(){
-        var jobsToShow = this.props.jobs.map(function(job,index) {
-            return <SingleJob jobs={this.props.jobs} key={index}  job={job} />
-        }.bind(this));
 
 
 
         return(
-            <div className="col-md-10">
-                <ul className="phones">
-                    {jobsToShow}
 
-                </ul>
+                <div >
+                    <input type="text"  placeholder="Search"/>
+                    Sort by:
+                    <select id="sort" >
+                        <option value="name">Alphabetical</option>
+                        <option value="age">Newest</option>
+                    </select>
+
             </div>
         );
 
     }
 });
 
-var List=reactClass(
+var List=React.createClass(
     {
         render:function()
             {
 
                 var jobsToDisplay = this.props.jobs.map(function(job,index) {
-                    return <SingleJob jobs={this.props.jobs} key={index}  job={job} />
+                    return <SingleJob job={job} key={index} />
                 }.bind(this));
 
 
@@ -130,10 +143,11 @@ var SingleJob=React.createClass({
 
             <li >
                 <p>
-                    <a href="#">{job.product.description}</a><br/>
+                    <a href="#">{job.date}</a><br/>
+                     <a href="#">{job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description}</a><br/>
                     <a href="#">{job.customer.name}</a>  <br/>
                     {job.customer.town}<br/>
-                    {job.status}
+
 
                 </p>
 
@@ -144,6 +158,6 @@ var SingleJob=React.createClass({
 });
 
 ReactDOM.render(
-    <JobPage  />,
+    <JobPage jobs={jobs} />,
     document.getElementById('mount-point')
 );
