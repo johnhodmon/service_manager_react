@@ -1,6 +1,6 @@
 var ReactDOM = require('react-dom');
 var React = require('react');
-var jobs=require('data/JobData').jobs;
+var jobs=require('data/JobData.js').jobs;
 
 
 

@@ -16,7 +16,7 @@ var parts= [
     cost: '93.20'},
 
     {part_number: '31005003',
-    description: 'Drum Washing Machine Hotpoint',
+    description: 'Drum Washing Machine Beko',
     quantity_in_stock: '45',
     cost: '93.20'},
 
@@ -39,7 +39,7 @@ bosch_bearing=
     cost: '10.10'},
 
     {part_number: '11125004',
-    description: 'Bearing Washing Machine Hotpoint',
+    description: 'Bearing Washing Machine Beko',
     quantity_in_stock: '200',
     cost: '9.15'},
 
@@ -62,7 +62,7 @@ bosch_bearing=
     cost: '17.19'},
 
     {part_number: '65005003',
-    description: 'Motor Washing Machine Hotpoint',
+    description: 'Motor Washing Machine Beko',
     quantity_in_stock: '105',
     cost: '11.52'},
 
@@ -107,7 +107,7 @@ bosch_bearing=
     cost: '3.75'},
 
     {part_number: '43075003',
-    description: 'Door Seal Washing Machine Hotpoint',
+    description: 'Door Seal Washing Machine Beko',
     quantity_in_stock: '155',
     cost: '5.65'},
 
@@ -128,7 +128,7 @@ bosch_bearing=
     cost: '3.75'},
 
     {part_number: '16085003',
-    description: 'Drain Pump Washing Machine Hotpoint',
+    description: 'Drain Pump Washing Machine Beko',
     quantity_in_stock: '155',
     cost: '5.65'},
 
