@@ -1,0 +1,18 @@
+{
+
+  "dependencies":
+  {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-router": "1.0.0",
+    "lodash" :  "~2.4.1",
+    "bootstrap": "~3.3.6",
+    "jquery": "~2.2.0"
+  },
+
+
+  "devDependencies": {
+
+    "reactify": "^1.1.1"
+  }
+}
