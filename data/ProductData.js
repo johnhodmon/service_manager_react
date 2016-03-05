@@ -130,7 +130,7 @@ var products=[
             }
 
         ]
-    },git
+    },
 
     {
         manufacturer:manufacturers[4],

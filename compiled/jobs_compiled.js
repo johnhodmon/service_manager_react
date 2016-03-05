@@ -19812,6 +19812,27 @@ var JobPage=React.createClass(
     }
 );
 
+var Navbar=React.createClass({displayName: "Navbar",
+        render: function ()
+        {
+            return(
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {role: "navigation", className: "col-md-12"}, 
+                        React.createElement("ul", {className: "nav navbar-nav"}, 
+                            React.createElement("li", null, React.createElement("a", {href: "#"}, "Jobs")), 
+                            React.createElement("li", null, React.createElement("a", {href: "#"}, "Customers")), 
+                            React.createElement("li", null, React.createElement("a", {href: "#"}, "Products")), 
+                            React.createElement("li", null, React.createElement("a", {href: "#"}, "Stock Control"))
+                        )
+                    )
+                )
+
+
+            );
+        }
+    }
+);
+
 
 var PageContent=React.createClass({displayName: "PageContent",
     render:function()
@@ -19831,33 +19852,12 @@ var PageContent=React.createClass({displayName: "PageContent",
     }
 });
 
-var Navbar=React.createClass({displayName: "Navbar",
-        render: function ()
-        {
-            return(
-                React.createElement("div", {className: "row"}, 
-                React.createElement("div", {role: "navigation", className: "col-md-9"}, 
-                    React.createElement("ul", {className: "nav navbar-nav"}, 
-                        React.createElement("li", null, React.createElement("a", {href: "#"}, "Jobs")), 
-                        React.createElement("li", null, React.createElement("a", {href: "#"}, "Customers")), 
-                        React.createElement("li", null, React.createElement("a", {href: "#"}, "Products")), 
-                        React.createElement("li", null, React.createElement("a", {href: "#"}, "Stock Control"))
-                        )
-                    )
-                    )
-
-
-            );
-        }
-    }
-);
-
 
 
 var SideBar=React.createClass({displayName: "SideBar",
     render:function(){
         return(
-            React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
             React.createElement(Searchbox, null), 
             React.createElement(List, {jobs: this.props.jobs})
             )
@@ -19869,8 +19869,17 @@ var SideBar=React.createClass({displayName: "SideBar",
 var MainPane=React.createClass({displayName: "MainPane",
     render:function(){
         return(
-            React.createElement("div", null, 
-                "Main Pane"
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-3"}, 
+                "customer details here"
+                ), 
+                React.createElement("div", {className: "col-md-6"}, 
+                "Job Details Here"
+                ), 
+                React.createElement("div", {className: "col-md-3"}, 
+                   "Product Details here"
+                )
+
             )
 
         );
@@ -19885,13 +19894,17 @@ var Searchbox=React.createClass({displayName: "Searchbox",
 
         return(
 
-                React.createElement("div", null, 
-                    React.createElement("input", {type: "text", placeholder: "Search"}), 
-                    "Sort by:", 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                    React.createElement("input", {type: "text", placeholder: "Search"})
+                     ), 
+                    React.createElement("div", {className: "col-md-6"}, 
                     React.createElement("select", {id: "sort"}, 
-                        React.createElement("option", {value: "name"}, "Alphabetical"), 
-                        React.createElement("option", {value: "age"}, "Newest")
+                        React.createElement("option", {value: "date"}, "Date"), 
+                        React.createElement("option", {value: "name"}, "Customer"), 
+                        React.createElement("option", {value: "product"}, "Customer")
                     )
+                        )
 
             )
         );

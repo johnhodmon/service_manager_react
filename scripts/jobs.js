@@ -22,6 +22,27 @@ var JobPage=React.createClass(
     }
 );
 
+var Navbar=React.createClass({
+        render: function ()
+        {
+            return(
+                <div className="row">
+                    <div role="navigation" className="col-md-12">
+                        <ul className="nav navbar-nav">
+                            <li><a href="#">Jobs</a></li>
+                            <li><a href="#">Customers</a></li>
+                            <li><a href="#">Products</a></li>
+                            <li><a href="#">Stock Control</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            );
+        }
+    }
+);
+
 
 var PageContent=React.createClass({
     render:function()
@@ -41,33 +62,12 @@ var PageContent=React.createClass({
     }
 });
 
-var Navbar=React.createClass({
-        render: function ()
-        {
-            return(
-                <div className="row">
-                <div role="navigation" className="col-md-9">
-                    <ul className="nav navbar-nav">
-                        <li><a href="#">Jobs</a></li>
-                        <li><a href="#">Customers</a></li>
-                        <li><a href="#">Products</a></li>
-                        <li><a href="#">Stock Control</a></li>
-                        </ul>
-                    </div>
-                    </div>
-
-
-            );
-        }
-    }
-);
-
 
 
 var SideBar=React.createClass({
     render:function(){
         return(
-            <div>
+            <div className="row">
             <Searchbox/>
             <List jobs={this.props.jobs}/>
             </div>
@@ -79,8 +79,17 @@ var SideBar=React.createClass({
 var MainPane=React.createClass({
     render:function(){
         return(
-            <div>
-                Main Pane
+            <div className="row">
+                <div className="col-md-3">
+
+                </div>
+                <div className="col-md-6">
+                Job Details Here
+                </div>
+                <div className="col-md-3">
+                   Product Details here
+                </div>
+
             </div>
 
         );
@@ -95,13 +104,17 @@ var Searchbox=React.createClass({
 
         return(
 
-                <div >
+                <div className="row" >
+                    <div className="col-md-6">
                     <input type="text"  placeholder="Search"/>
-                    Sort by:
+                     </div>
+                    <div className="col-md-6">
                     <select id="sort" >
-                        <option value="name">Alphabetical</option>
-                        <option value="age">Newest</option>
+                        <option value="date">Date</option>
+                        <option value="name">Customer</option>
+                        <option value="product">Customer</option>
                     </select>
+                        </div>
 
             </div>
         );
