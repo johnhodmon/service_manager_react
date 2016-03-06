@@ -1,0 +1,164 @@
+
+
+
+
+h3
+{
+    font-size:130%;
+}
+
+h2
+{
+    font-size:140%;
+}
+
+
+h1
+{
+    font-size:150%;
+}
+
+p
+{
+    font-size:120%;
+
+
+}
+
+.top-nav-div
+{
+    margin-top:22px;
+}
+.top-nav
+{
+    background-color:#555555;
+
+    font-size:130%;
+
+
+}
+
+.nav-tabs > li > a:hover
+{
+    cursor: default;
+    color:#668cff;
+}
+
+.nav-tabs > li > a,
+.nav-tabs > li > a:focus {
+
+    cursor: default;
+    color:white;
+    border-bottom-color:#555555;
+
+}
+
+.nav-tabs
+{
+    border-bottom-color:#555555;
+    margin-bottom: 0px;
+}
+
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+
+    cursor: default;
+    color:#668cff;
+    background-color:#555555;
+    border: 1px solid  #555555;
+    border-bottom-color:#555555;
+}
+.side-pane
+{
+    background-color:black;
+
+
+
+
+}
+
+.side-nav
+{
+    background-color:black;
+
+
+}
+
+
+
+
+
+.nav-pills > li > a,
+.nav-pills > li > a:focus {
+
+    cursor: default;
+    background-color: black;
+    color:white;
+
+
+}
+
+.nav-pills > li > a:hover
+{
+    cursor: default;
+    background-color: #555555;
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+
+    cursor: default;
+    background-color: #555555;
+
+
+}
+
+
+.main-pane
+{
+    background-color:#eeeeee;
+
+    padding-top: 10px;
+
+
+
+}
+
+
+
+
+
+
+
+table
+{
+    border: 1px solid  black;
+}
+
+td,th
+{
+    border: 1px solid  black;
+    padding:2px;
+
+
+}
+
+ul
+{
+    list-style-type:none;
+
+}
+
+.search-box-div
+{
+    margin-left:10px;
+    margin-top: 10px;
+}
+
+
+
+
+
