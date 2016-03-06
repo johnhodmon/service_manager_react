@@ -256,11 +256,11 @@ var SingleJob=React.createClass({
             <li role="presentation" >
 
 
-                 <a href="#"><h3>{job.date}</h3>
+                 <Link to="/jobs" params="/1"><h3>{job.date}</h3>
                     <p>{job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0]}<br/>
                     {job.customer.name}  <br/>
                     {job.customer.town}<br/>
-                        {job.status}<br/></p></a>
+                        {job.status}<br/></p></Link>
 
 
 
@@ -277,8 +277,8 @@ ReactDOM.render( (
             <Route path="/" component={App}>
                 <IndexRoute component={JobPage}/>
                 <Route path="jobs" component={JobPage}>
-                    <IndexRoute path="jobs/1"/>
-                    <Route path="jobs/:id" component={JobPage} />
+                    <IndexRoute component={JobPage}/>
+                    <Route path="jobs/:id" component={CustomerPage} />
                 </Route>
                 <Route path="customers" component={CustomerPage} />
                 <Route path="products" component={ProductPage} />

@@ -24275,7 +24275,7 @@ var SingleJob=React.createClass({displayName: "SingleJob",
             React.createElement("li", {role: "presentation"}, 
 
 
-                 React.createElement("a", {href: "#"}, React.createElement("h3", null, job.date), 
+                 React.createElement(Link, {to: "/jobs", params: "/1"}, React.createElement("h3", null, job.date), 
                     React.createElement("p", null, job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0], React.createElement("br", null), 
                     job.customer.name, "  ", React.createElement("br", null), 
                     job.customer.town, React.createElement("br", null), 
@@ -24296,8 +24296,8 @@ ReactDOM.render( (
             React.createElement(Route, {path: "/", component: App}, 
                 React.createElement(IndexRoute, {component: JobPage}), 
                 React.createElement(Route, {path: "jobs", component: JobPage}, 
-                    React.createElement(IndexRoute, {path: "jobs/1"}), 
-                    React.createElement(Route, {path: "jobs/:id", component: JobPage})
+                    React.createElement(IndexRoute, {component: JobPage}), 
+                    React.createElement(Route, {path: "jobs/:id", component: CustomerPage})
                 ), 
                 React.createElement(Route, {path: "customers", component: CustomerPage}), 
                 React.createElement(Route, {path: "products", component: ProductPage}), 
