@@ -36,7 +36,9 @@ var JobPage=React.createClass(
             {
                 return(
                    <div className="container-fluid">
+                       {this.props.params.id}
                    <Navbar />
+
                    <PageContent jobs={jobs}  />
                    </div>
 
@@ -55,6 +57,7 @@ var CustomerPage=React.createClass(
                 <div className="container-fluid">
                     <Navbar />
                     <h1>Customers</h1>
+                    Job {this.props.params.id}
                 </div>
 
 
@@ -112,10 +115,10 @@ var Navbar=React.createClass({
                         </div>
                     <div className="col-md-10 top-nav-div">
                         <ul className="nav  nav-tabs">
-                            <li className="active"> <Link to="/jobs">Jobs</Link></li>
-                            <li> <Link to="/customers">Customers</Link></li>
-                            <li>   <Link to="/products">Products</Link></li>
-                            <li>   <Link to="/parts">Stock Control</Link></li>
+                            <li className="active"> <Link to="/jobs/1" params={{id: 1}}>Jobs</Link></li>
+                            <li> <Link to="/customers/1">Customers</Link></li>
+                            <li>   <Link to="/products/1">Products</Link></li>
+                            <li>   <Link to="/parts/1">Stock Control</Link></li>
                             <li role="presentation" className="dropdown">
                                 <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     John Hodmon<span className="caret"></span>
@@ -256,7 +259,7 @@ var SingleJob=React.createClass({
             <li role="presentation" >
 
 
-                 <Link to="/jobs" params="/1"><h3>{job.date}</h3>
+                 <Link to={"/jobs/"+job.id} ><h3>{job.date}</h3>
                     <p>{job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0]}<br/>
                     {job.customer.name}  <br/>
                     {job.customer.town}<br/>
@@ -276,13 +279,10 @@ ReactDOM.render( (
         <Router >
             <Route path="/" component={App}>
                 <IndexRoute component={JobPage}/>
-                <Route path="jobs" component={JobPage}>
-                    <IndexRoute component={JobPage}/>
-                    <Route path="jobs/:id" component={CustomerPage} />
-                </Route>
-                <Route path="customers" component={CustomerPage} />
-                <Route path="products" component={ProductPage} />
-                <Route path="Parts" component={PartPage} />
+                <Route path="jobs/:id" component={JobPage}/>
+                <Route path="customers/:id" component={CustomerPage} />
+                <Route path="products/:id" component={ProductPage} />
+                <Route path="Parts/:id" component={PartPage} />
             </Route>
         </Router>
     ),
