@@ -258,14 +258,13 @@ var SingleJob=React.createClass({
             <li role="presentation" >
 
 
-                {/* <a href="#"><h3>{job.date}</h3>
+                 <a href="#"><h3>{job.date}</h3>
                     <p>{job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0]}<br/>
                     {job.customer.name}  <br/>
                     {job.customer.town}<br/>
-                        {job.status}<br/></p></a>*/}
+                        {job.status}<br/></p></a>
 
 
-                Test
 
 
 
@@ -279,7 +278,10 @@ ReactDOM.render( (
         <Router >
             <Route path="/" component={App}>
                 <IndexRoute component={JobPage}/>
-                <Route path="jobs" component={JobPage}  />
+                <Route path="jobs" component={JobPage}>
+                    <IndexRoute path="jobs/1"/>
+                    <Route path="jobs/:id" component={JobPage} />
+                </Route>
                 <Route path="customers" component={CustomerPage} />
                 <Route path="products" component={ProductPage} />
                 <Route path="Parts" component={PartPage} />
