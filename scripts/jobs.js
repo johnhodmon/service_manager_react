@@ -236,12 +236,12 @@ var List=React.createClass(
 
 
             return(
-                <div className="col-md-10">
-                    <ul className="phones">
+
+                    <ul className="nav nav-pills nav-stacked side-nav">
                         {jobsToDisplay}
 
                     </ul>
-                </div>
+
             );
         }
 

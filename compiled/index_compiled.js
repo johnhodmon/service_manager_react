@@ -24347,12 +24347,12 @@ var List=React.createClass(
 
 
             return(
-                React.createElement("div", {className: "col-md-10"}, 
-                    React.createElement("ul", {className: "phones"}, 
+
+                    React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
                         jobsToDisplay
 
                     )
-                )
+
             );
         }
 
