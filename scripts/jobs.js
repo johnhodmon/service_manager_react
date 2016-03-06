@@ -37,7 +37,7 @@ var JobPage=React.createClass(
                 return(
                    <div className="container-fluid">
                    <Navbar />
-                   <PageContent  />
+                   <PageContent jobs={jobs}  />
                    </div>
 
 
@@ -166,7 +166,7 @@ var SideBar=React.createClass({
             <Searchbox/>
                 </div>
                 <div className="row">
-            <List jobs={["Test","Test"]}/>
+            <List jobs={this.props.jobs}/>
             </div>
                 </div>
 
@@ -224,27 +224,25 @@ var Searchbox=React.createClass({
 var List=React.createClass(
     {
         render:function()
-            {
+        {
 
-                var jobsToDisplay = this.props.jobs.map(function(job,index) {
-                    return <SingleJob job={job} key={index} />
-                }.bind(this));
-
-
-
-                return(
-                    <div >
-                        <ul className="nav nav-pills nav-stacked side-nav" >
-
-                            {jobsToDisplay}
+            var jobsToDisplay = this.props.jobs.map(function(job,index) {
+                return <SingleJob job={job} key={index} />
+            }.bind(this));
 
 
-                        </ul>
-                    </div>
-                );
-            }
 
-            }
+            return(
+                <div className="col-md-10">
+                    <ul className="phones">
+                        {jobsToDisplay}
+
+                    </ul>
+                </div>
+            );
+        }
+
+    }
 
 
 );

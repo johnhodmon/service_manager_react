@@ -24056,7 +24056,7 @@ var JobPage=React.createClass(
                 return(
                    React.createElement("div", {className: "container-fluid"}, 
                    React.createElement(Navbar, null), 
-                   React.createElement(PageContent, null)
+                   React.createElement(PageContent, {jobs: jobs})
                    )
 
 
@@ -24185,7 +24185,7 @@ var SideBar=React.createClass({displayName: "SideBar",
             React.createElement(Searchbox, null)
                 ), 
                 React.createElement("div", {className: "row"}, 
-            React.createElement(List, {jobs: ["Test","Test"]})
+            React.createElement(List, {jobs: this.props.jobs})
             )
                 )
 
@@ -24243,27 +24243,25 @@ var Searchbox=React.createClass({displayName: "Searchbox",
 var List=React.createClass(
     {displayName: "List",
         render:function()
-            {
+        {
 
-                var jobsToDisplay = this.props.jobs.map(function(job,index) {
-                    return React.createElement(SingleJob, {job: job, key: index})
-                }.bind(this));
-
-
-
-                return(
-                    React.createElement("div", null, 
-                        React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
-
-                            jobsToDisplay
+            var jobsToDisplay = this.props.jobs.map(function(job,index) {
+                return React.createElement(SingleJob, {job: job, key: index})
+            }.bind(this));
 
 
-                        )
+
+            return(
+                React.createElement("div", {className: "col-md-10"}, 
+                    React.createElement("ul", {className: "phones"}, 
+                        jobsToDisplay
+
                     )
-                );
-            }
+                )
+            );
+        }
 
-            }
+    }
 
 
 );
