@@ -24109,14 +24109,14 @@ module.exports = warning;
 
 }).call(this,require('_process'))
 },{"_process":210}],209:[function(require,module,exports){
-var ReactDOM = require('react-dom');
+ReactDOM = require('react-dom');
 var React = require('react');
 var jobs=require('../data/JobData.js').jobs;
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
-var IndexRoute = ReactRouter.IndexRoute
+var IndexRoute = ReactRouter.IndexRoute;
 $(document).ready(function() {
 
     var dynamic = $('.side-pane');
@@ -24147,10 +24147,10 @@ var JobPage=React.createClass(
             {
                 return(
                    React.createElement("div", {className: "container-fluid"}, 
-                       this.props.params.id, 
-                   React.createElement(Navbar, null), 
 
-                   React.createElement(PageContent, {jobs: jobs})
+                   React.createElement(Navbar, {activeTab: "jobs"}), 
+
+                   React.createElement(PageContent, {activeId: this.props.params.id, jobs: jobs})
                    )
 
 
@@ -24166,9 +24166,9 @@ var CustomerPage=React.createClass(
         {
             return(
                 React.createElement("div", {className: "container-fluid"}, 
-                    React.createElement(Navbar, null), 
-                    React.createElement("h1", null, "Customers"), 
-                    "Job ", this.props.params.id
+                    React.createElement(Navbar, {activeTab: "customers"}), 
+                    React.createElement("h1", null, "Customers")
+
                 )
 
 
@@ -24185,7 +24185,7 @@ var ProductPage=React.createClass(
         {
             return(
                 React.createElement("div", {className: "container-fluid"}, 
-                    React.createElement(Navbar, null), 
+                    React.createElement(Navbar, {activeTab: "products"}), 
                     React.createElement("h1", null, "Products")
                 )
 
@@ -24203,7 +24203,7 @@ var PartPage=React.createClass(
         {
             return(
                 React.createElement("div", {className: "container-fluid"}, 
-                    React.createElement(Navbar, null), 
+                    React.createElement(Navbar, {activeTab: "parts"}), 
                     React.createElement("h1", null, "Parts")
                 )
 
@@ -24217,8 +24217,14 @@ var PartPage=React.createClass(
 
 
 var Navbar=React.createClass({displayName: "Navbar",
-        render: function ()
+    getInitialState: function()
+    {
+       return{ activeTab:this.props.activeTab};
+    },
+
+    render: function ()
         {
+
             return(
                 React.createElement("div", {className: "row top-nav"}, 
                     React.createElement("div", {className: "col-md-2"}, 
@@ -24226,10 +24232,10 @@ var Navbar=React.createClass({displayName: "Navbar",
                         ), 
                     React.createElement("div", {className: "col-md-10 top-nav-div"}, 
                         React.createElement("ul", {className: "nav  nav-tabs"}, 
-                            React.createElement("li", {className: "active"}, " ", React.createElement(Link, {to: "/jobs/1", params: {id: 1}}, "Jobs")), 
-                            React.createElement("li", null, " ", React.createElement(Link, {to: "/customers/1"}, "Customers")), 
-                            React.createElement("li", null, "   ", React.createElement(Link, {to: "/products/1"}, "Products")), 
-                            React.createElement("li", null, "   ", React.createElement(Link, {to: "/parts/1"}, "Stock Control")), 
+                            React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs/1", params: {id: 1}}, "Jobs")), 
+                            React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers/1"}, "Customers")), 
+                            React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products/1"}, "Products")), 
+                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts/1"}, "Stock Control")), 
                             React.createElement("li", {role: "presentation", className: "dropdown"}, 
                                 React.createElement("a", {className: "dropdown-toggle", "data-toggle": "dropdown", href: "#", role: "button", "aria-haspopup": "true", "aria-expanded": "false"}, 
                                     "John Hodmon", React.createElement("span", {className: "caret"})
@@ -24258,7 +24264,7 @@ var PageContent=React.createClass({displayName: "PageContent",
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(SideBar, {jobs: this.props.jobs})
+                    React.createElement(SideBar, {activeId: this.props.activeId, jobs: this.props.jobs})
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
@@ -24280,7 +24286,7 @@ var SideBar=React.createClass({displayName: "SideBar",
             React.createElement(Searchbox, null)
                 ), 
                 React.createElement("div", {className: "row"}, 
-            React.createElement(List, {jobs: this.props.jobs})
+            React.createElement(List, {activeId: this.props.activeId, jobs: this.props.jobs})
             )
                 )
 
@@ -24337,11 +24343,13 @@ var Searchbox=React.createClass({displayName: "Searchbox",
 
 var List=React.createClass(
     {displayName: "List",
+
         render:function()
         {
 
+
             var jobsToDisplay = this.props.jobs.map(function(job,index) {
-                return React.createElement(SingleJob, {job: job, key: index})
+                return React.createElement(SingleJob, {activeId: this.props.activeId, job: job, key: index})
             }.bind(this));
 
 
@@ -24362,12 +24370,17 @@ var List=React.createClass(
 );
 
 var SingleJob=React.createClass({displayName: "SingleJob",
+
+
+
+
+
     render: function () {
         var job=this.props.job;
 
         return (
 
-            React.createElement("li", {role: "presentation"}, 
+            React.createElement("li", {className: (this.props.activeId === ""+job.id) ? "active" : "", role: "presentation"}, 
 
 
                  React.createElement(Link, {to: "/jobs/"+job.id}, React.createElement("h3", null, job.date), 

@@ -1,4 +1,4 @@
-var ReactDOM = require('react-dom');
+ReactDOM = require('react-dom');
 var React = require('react');
 var jobs=require('../data/JobData.js').jobs;
 var ReactRouter = require('react-router');
@@ -36,10 +36,10 @@ var JobPage=React.createClass(
             {
                 return(
                    <div className="container-fluid">
-                       {this.props.params.id}
-                   <Navbar />
 
-                   <PageContent jobs={jobs}  />
+                   <Navbar activeTab="jobs" />
+
+                   <PageContent activeId={this.props.params.id} jobs={jobs}  />
                    </div>
 
 
@@ -55,9 +55,9 @@ var CustomerPage=React.createClass(
         {
             return(
                 <div className="container-fluid">
-                    <Navbar />
+                    <Navbar activeTab="customers" />
                     <h1>Customers</h1>
-                    Job {this.props.params.id}
+
                 </div>
 
 
@@ -74,7 +74,7 @@ var ProductPage=React.createClass(
         {
             return(
                 <div className="container-fluid">
-                    <Navbar />
+                    <Navbar activeTab="products"/>
                     <h1>Products</h1>
                 </div>
 
@@ -92,7 +92,7 @@ var PartPage=React.createClass(
         {
             return(
                 <div className="container-fluid">
-                    <Navbar />
+                    <Navbar activeTab="parts" />
                     <h1>Parts</h1>
                 </div>
 
@@ -108,7 +108,7 @@ var PartPage=React.createClass(
 var Navbar=React.createClass({
     getInitialState: function()
     {
-       return{ activeTab:"jobs"};
+       return{ activeTab:this.props.activeTab};
     },
 
     render: function ()
@@ -121,10 +121,10 @@ var Navbar=React.createClass({
                         </div>
                     <div className="col-md-10 top-nav-div">
                         <ul className="nav  nav-tabs">
-                            <li className={(this.state.activeTabClassName === "jobs") ? "active" : ""}> <Link to="/jobs/1" params={{id: 1}}>Jobs</Link></li>
-                            <li className={(this.state.activeTabClassName === "customers") ? "active" : ""}> <Link to="/customers/1">Customers</Link></li>
-                            <li className={(this.state.activeTabClassName === "products") ? "active" : ""}>   <Link to="/products/1">Products</Link></li>
-                            <li className={(this.state.activeTabClassName === "parts") ? "active" : ""}>   <Link to="/parts/1">Stock Control</Link></li>
+                            <li className={(this.state.activeTab === "jobs") ? "active" : ""}> <Link to="/jobs/1" params={{id: 1}}>Jobs</Link></li>
+                            <li className={(this.state.activeTab === "customers") ? "active" : ""}> <Link to="/customers/1">Customers</Link></li>
+                            <li className={(this.state.activeTab === "products") ? "active" : ""}>   <Link to="/products/1">Products</Link></li>
+                            <li className={(this.state.activeTab === "parts") ? "active" : ""}>   <Link to="/parts/1">Stock Control</Link></li>
                             <li role="presentation" className="dropdown">
                                 <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     John Hodmon<span className="caret"></span>
@@ -153,7 +153,7 @@ var PageContent=React.createClass({
         return(
             <div className="row">
                 <div className="col-md-2 side-pane">
-                    <SideBar jobs={this.props.jobs}/>
+                    <SideBar activeId={this.props.activeId}  jobs={this.props.jobs}/>
 
                 </div>
                 <div className="col-md-10 main-pane">
@@ -175,7 +175,7 @@ var SideBar=React.createClass({
             <Searchbox/>
                 </div>
                 <div className="row">
-            <List jobs={this.props.jobs}/>
+            <List activeId={this.props.activeId}  jobs={this.props.jobs}/>
             </div>
                 </div>
 
@@ -232,11 +232,13 @@ var Searchbox=React.createClass({
 
 var List=React.createClass(
     {
+
         render:function()
         {
 
+
             var jobsToDisplay = this.props.jobs.map(function(job,index) {
-                return <SingleJob job={job} key={index} />
+                return <SingleJob activeId={this.props.activeId}  job={job} key={index} />
             }.bind(this));
 
 
@@ -257,15 +259,20 @@ var List=React.createClass(
 );
 
 var SingleJob=React.createClass({
+
+
+
+
+
     render: function () {
         var job=this.props.job;
 
         return (
 
-            <li role="presentation" >
+            <li  className={(this.props.activeId === ""+job.id) ? "active" : ""} role="presentation" >
 
 
-                 <Link to={"/jobs/"+job.id} ><h3>{job.date}</h3>
+                 <Link  to={"/jobs/"+job.id} ><h3>{job.date}</h3>
                     <p>{job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0]}<br/>
                     {job.customer.name}  <br/>
                     {job.customer.town}<br/>
