@@ -5,7 +5,7 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
-var IndexRoute = ReactRouter.IndexRoute
+var IndexRoute = ReactRouter.IndexRoute;
 $(document).ready(function() {
 
     var dynamic = $('.side-pane');
@@ -106,8 +106,14 @@ var PartPage=React.createClass(
 
 
 var Navbar=React.createClass({
-        render: function ()
+    getInitialState: function()
+    {
+       return{ activeTab:"jobs"};
+    },
+
+    render: function ()
         {
+
             return(
                 <div className="row top-nav">
                     <div className="col-md-2">
@@ -115,10 +121,10 @@ var Navbar=React.createClass({
                         </div>
                     <div className="col-md-10 top-nav-div">
                         <ul className="nav  nav-tabs">
-                            <li className="active"> <Link to="/jobs/1" params={{id: 1}}>Jobs</Link></li>
-                            <li> <Link to="/customers/1">Customers</Link></li>
-                            <li>   <Link to="/products/1">Products</Link></li>
-                            <li>   <Link to="/parts/1">Stock Control</Link></li>
+                            <li className={(this.state.activeTabClassName === "jobs") ? "active" : ""}> <Link to="/jobs/1" params={{id: 1}}>Jobs</Link></li>
+                            <li className={(this.state.activeTabClassName === "customers") ? "active" : ""}> <Link to="/customers/1">Customers</Link></li>
+                            <li className={(this.state.activeTabClassName === "products") ? "active" : ""}>   <Link to="/products/1">Products</Link></li>
+                            <li className={(this.state.activeTabClassName === "parts") ? "active" : ""}>   <Link to="/parts/1">Stock Control</Link></li>
                             <li role="presentation" className="dropdown">
                                 <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     John Hodmon<span className="caret"></span>
