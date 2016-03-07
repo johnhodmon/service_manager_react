@@ -1,6 +1,9 @@
 ReactDOM = require('react-dom');
 var React = require('react');
 var jobs=require('../data/JobData.js').jobs;
+var customers=require('../data/CustomerData.js').customers;
+var products=require('../data/ProductData.js').products;
+var parts=require('../data/PartData.js').parts;
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -39,7 +42,7 @@ var JobPage=React.createClass(
 
                    <Navbar activeTab="jobs" />
 
-                   <PageContent activeId={this.props.params.id} jobs={jobs}  />
+                   <JobPageContent activeId={this.props.params.id} jobs={jobs}  />
                    </div>
 
 
@@ -55,9 +58,10 @@ var CustomerPage=React.createClass(
         {
             return(
                 <div className="container-fluid">
-                    <Navbar activeTab="customers" />
-                    <h1>Customers</h1>
 
+                    <Navbar activeTab="customers" />
+
+                    <CustomerPageContent activeId={this.props.params.id} customers={customers}  />
                 </div>
 
 
@@ -74,8 +78,10 @@ var ProductPage=React.createClass(
         {
             return(
                 <div className="container-fluid">
-                    <Navbar activeTab="products"/>
-                    <h1>Products</h1>
+
+                    <Navbar activeTab="products" />
+
+                    <ProductPageContent activeId={this.props.params.id} products={products}  />
                 </div>
 
 
@@ -92,8 +98,10 @@ var PartPage=React.createClass(
         {
             return(
                 <div className="container-fluid">
+
                     <Navbar activeTab="parts" />
-                    <h1>Parts</h1>
+
+                    <PartPageContent activeId={this.props.params.id} parts={parts}  />
                 </div>
 
 
@@ -147,17 +155,73 @@ var Navbar=React.createClass({
 );
 
 
-var PageContent=React.createClass({
+var JobPageContent=React.createClass({
     render:function()
     {
         return(
             <div className="row">
                 <div className="col-md-2 side-pane">
-                    <SideBar activeId={this.props.activeId}  jobs={this.props.jobs}/>
+                    <JobSideBar activeId={this.props.activeId} jobs={this.props.jobs}/>
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <MainPane/>
+                    <JobMainPane/>
+                </div>
+
+            </div>
+        );
+    }
+});
+
+
+var CustomerPageContent=React.createClass({
+    render:function()
+    {
+        return(
+            <div className="row">
+                <div className="col-md-2 side-pane">
+                    <CustomerSideBar activeId={this.props.activeId} customers={this.props.customers}/>
+
+                </div>
+                <div className="col-md-10 main-pane">
+                    <CustomerMainPane/>
+                </div>
+
+            </div>
+        );
+    }
+});
+
+
+var ProductPageContent=React.createClass({
+    render:function()
+    {
+        return(
+            <div className="row">
+                <div className="col-md-2 side-pane">
+                    <ProductSideBar activeId={this.props.activeId} products={this.props.products}/>
+
+                </div>
+                <div className="col-md-10 main-pane">
+                    <ProductMainPane/>
+                </div>
+
+            </div>
+        );
+    }
+});
+
+var PartPageContent=React.createClass({
+    render:function()
+    {
+        return(
+            <div className="row">
+                <div className="col-md-2 side-pane">
+                    <PartSideBar activeId={this.props.activeId} parts={this.props.parts}/>
+
+                </div>
+                <div className="col-md-10 main-pane">
+                    <PartMainPane/>
                 </div>
 
             </div>
@@ -167,15 +231,15 @@ var PageContent=React.createClass({
 
 
 
-var SideBar=React.createClass({
+var JobSideBar=React.createClass({
     render:function(){
         return(
             <div>
             <div className="row search-box-div">
-            <Searchbox/>
+            <JobSearchbox/>
                 </div>
                 <div className="row">
-            <List activeId={this.props.activeId}  jobs={this.props.jobs}/>
+            <JobList activeId={this.props.activeId} jobs={this.props.jobs}/>
             </div>
                 </div>
 
@@ -183,7 +247,60 @@ var SideBar=React.createClass({
     }
 });
 
-var MainPane=React.createClass({
+
+var CustomerSideBar=React.createClass({
+    render:function(){
+        return(
+            <div>
+                <div className="row search-box-div">
+                    <CustomerSearchbox/>
+                </div>
+                <div className="row">
+                    <CustomerList activeId={this.props.activeId} customers={this.props.customers}/>
+                </div>
+            </div>
+
+        );
+    }
+});
+
+var ProductSideBar=React.createClass({
+    render:function(){
+        return(
+            <div>
+                <div className="row search-box-div">
+                    <ProductSearchbox/>
+                </div>
+                <div className="row">
+                    <ProductList activeId={this.props.activeId} products={this.props.products}/>
+                </div>
+            </div>
+
+        );
+    }
+});
+
+var PartSideBar=React.createClass({
+    render:function(){
+        return(
+            <div>
+                <div className="row search-box-div">
+                    <PartSearchbox/>
+                </div>
+                <div className="row">
+                    <PartList activeId={this.props.activeId} parts={this.props.parts}/>
+                </div>
+            </div>
+
+        );
+    }
+});
+
+
+
+
+
+var JobMainPane=React.createClass({
     render:function(){
         return(
             <div>
@@ -203,8 +320,79 @@ var MainPane=React.createClass({
     }
 });
 
+var CustomerMainPane=React.createClass({
+    render:function(){
+        return(
+            <div>
+                <div className="col-md-3">
+                    Customer details here
 
-var Searchbox=React.createClass({
+                </div>
+                <div className="col-md-6">
+                    Previous Jobs Here
+                    <div>
+                        Customer Products Here
+                    </div>
+                </div>
+                <div className="col-md-3">
+
+                </div>
+
+            </div>
+
+        );
+    }
+});
+
+var ProductMainPane=React.createClass({
+    render:function(){
+        return(
+            <div>
+                <div className="col-md-3">
+                    Manufacturer details here
+
+                </div>
+                <div className="col-md-6">
+                    Part List Here
+
+                </div>
+                <div className="col-md-3">
+                 <div>
+                 Product Details here
+                    </div>
+                    <div>
+                Product diagram here
+                        </div>
+                </div>
+
+            </div>
+
+        );
+    }
+});
+
+var PartMainPane=React.createClass({
+    render:function(){
+        return(
+            <div>
+                <div className="col-md-3">
+                    Part details here
+                </div>
+                <div className="col-md-6">
+                    Where used here
+                </div>
+                <div className="col-md-3">
+                    History here
+                </div>
+
+            </div>
+
+        );
+    }
+});
+
+
+var JobSearchbox=React.createClass({
     render: function(){
 
 
@@ -230,7 +418,70 @@ var Searchbox=React.createClass({
     }
 });
 
-var List=React.createClass(
+var CustomerSearchbox=React.createClass({
+    render: function(){
+
+
+
+        return(
+
+            <div>
+                <div className="row">
+                    <input type="text"  placeholder="Search"/>
+                </div>
+                <div className="row">
+                    <select id="sort" >
+                        <option value="" disabled selected>Sort by: </option>
+                        <option value="name">Date</option>
+                        <option value="customer">Customer</option>
+                    </select>
+                </div>
+
+            </div>
+        );
+
+    }
+});
+
+var ProductSearchbox=React.createClass({
+    render: function(){
+
+
+
+        return(
+
+
+                <div className="row">
+                    <input type="text"  placeholder="Search"/>
+                </div>
+
+
+
+        );
+
+    }
+});
+
+var PartSearchbox=React.createClass({
+    render: function(){
+
+
+
+        return(
+
+
+            <div className="row">
+                <input type="text"  placeholder="Search"/>
+            </div>
+
+
+
+        );
+
+    }
+});
+
+var JobList=React.createClass(
     {
 
         render:function()
@@ -249,6 +500,92 @@ var List=React.createClass(
                         {jobsToDisplay}
 
                     </ul>
+
+            );
+        }
+
+    }
+
+
+);
+
+var CustomerList=React.createClass(
+    {
+
+        render:function()
+        {
+
+
+            var customersToDisplay = this.props.customers.map(function(customer,index) {
+                return <SingleCustomer activeId={this.props.activeId}  customer={customer} key={index} />
+            }.bind(this));
+
+
+
+            return(
+
+                <ul className="nav nav-pills nav-stacked side-nav">
+                    {customersToDisplay}
+
+                </ul>
+
+            );
+        }
+
+    }
+
+
+);
+
+
+var ProductList=React.createClass(
+    {
+
+        render:function()
+        {
+
+
+            var productsToDisplay = this.props.products.map(function(product,index) {
+                return <SingleProduct activeId={this.props.activeId}  product={product} key={index} />
+            }.bind(this));
+
+
+
+            return(
+
+                <ul className="nav nav-pills nav-stacked side-nav">
+                    {productsToDisplay}
+
+                </ul>
+
+            );
+        }
+
+    }
+
+
+);
+
+
+var PartList=React.createClass(
+    {
+
+        render:function()
+        {
+
+
+            var partsToDisplay = this.props.parts.map(function(part,index) {
+                return <SinglePart activeId={this.props.activeId}  part={part} key={index} />
+            }.bind(this));
+
+
+
+            return(
+
+                <ul className="nav nav-pills nav-stacked side-nav">
+                    {partsToDisplay}
+
+                </ul>
 
             );
         }
@@ -285,6 +622,88 @@ var SingleJob=React.createClass({
             </li>);
     }
 });
+
+var SingleCustomer=React.createClass({
+
+
+
+
+
+    render: function () {
+        var customer=this.props.customer;
+
+        return (
+
+            <li  className={(this.props.activeId === ""+customer.id) ? "active" : ""} role="presentation" >
+
+
+                <Link  to={"/customers/"+customer.id} ><h3>{customer.name}</h3>
+                    <p>{customer.street}<br/>
+                        {customer.county}  <br/>
+                        {customer.town}<br/>
+                        {customer.county}<br/></p></Link>
+
+
+
+
+
+            </li>);
+    }
+});
+
+var SingleProduct=React.createClass({
+
+
+
+
+
+    render: function () {
+        var product=this.props.product;
+
+        return (
+
+            <li  className={(this.props.activeId === ""+product.id) ? "active" : ""} role="presentation" >
+
+
+                <Link  to={"/products/"+product.id} ><h3>{product.manufacturer.name+" "+product.number}</h3>
+                    <p>
+
+                        {product.number}</p></Link>
+
+
+
+
+
+            </li>);
+    }
+});
+
+var SinglePart=React.createClass({
+
+
+
+
+
+    render: function () {
+        var part=this.props.part;
+
+        return (
+
+            <li  className={(this.props.activeId === ""+part.id) ? "active" : ""} role="presentation" >
+
+
+                <Link  to={"/parts/"+part.id} ><h3>{part.description}</h3>
+                    <p>{"Part Number: "+part.number}</p></Link>
+
+
+
+
+
+            </li>);
+    }
+});
+
+
 
 
 

@@ -24112,6 +24112,9 @@ module.exports = warning;
 ReactDOM = require('react-dom');
 var React = require('react');
 var jobs=require('../data/JobData.js').jobs;
+var customers=require('../data/CustomerData.js').customers;
+var products=require('../data/ProductData.js').products;
+var parts=require('../data/PartData.js').parts;
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -24150,7 +24153,7 @@ var JobPage=React.createClass(
 
                    React.createElement(Navbar, {activeTab: "jobs"}), 
 
-                   React.createElement(PageContent, {activeId: this.props.params.id, jobs: jobs})
+                   React.createElement(JobPageContent, {activeId: this.props.params.id, jobs: jobs})
                    )
 
 
@@ -24166,9 +24169,10 @@ var CustomerPage=React.createClass(
         {
             return(
                 React.createElement("div", {className: "container-fluid"}, 
-                    React.createElement(Navbar, {activeTab: "customers"}), 
-                    React.createElement("h1", null, "Customers")
 
+                    React.createElement(Navbar, {activeTab: "customers"}), 
+
+                    React.createElement(CustomerPageContent, {activeId: this.props.params.id, customers: customers})
                 )
 
 
@@ -24185,8 +24189,10 @@ var ProductPage=React.createClass(
         {
             return(
                 React.createElement("div", {className: "container-fluid"}, 
+
                     React.createElement(Navbar, {activeTab: "products"}), 
-                    React.createElement("h1", null, "Products")
+
+                    React.createElement(ProductPageContent, {activeId: this.props.params.id, products: products})
                 )
 
 
@@ -24203,8 +24209,10 @@ var PartPage=React.createClass(
         {
             return(
                 React.createElement("div", {className: "container-fluid"}, 
+
                     React.createElement(Navbar, {activeTab: "parts"}), 
-                    React.createElement("h1", null, "Parts")
+
+                    React.createElement(PartPageContent, {activeId: this.props.params.id, parts: parts})
                 )
 
 
@@ -24258,17 +24266,73 @@ var Navbar=React.createClass({displayName: "Navbar",
 );
 
 
-var PageContent=React.createClass({displayName: "PageContent",
+var JobPageContent=React.createClass({displayName: "JobPageContent",
     render:function()
     {
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(SideBar, {activeId: this.props.activeId, jobs: this.props.jobs})
+                    React.createElement(JobSideBar, {activeId: this.props.activeId, jobs: this.props.jobs})
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(MainPane, null)
+                    React.createElement(JobMainPane, null)
+                )
+
+            )
+        );
+    }
+});
+
+
+var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
+    render:function()
+    {
+        return(
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-2 side-pane"}, 
+                    React.createElement(CustomerSideBar, {activeId: this.props.activeId, customers: this.props.customers})
+
+                ), 
+                React.createElement("div", {className: "col-md-10 main-pane"}, 
+                    React.createElement(CustomerMainPane, null)
+                )
+
+            )
+        );
+    }
+});
+
+
+var ProductPageContent=React.createClass({displayName: "ProductPageContent",
+    render:function()
+    {
+        return(
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-2 side-pane"}, 
+                    React.createElement(ProductSideBar, {activeId: this.props.activeId, products: this.props.products})
+
+                ), 
+                React.createElement("div", {className: "col-md-10 main-pane"}, 
+                    React.createElement(ProductMainPane, null)
+                )
+
+            )
+        );
+    }
+});
+
+var PartPageContent=React.createClass({displayName: "PartPageContent",
+    render:function()
+    {
+        return(
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-2 side-pane"}, 
+                    React.createElement(PartSideBar, {activeId: this.props.activeId, parts: this.props.parts})
+
+                ), 
+                React.createElement("div", {className: "col-md-10 main-pane"}, 
+                    React.createElement(PartMainPane, null)
                 )
 
             )
@@ -24278,15 +24342,15 @@ var PageContent=React.createClass({displayName: "PageContent",
 
 
 
-var SideBar=React.createClass({displayName: "SideBar",
+var JobSideBar=React.createClass({displayName: "JobSideBar",
     render:function(){
         return(
             React.createElement("div", null, 
             React.createElement("div", {className: "row search-box-div"}, 
-            React.createElement(Searchbox, null)
+            React.createElement(JobSearchbox, null)
                 ), 
                 React.createElement("div", {className: "row"}, 
-            React.createElement(List, {activeId: this.props.activeId, jobs: this.props.jobs})
+            React.createElement(JobList, {activeId: this.props.activeId, jobs: this.props.jobs})
             )
                 )
 
@@ -24294,7 +24358,60 @@ var SideBar=React.createClass({displayName: "SideBar",
     }
 });
 
-var MainPane=React.createClass({displayName: "MainPane",
+
+var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
+    render:function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row search-box-div"}, 
+                    React.createElement(CustomerSearchbox, null)
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement(CustomerList, {activeId: this.props.activeId, customers: this.props.customers})
+                )
+            )
+
+        );
+    }
+});
+
+var ProductSideBar=React.createClass({displayName: "ProductSideBar",
+    render:function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row search-box-div"}, 
+                    React.createElement(ProductSearchbox, null)
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement(ProductList, {activeId: this.props.activeId, products: this.props.products})
+                )
+            )
+
+        );
+    }
+});
+
+var PartSideBar=React.createClass({displayName: "PartSideBar",
+    render:function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row search-box-div"}, 
+                    React.createElement(PartSearchbox, null)
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement(PartList, {activeId: this.props.activeId, parts: this.props.parts})
+                )
+            )
+
+        );
+    }
+});
+
+
+
+
+
+var JobMainPane=React.createClass({displayName: "JobMainPane",
     render:function(){
         return(
             React.createElement("div", null, 
@@ -24314,8 +24431,79 @@ var MainPane=React.createClass({displayName: "MainPane",
     }
 });
 
+var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
+    render:function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "col-md-3"}, 
+                    "Customer details here"
 
-var Searchbox=React.createClass({displayName: "Searchbox",
+                ), 
+                React.createElement("div", {className: "col-md-6"}, 
+                    "Previous Jobs Here", 
+                    React.createElement("div", null, 
+                        "Customer Products Here"
+                    )
+                ), 
+                React.createElement("div", {className: "col-md-3"}
+
+                )
+
+            )
+
+        );
+    }
+});
+
+var ProductMainPane=React.createClass({displayName: "ProductMainPane",
+    render:function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "col-md-3"}, 
+                    "Manufacturer details here"
+
+                ), 
+                React.createElement("div", {className: "col-md-6"}, 
+                    "Part List Here"
+
+                ), 
+                React.createElement("div", {className: "col-md-3"}, 
+                 React.createElement("div", null, 
+                 "Product Details here"
+                    ), 
+                    React.createElement("div", null, 
+                "Product diagram here"
+                        )
+                )
+
+            )
+
+        );
+    }
+});
+
+var PartMainPane=React.createClass({displayName: "PartMainPane",
+    render:function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "col-md-3"}, 
+                    "Part details here"
+                ), 
+                React.createElement("div", {className: "col-md-6"}, 
+                    "Where used here"
+                ), 
+                React.createElement("div", {className: "col-md-3"}, 
+                    "History here"
+                )
+
+            )
+
+        );
+    }
+});
+
+
+var JobSearchbox=React.createClass({displayName: "JobSearchbox",
     render: function(){
 
 
@@ -24341,8 +24529,71 @@ var Searchbox=React.createClass({displayName: "Searchbox",
     }
 });
 
-var List=React.createClass(
-    {displayName: "List",
+var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
+    render: function(){
+
+
+
+        return(
+
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("input", {type: "text", placeholder: "Search"})
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("select", {id: "sort"}, 
+                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
+                        React.createElement("option", {value: "name"}, "Date"), 
+                        React.createElement("option", {value: "customer"}, "Customer")
+                    )
+                )
+
+            )
+        );
+
+    }
+});
+
+var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
+    render: function(){
+
+
+
+        return(
+
+
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("input", {type: "text", placeholder: "Search"})
+                )
+
+
+
+        );
+
+    }
+});
+
+var PartSearchbox=React.createClass({displayName: "PartSearchbox",
+    render: function(){
+
+
+
+        return(
+
+
+            React.createElement("div", {className: "row"}, 
+                React.createElement("input", {type: "text", placeholder: "Search"})
+            )
+
+
+
+        );
+
+    }
+});
+
+var JobList=React.createClass(
+    {displayName: "JobList",
 
         render:function()
         {
@@ -24360,6 +24611,92 @@ var List=React.createClass(
                         jobsToDisplay
 
                     )
+
+            );
+        }
+
+    }
+
+
+);
+
+var CustomerList=React.createClass(
+    {displayName: "CustomerList",
+
+        render:function()
+        {
+
+
+            var customersToDisplay = this.props.customers.map(function(customer,index) {
+                return React.createElement(SingleCustomer, {activeId: this.props.activeId, customer: customer, key: index})
+            }.bind(this));
+
+
+
+            return(
+
+                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
+                    customersToDisplay
+
+                )
+
+            );
+        }
+
+    }
+
+
+);
+
+
+var ProductList=React.createClass(
+    {displayName: "ProductList",
+
+        render:function()
+        {
+
+
+            var productsToDisplay = this.props.products.map(function(product,index) {
+                return React.createElement(SingleProduct, {activeId: this.props.activeId, product: product, key: index})
+            }.bind(this));
+
+
+
+            return(
+
+                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
+                    productsToDisplay
+
+                )
+
+            );
+        }
+
+    }
+
+
+);
+
+
+var PartList=React.createClass(
+    {displayName: "PartList",
+
+        render:function()
+        {
+
+
+            var partsToDisplay = this.props.parts.map(function(part,index) {
+                return React.createElement(SinglePart, {activeId: this.props.activeId, part: part, key: index})
+            }.bind(this));
+
+
+
+            return(
+
+                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
+                    partsToDisplay
+
+                )
 
             );
         }
@@ -24397,6 +24734,88 @@ var SingleJob=React.createClass({displayName: "SingleJob",
     }
 });
 
+var SingleCustomer=React.createClass({displayName: "SingleCustomer",
+
+
+
+
+
+    render: function () {
+        var customer=this.props.customer;
+
+        return (
+
+            React.createElement("li", {className: (this.props.activeId === ""+customer.id) ? "active" : "", role: "presentation"}, 
+
+
+                React.createElement(Link, {to: "/customers/"+customer.id}, React.createElement("h3", null, customer.name), 
+                    React.createElement("p", null, customer.street, React.createElement("br", null), 
+                        customer.county, "  ", React.createElement("br", null), 
+                        customer.town, React.createElement("br", null), 
+                        customer.county, React.createElement("br", null)))
+
+
+
+
+
+            ));
+    }
+});
+
+var SingleProduct=React.createClass({displayName: "SingleProduct",
+
+
+
+
+
+    render: function () {
+        var product=this.props.product;
+
+        return (
+
+            React.createElement("li", {className: (this.props.activeId === ""+product.id) ? "active" : "", role: "presentation"}, 
+
+
+                React.createElement(Link, {to: "/products/"+product.id}, React.createElement("h3", null, product.manufacturer.name+" "+product.number), 
+                    React.createElement("p", null, 
+
+                        product.number))
+
+
+
+
+
+            ));
+    }
+});
+
+var SinglePart=React.createClass({displayName: "SinglePart",
+
+
+
+
+
+    render: function () {
+        var part=this.props.part;
+
+        return (
+
+            React.createElement("li", {className: (this.props.activeId === ""+part.id) ? "active" : "", role: "presentation"}, 
+
+
+                React.createElement(Link, {to: "/parts/"+part.id}, React.createElement("h3", null, part.description), 
+                    React.createElement("p", null, "Part Number: "+part.number))
+
+
+
+
+
+            ));
+    }
+});
+
+
+
 
 
 ReactDOM.render( (
@@ -24413,7 +24832,7 @@ ReactDOM.render( (
     document.getElementById('mount-point')
 );
 
-},{"../data/JobData.js":2,"react":206,"react-dom":53,"react-router":73}],210:[function(require,module,exports){
+},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/PartData.js":4,"../data/ProductData.js":5,"react":206,"react-dom":53,"react-router":73}],210:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
