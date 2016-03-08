@@ -31180,14 +31180,45 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
 
 
 var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
-    render:function(){
+
+    getInitialState:function()
+    {
         return(
+        {
+            searchBoxContent: "",
+            sortBy:""
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+    setSortBy:function(value)
+    {
+        this.setState({ sortBy:value})
+    },
+
+
+    render:function(){
+
+        var customers=this.props.customers;
+        var list=customers.filter(function(customer){
+            return customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
+        }.bind(this));
+
+        var sortedList=_.sortBy(list,this.state.sortBy)
+        return(
+
+
             React.createElement("div", null, 
                 React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(CustomerSearchbox, null)
+                    React.createElement(CustomerSearchbox, {setSortBy: this.setSortBy, setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement(CustomerList, {activeId: this.props.activeId, customers: this.props.customers})
+                    React.createElement(CustomerList, {activeId: this.props.activeId, customers: sortedList})
                 )
             )
 
@@ -31196,14 +31227,38 @@ var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
 });
 
 var ProductSideBar=React.createClass({displayName: "ProductSideBar",
+
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+
+
     render:function(){
+        var products=this.props.products;
+        var list=products.filter(function(product){
+            return product.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
+        }.bind(this));
+
+        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(ProductSearchbox, null)
+                    React.createElement(ProductSearchbox, {setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement(ProductList, {activeId: this.props.activeId, products: this.props.products})
+                    React.createElement(ProductList, {activeId: this.props.activeId, products: sortedList})
                 )
             )
 
@@ -31212,14 +31267,37 @@ var ProductSideBar=React.createClass({displayName: "ProductSideBar",
 });
 
 var PartSideBar=React.createClass({displayName: "PartSideBar",
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+
+    },
+
     render:function(){
+        console.log(this.state.searchBoxContent);
+        var parts=this.props.parts;
+        var list=parts.filter(function(part){
+            return part.part_number.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
+        }.bind(this));
+
+        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(PartSearchbox, null)
+                    React.createElement(PartSearchbox, {setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement(PartList, {activeId: this.props.activeId, parts: this.props.parts})
+                    React.createElement(PartList, {activeId: this.props.activeId, parts: sortedList})
                 )
             )
 
@@ -31328,14 +31406,14 @@ var JobSearchbox=React.createClass({displayName: "JobSearchbox",
     setSearchText:function(e)
     {
         e.preventDefault();
-        console.log("value: "+e.target.value);
+
         this.props.setSearchText(e.target.value);
     },
 
     setSortBy:function(e)
     {
         e.preventDefault();
-        console.log("sort: "+e.target.value);
+
         this.props.setSortBy(e.target.value);
     },
     render: function(){
@@ -31364,6 +31442,20 @@ var JobSearchbox=React.createClass({displayName: "JobSearchbox",
 });
 
 var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSortBy:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSortBy(e.target.value);
+    },
+
     render: function(){
 
 
@@ -31372,13 +31464,13 @@ var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
 
             React.createElement("div", null, 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {type: "text", placeholder: "Search"})
+                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("select", {id: "sort"}, 
+                    React.createElement("select", {onChange: this.setSortBy, id: "sort"}, 
                         React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
-                        React.createElement("option", {value: "name"}, "Date"), 
-                        React.createElement("option", {value: "customer"}, "Customer")
+                        React.createElement("option", {value: "name"}, "Name"), 
+                        React.createElement("option", {value: "county"}, "County")
                     )
                 )
 
@@ -31389,6 +31481,15 @@ var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
 });
 
 var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchText(e.target.value);
+    },
+
+
     render: function(){
 
 
@@ -31397,7 +31498,7 @@ var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
 
 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {type: "text", placeholder: "Search"})
+                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
                 )
 
 
@@ -31408,6 +31509,15 @@ var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
 });
 
 var PartSearchbox=React.createClass({displayName: "PartSearchbox",
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchText(e.target.value);
+    },
+
+
     render: function(){
 
 
@@ -31416,7 +31526,7 @@ var PartSearchbox=React.createClass({displayName: "PartSearchbox",
 
 
             React.createElement("div", {className: "row"}, 
-                React.createElement("input", {type: "text", placeholder: "Search"})
+                React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
             )
 
 

@@ -314,7 +314,7 @@ var CustomerSideBar=React.createClass({
 
             <div>
                 <div className="row search-box-div">
-                    <CustomerSearchbox/>
+                    <CustomerSearchbox setSortBy={this.setSortBy} setSearchText={this.setSearchText}/>
                 </div>
                 <div className="row">
                     <CustomerList activeId={this.props.activeId} customers={sortedList}/>
@@ -347,14 +347,14 @@ var ProductSideBar=React.createClass({
     render:function(){
         var products=this.props.products;
         var list=products.filter(function(product){
-            return productdescription.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
+            return product.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
         }.bind(this));
 
         var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             <div>
                 <div className="row search-box-div">
-                    <ProductSearchbox/>
+                    <ProductSearchbox setSearchText={this.setSearchText}/>
                 </div>
                 <div className="row">
                     <ProductList activeId={this.props.activeId} products={sortedList}/>
@@ -379,23 +379,24 @@ var PartSideBar=React.createClass({
     setSearchText:function(value)
     {
         this.setState({ searchBoxContent:value})
+
     },
 
     render:function(){
-
-        var parts=this.props.products;
+        console.log(this.state.searchBoxContent);
+        var parts=this.props.parts;
         var list=parts.filter(function(part){
-            return part.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
+            return part.part_number.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
         }.bind(this));
 
         var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             <div>
                 <div className="row search-box-div">
-                    <PartSearchbox/>
+                    <PartSearchbox setSearchText={this.setSearchText}/>
                 </div>
                 <div className="row">
-                    <PartList activeId={this.props.activeId} parts={parts}/>
+                    <PartList activeId={this.props.activeId} parts={sortedList}/>
                 </div>
             </div>
 
@@ -504,14 +505,14 @@ var JobSearchbox=React.createClass({
     setSearchText:function(e)
     {
         e.preventDefault();
-        console.log("value: "+e.target.value);
+
         this.props.setSearchText(e.target.value);
     },
 
     setSortBy:function(e)
     {
         e.preventDefault();
-        console.log("sort: "+e.target.value);
+
         this.props.setSortBy(e.target.value);
     },
     render: function(){
@@ -543,14 +544,14 @@ var CustomerSearchbox=React.createClass({
     setSearchText:function(e)
     {
         e.preventDefault();
-        console.log("value: "+e.target.value);
+
         this.props.setSearchText(e.target.value);
     },
 
     setSortBy:function(e)
     {
         e.preventDefault();
-        console.log("sort: "+e.target.value);
+
         this.props.setSortBy(e.target.value);
     },
 
@@ -583,7 +584,7 @@ var ProductSearchbox=React.createClass({
     setSearchText:function(e)
     {
         e.preventDefault();
-        console.log("value: "+e.target.value);
+
         this.props.setSearchText(e.target.value);
     },
 
@@ -611,7 +612,7 @@ var PartSearchbox=React.createClass({
     setSearchText:function(e)
     {
         e.preventDefault();
-        console.log("value: "+e.target.value);
+
         this.props.setSearchText(e.target.value);
     },
 
