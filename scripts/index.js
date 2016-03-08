@@ -8,6 +8,7 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
+var _=require('lodash');
 var IndexRoute = ReactRouter.IndexRoute;
 $(document).ready(function() {
 
@@ -232,14 +233,43 @@ var PartPageContent=React.createClass({
 
 
 var JobSideBar=React.createClass({
+
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+            sortBy:""
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+    setSortBy:function(value)
+    {
+        this.setState({ sortBy:value})
+    },
+
     render:function(){
+        var jobs=this.props.jobs;
+        var list=jobs.filter(function(job){
+            return job.customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
+        }.bind(this));
+
+         var sortedList=_.sortBy(list,this.state.sortBy)
+
+
         return(
             <div>
             <div className="row search-box-div">
-            <JobSearchbox/>
+            <JobSearchbox setSortBy={this.setSortBy} setSearchText={this.setSearchText}/>
                 </div>
                 <div className="row">
-            <JobList activeId={this.props.activeId} jobs={this.props.jobs}/>
+            <JobList activeId={this.props.activeId} jobs={sortedList}/>
             </div>
                 </div>
 
@@ -393,6 +423,20 @@ var PartMainPane=React.createClass({
 
 
 var JobSearchbox=React.createClass({
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+        console.log("value: "+e.target.value);
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSortBy:function(e)
+    {
+        e.preventDefault();
+        console.log("sort: "+e.target.value);
+        this.props.setSortBy(e.target.value);
+    },
     render: function(){
 
 
@@ -401,14 +445,14 @@ var JobSearchbox=React.createClass({
 
                 <div>
                     <div className="row">
-                    <input type="text"  placeholder="Search"/>
+                    <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
                      </div>
                     <div className="row">
-                    <select id="sort" >
+                    <select onChange={this.setSortBy} id="sort" >
                         <option value="" disabled selected>Sort by: </option>
                         <option value="date">Date</option>
-                        <option value="name">Customer</option>
-                        <option value="product">Status</option>
+                        <option value="customer.name">Customer</option>
+
                     </select>
                         </div>
 
@@ -665,7 +709,7 @@ var SingleProduct=React.createClass({
             <li  className={(this.props.activeId === ""+product.id) ? "active" : ""} role="presentation" >
 
 
-                <Link  to={"/products/"+product.id} ><h3>{product.manufacturer.name+" "+product.number}</h3>
+                <Link  to={"/products/"+product.id} ><h3>{product.manufacturer.name+" "+product.product_number}</h3>
                     <p>
 
                         {product.number}</p></Link>
@@ -693,7 +737,7 @@ var SinglePart=React.createClass({
 
 
                 <Link  to={"/parts/"+part.id} ><h3>{part.description}</h3>
-                    <p>{"Part Number: "+part.number}</p></Link>
+                    <p>{"Part Number: "+part.part_number}</p></Link>
 
 
 
