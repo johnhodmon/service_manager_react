@@ -279,14 +279,45 @@ var JobSideBar=React.createClass({
 
 
 var CustomerSideBar=React.createClass({
-    render:function(){
+
+    getInitialState:function()
+    {
         return(
+        {
+            searchBoxContent: "",
+            sortBy:""
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+    setSortBy:function(value)
+    {
+        this.setState({ sortBy:value})
+    },
+
+
+    render:function(){
+
+        var customers=this.props.customers;
+        var list=customers.filter(function(customer){
+            return customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
+        }.bind(this));
+
+        var sortedList=_.sortBy(list,this.state.sortBy)
+        return(
+
+
             <div>
                 <div className="row search-box-div">
                     <CustomerSearchbox/>
                 </div>
                 <div className="row">
-                    <CustomerList activeId={this.props.activeId} customers={this.props.customers}/>
+                    <CustomerList activeId={this.props.activeId} customers={sortedList}/>
                 </div>
             </div>
 
@@ -295,14 +326,38 @@ var CustomerSideBar=React.createClass({
 });
 
 var ProductSideBar=React.createClass({
+
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+
+
     render:function(){
+        var products=this.props.products;
+        var list=products.filter(function(product){
+            return productdescription.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
+        }.bind(this));
+
+        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             <div>
                 <div className="row search-box-div">
                     <ProductSearchbox/>
                 </div>
                 <div className="row">
-                    <ProductList activeId={this.props.activeId} products={this.props.products}/>
+                    <ProductList activeId={this.props.activeId} products={sortedList}/>
                 </div>
             </div>
 
@@ -311,14 +366,36 @@ var ProductSideBar=React.createClass({
 });
 
 var PartSideBar=React.createClass({
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
     render:function(){
+
+        var parts=this.props.products;
+        var list=parts.filter(function(part){
+            return part.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
+        }.bind(this));
+
+        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             <div>
                 <div className="row search-box-div">
                     <PartSearchbox/>
                 </div>
                 <div className="row">
-                    <PartList activeId={this.props.activeId} parts={this.props.parts}/>
+                    <PartList activeId={this.props.activeId} parts={parts}/>
                 </div>
             </div>
 
@@ -463,6 +540,20 @@ var JobSearchbox=React.createClass({
 });
 
 var CustomerSearchbox=React.createClass({
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+        console.log("value: "+e.target.value);
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSortBy:function(e)
+    {
+        e.preventDefault();
+        console.log("sort: "+e.target.value);
+        this.props.setSortBy(e.target.value);
+    },
+
     render: function(){
 
 
@@ -471,13 +562,13 @@ var CustomerSearchbox=React.createClass({
 
             <div>
                 <div className="row">
-                    <input type="text"  placeholder="Search"/>
+                    <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
                 </div>
                 <div className="row">
-                    <select id="sort" >
+                    <select onChange={this.setSortBy} id="sort" >
                         <option value="" disabled selected>Sort by: </option>
-                        <option value="name">Date</option>
-                        <option value="customer">Customer</option>
+                        <option value="name">Name</option>
+                        <option value="county">County</option>
                     </select>
                 </div>
 
@@ -488,6 +579,15 @@ var CustomerSearchbox=React.createClass({
 });
 
 var ProductSearchbox=React.createClass({
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+        console.log("value: "+e.target.value);
+        this.props.setSearchText(e.target.value);
+    },
+
+
     render: function(){
 
 
@@ -496,7 +596,7 @@ var ProductSearchbox=React.createClass({
 
 
                 <div className="row">
-                    <input type="text"  placeholder="Search"/>
+                    <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
                 </div>
 
 
@@ -507,6 +607,15 @@ var ProductSearchbox=React.createClass({
 });
 
 var PartSearchbox=React.createClass({
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+        console.log("value: "+e.target.value);
+        this.props.setSearchText(e.target.value);
+    },
+
+
     render: function(){
 
 
@@ -515,7 +624,7 @@ var PartSearchbox=React.createClass({
 
 
             <div className="row">
-                <input type="text"  placeholder="Search"/>
+                <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
             </div>
 
 
