@@ -12,10 +12,15 @@ var _=require('lodash');
 var IndexRoute = ReactRouter.IndexRoute;
 $(document).ready(function() {
 
-    var dynamic = $('.side-pane');
-    var static = $('.main-pane');
+    var side = $('.side-pane');
+    var main = $('.main-pane');
 
-    static.height(dynamic.height());
+
+        main.height(side.height());
+
+
+
+
 
 });
 

@@ -73,6 +73,7 @@ p
 .side-pane
 {
     background-color:black;
+    min-height:100vh;
 
 
 
@@ -122,6 +123,7 @@ p
     background-color:#eeeeee;
 
     padding-top: 10px;
+    min-height:100vh;
 
 
 
