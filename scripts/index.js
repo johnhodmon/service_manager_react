@@ -43,13 +43,18 @@ var JobPage=React.createClass(
     {
         render:function()
             {
+                var id="1";
+                if(this.props.params.id!=null)
+                {
+                    id=this.props.params.id;
+                }
                 console.log("params.id"+this.props.params.id);
                 return(
                    <div className="container-fluid">
 
                    <Navbar activeTab="jobs" />
 
-                   <JobPageContent activeId={this.props.params.id} jobs={jobs}  />
+                   <JobPageContent activeId={id} jobs={jobs} parts={parts}  />
                    </div>
 
 
@@ -165,6 +170,7 @@ var Navbar=React.createClass({
 var JobPageContent=React.createClass({
     render:function()
     {
+
         return(
             <div className="row">
                 <div className="col-md-2 side-pane">
@@ -172,7 +178,7 @@ var JobPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <JobMainPane activeId={this.props.activeId} jobs={this.props.jobs}/>
+                    <JobMainPane activeId={this.props.activeId} jobs={this.props.jobs} parts={this.props.parts}/>
                 </div>
 
             </div>
@@ -345,6 +351,9 @@ var JobMainPane=React.createClass({
         var customerProduct=jobToShow.customerProduct;
         var product=jobToShow.customerProduct.product;
         var jobParts=[];
+        var parts=this.props.parts;
+
+
         if(jobToShow.jobParts!=null)
         {
             jobParts=jobToShow.jobParts.map(function(jp,index)
@@ -353,6 +362,9 @@ var JobMainPane=React.createClass({
         });
         }
 
+     var selectOptions=product.bom.map(function(bomItem,index){
+         return <SelectOption bomItem={bomItem} />
+     });
 
 
         return(
@@ -369,6 +381,7 @@ var JobMainPane=React.createClass({
                         {customer.email}<br/>
                     </p>
                 </div>
+
                 <div className="col-md-6">
                 <h3><strong>Job Details</strong></h3>
                     <p>
@@ -379,23 +392,10 @@ var JobMainPane=React.createClass({
 
 
 
-                </div>
-                <div className="col-md-3">
-                   <h3><strong>Product Details</strong></h3>
-                    <p>
-                        {product.manufacturer.name} {product.product_number}
-                        {product.description}
-                        Serial Number: {customerProduct.serialNumber}
 
-                    </p>
-                </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-3">
-                        </div>
-                    <div className="col-md-9">
 
                     <h3><strong>Parts Used</strong></h3>
+                    <p>There were no parts used on this job</p>
                         <table className="table table-striped">
                             <thead>
 
@@ -405,17 +405,71 @@ var JobMainPane=React.createClass({
 
                             <tbody>
                             {jobParts}
+
+
                             </tbody>
                             </table>
+                    <h3><strong>Add part used</strong></h3>
+                        <form>
+                            <div className="form-group">
+                                <label for="partNumber">Part Number</label>
+                            <select>
+                                {selectOptions}
+                            </select>
+                                </div>
+
+                            <div className="form-group">
+                                <label for="quantity" >Quantity</label>
+                            <select>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                </select>
+                            </div>
+                            <input type="button" className="btn btn-primary" action="submit" value="Add"/>
+                        </form>
 
                     </div>
-                   </div>
 
-            </div>
+                    <div className="col-md-3">
+                        <h3><strong>Product Details</strong></h3>
+                        <p>
+                            {product.manufacturer.name} {product.product_number}
+                            {product.description}
+                            Serial Number: {customerProduct.serialNumber}
+
+                        </p>
+                    </div>
+
+                   </div>
+                </div>
+
+
 
         );
+
+
     }
 });
+
+var SelectOption=React.createClass(
+    {
+
+       render: function()
+       {
+           var bomItem=this.props.bomItem;
+           return(
+               <option value={bomItem.part.part_number}>{bomItem.part.part_number}:{bomItem.part.description} </option>
+           );
+       }
+    });
 
 var SingleJobPart=React.createClass(
     {
@@ -424,7 +478,8 @@ var SingleJobPart=React.createClass(
             var jobPart=this.props.jobPart;
             var part = jobPart.part;
             return(
-                <tr><td>{part.part_number}</td><td>{part.description}</td><td>{jobPart.quantity}</td></tr>
+                <tr><td>{part.part_number}</td><td>{part.description}</td><td>{jobPart.quantity}</td>
+                    <td><button className="btn btn-primary">Edit</button></td><td><button className="btn btn-primary">Delete</button></td></tr>
             );
         }
     }

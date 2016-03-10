@@ -30944,13 +30944,18 @@ var JobPage=React.createClass(
     {displayName: "JobPage",
         render:function()
             {
+                var id="1";
+                if(this.props.params.id!=null)
+                {
+                    id=this.props.params.id;
+                }
                 console.log("params.id"+this.props.params.id);
                 return(
                    React.createElement("div", {className: "container-fluid"}, 
 
                    React.createElement(Navbar, {activeTab: "jobs"}), 
 
-                   React.createElement(JobPageContent, {activeId: this.props.params.id, jobs: jobs})
+                   React.createElement(JobPageContent, {activeId: id, jobs: jobs, parts: parts})
                    )
 
 
@@ -31066,6 +31071,7 @@ var Navbar=React.createClass({displayName: "Navbar",
 var JobPageContent=React.createClass({displayName: "JobPageContent",
     render:function()
     {
+
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-2 side-pane"}, 
@@ -31073,7 +31079,7 @@ var JobPageContent=React.createClass({displayName: "JobPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(JobMainPane, {activeId: this.props.activeId, jobs: this.props.jobs})
+                    React.createElement(JobMainPane, {activeId: this.props.activeId, jobs: this.props.jobs, parts: this.props.parts})
                 )
 
             )
@@ -31246,6 +31252,9 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
         var customerProduct=jobToShow.customerProduct;
         var product=jobToShow.customerProduct.product;
         var jobParts=[];
+        var parts=this.props.parts;
+
+
         if(jobToShow.jobParts!=null)
         {
             jobParts=jobToShow.jobParts.map(function(jp,index)
@@ -31254,6 +31263,9 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
         });
         }
 
+     var selectOptions=product.bom.map(function(bomItem,index){
+         return React.createElement(SelectOption, {bomItem: bomItem})
+     });
 
 
         return(
@@ -31270,33 +31282,21 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
                         customer.email, React.createElement("br", null)
                     )
                 ), 
+
                 React.createElement("div", {className: "col-md-6"}, 
                 React.createElement("h3", null, React.createElement("strong", null, "Job Details")), 
                     React.createElement("p", null, 
                         "Fault reported on ", jobToShow.date, React.createElement("br", null), 
                         "Fault description: ", jobToShow.reported_fault, React.createElement("br", null)
 
-                    )
+                    ), 
 
 
 
-                ), 
-                React.createElement("div", {className: "col-md-3"}, 
-                   React.createElement("h3", null, React.createElement("strong", null, "Product Details")), 
-                    React.createElement("p", null, 
-                        product.manufacturer.name, " ", product.product_number, 
-                        product.description, 
-                        "Serial Number: ", customerProduct.serialNumber
 
-                    )
-                )
-                ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "col-md-3"}
-                        ), 
-                    React.createElement("div", {className: "col-md-9"}, 
 
                     React.createElement("h3", null, React.createElement("strong", null, "Parts Used")), 
+                    React.createElement("p", null, "There were no parts used on this job"), 
                         React.createElement("table", {className: "table table-striped"}, 
                             React.createElement("thead", null, 
 
@@ -31306,17 +31306,71 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
 
                             React.createElement("tbody", null, 
                             jobParts
-                            )
-                            )
 
+
+                            )
+                            ), 
+                    React.createElement("h3", null, React.createElement("strong", null, "Add part used")), 
+                        React.createElement("form", null, 
+                            React.createElement("div", {className: "form-group"}, 
+                                React.createElement("label", {for: "partNumber"}, "Part Number"), 
+                            React.createElement("select", null, 
+                                selectOptions
+                            )
+                                ), 
+
+                            React.createElement("div", {className: "form-group"}, 
+                                React.createElement("label", {for: "quantity"}, "Quantity"), 
+                            React.createElement("select", null, 
+                                React.createElement("option", {value: "1"}, "1"), 
+                                React.createElement("option", {value: "2"}, "2"), 
+                                React.createElement("option", {value: "3"}, "3"), 
+                                React.createElement("option", {value: "4"}, "4"), 
+                                React.createElement("option", {value: "5"}, "5"), 
+                                React.createElement("option", {value: "6"}, "6"), 
+                                React.createElement("option", {value: "7"}, "7"), 
+                                React.createElement("option", {value: "8"}, "8"), 
+                                React.createElement("option", {value: "9"}, "9"), 
+                                React.createElement("option", {value: "10"}, "10")
+                                )
+                            ), 
+                            React.createElement("input", {type: "button", className: "btn btn-primary", action: "submit", value: "Add"})
+                        )
+
+                    ), 
+
+                    React.createElement("div", {className: "col-md-3"}, 
+                        React.createElement("h3", null, React.createElement("strong", null, "Product Details")), 
+                        React.createElement("p", null, 
+                            product.manufacturer.name, " ", product.product_number, 
+                            product.description, 
+                            "Serial Number: ", customerProduct.serialNumber
+
+                        )
                     )
-                   )
 
-            )
+                   )
+                )
+
+
 
         );
+
+
     }
 });
+
+var SelectOption=React.createClass(
+    {displayName: "SelectOption",
+
+       render: function()
+       {
+           var bomItem=this.props.bomItem;
+           return(
+               React.createElement("option", {value: bomItem.part.part_number}, bomItem.part.part_number, ":", bomItem.part.description, " ")
+           );
+       }
+    });
 
 var SingleJobPart=React.createClass(
     {displayName: "SingleJobPart",
@@ -31325,7 +31379,8 @@ var SingleJobPart=React.createClass(
             var jobPart=this.props.jobPart;
             var part = jobPart.part;
             return(
-                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), React.createElement("td", null, jobPart.quantity))
+                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), React.createElement("td", null, jobPart.quantity), 
+                    React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Edit")), React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Delete")))
             );
         }
     }
