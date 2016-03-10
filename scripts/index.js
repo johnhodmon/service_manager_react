@@ -43,6 +43,7 @@ var JobPage=React.createClass(
     {
         render:function()
             {
+                console.log("params.id"+this.props.params.id);
                 return(
                    <div className="container-fluid">
 
@@ -171,7 +172,7 @@ var JobPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <JobMainPane/>
+                    <JobMainPane activeId={this.props.activeId} jobs={this.props.jobs}/>
                 </div>
 
             </div>
@@ -337,23 +338,97 @@ var PartSideBar=React.createClass({
 
 var JobMainPane=React.createClass({
     render:function(){
+        var jobs=this.props.jobs;
+        console.log("activeId"+this.props.activeId);
+        var jobToShow=jobs[this.props.activeId];
+        var customer=jobToShow.customer;
+        var customerProduct=jobToShow.customerProduct;
+        var product=jobToShow.customerProduct.product;
+        var jobParts=[];
+        if(jobToShow.jobParts!=null)
+        {
+            jobParts=jobToShow.jobParts.map(function(jp,index)
+        {
+            return <SingleJobPart jobPart={jp} index={index} />
+        });
+        }
+
+
+
         return(
-            <div>
+            <div >
+                <div className="row">
                 <div className="col-md-3">
-                Customer details here
+                    <h3><strong>Customer Details</strong></h3>
+                  <p>
+                        {customer.name}<br/>
+                        {customer.street}<br/>
+                        { customer.town}<br/>
+                        {customer.county}<br/>
+                        {customer.phone}<br/>
+                        {customer.email}<br/>
+                    </p>
                 </div>
                 <div className="col-md-6">
-                Job Details Here
+                <h3><strong>Job Details</strong></h3>
+                    <p>
+                        Fault reported on {jobToShow.date}<br/>
+                        Fault description: {jobToShow.reported_fault}<br/>
+
+                    </p>
+
+
+
                 </div>
                 <div className="col-md-3">
-                   Product Details here
+                   <h3><strong>Product Details</strong></h3>
+                    <p>
+                        {product.manufacturer.name} {product.product_number}
+                        {product.description}
+                        Serial Number: {customerProduct.serialNumber}
+
+                    </p>
                 </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-3">
+                        </div>
+                    <div className="col-md-9">
+
+                    <h3><strong>Parts Used</strong></h3>
+                        <table className="table table-striped">
+                            <thead>
+
+                            <tr><th>Part Number</th><th>Description</th><th>Quantity</th> </tr>
+
+                            </thead>
+
+                            <tbody>
+                            {jobParts}
+                            </tbody>
+                            </table>
+
+                    </div>
+                   </div>
 
             </div>
 
         );
     }
 });
+
+var SingleJobPart=React.createClass(
+    {
+
+        render:function(){
+            var jobPart=this.props.jobPart;
+            var part = jobPart.part;
+            return(
+                <tr><td>{part.part_number}</td><td>{part.description}</td><td>{jobPart.quantity}</td></tr>
+            );
+        }
+    }
+);
 
 var CustomerMainPane=React.createClass({
     render:function(){

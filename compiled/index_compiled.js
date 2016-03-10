@@ -30944,6 +30944,7 @@ var JobPage=React.createClass(
     {displayName: "JobPage",
         render:function()
             {
+                console.log("params.id"+this.props.params.id);
                 return(
                    React.createElement("div", {className: "container-fluid"}, 
 
@@ -31072,7 +31073,7 @@ var JobPageContent=React.createClass({displayName: "JobPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(JobMainPane, null)
+                    React.createElement(JobMainPane, {activeId: this.props.activeId, jobs: this.props.jobs})
                 )
 
             )
@@ -31238,23 +31239,97 @@ var PartSideBar=React.createClass({displayName: "PartSideBar",
 
 var JobMainPane=React.createClass({displayName: "JobMainPane",
     render:function(){
+        var jobs=this.props.jobs;
+        console.log("activeId"+this.props.activeId);
+        var jobToShow=jobs[this.props.activeId];
+        var customer=jobToShow.customer;
+        var customerProduct=jobToShow.customerProduct;
+        var product=jobToShow.customerProduct.product;
+        var jobParts=[];
+        if(jobToShow.jobParts!=null)
+        {
+            jobParts=jobToShow.jobParts.map(function(jp,index)
+        {
+            return React.createElement(SingleJobPart, {jobPart: jp, index: index})
+        });
+        }
+
+
+
         return(
             React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-3"}, 
-                "Customer details here"
+                    React.createElement("h3", null, React.createElement("strong", null, "Customer Details")), 
+                  React.createElement("p", null, 
+                        customer.name, React.createElement("br", null), 
+                        customer.street, React.createElement("br", null), 
+                         customer.town, React.createElement("br", null), 
+                        customer.county, React.createElement("br", null), 
+                        customer.phone, React.createElement("br", null), 
+                        customer.email, React.createElement("br", null)
+                    )
                 ), 
                 React.createElement("div", {className: "col-md-6"}, 
-                "Job Details Here"
+                React.createElement("h3", null, React.createElement("strong", null, "Job Details")), 
+                    React.createElement("p", null, 
+                        "Fault reported on ", jobToShow.date, React.createElement("br", null), 
+                        "Fault description: ", jobToShow.reported_fault, React.createElement("br", null)
+
+                    )
+
+
+
                 ), 
                 React.createElement("div", {className: "col-md-3"}, 
-                   "Product Details here"
+                   React.createElement("h3", null, React.createElement("strong", null, "Product Details")), 
+                    React.createElement("p", null, 
+                        product.manufacturer.name, " ", product.product_number, 
+                        product.description, 
+                        "Serial Number: ", customerProduct.serialNumber
+
+                    )
                 )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-3"}
+                        ), 
+                    React.createElement("div", {className: "col-md-9"}, 
+
+                    React.createElement("h3", null, React.createElement("strong", null, "Parts Used")), 
+                        React.createElement("table", {className: "table table-striped"}, 
+                            React.createElement("thead", null, 
+
+                            React.createElement("tr", null, React.createElement("th", null, "Part Number"), React.createElement("th", null, "Description"), React.createElement("th", null, "Quantity"), " ")
+
+                            ), 
+
+                            React.createElement("tbody", null, 
+                            jobParts
+                            )
+                            )
+
+                    )
+                   )
 
             )
 
         );
     }
 });
+
+var SingleJobPart=React.createClass(
+    {displayName: "SingleJobPart",
+
+        render:function(){
+            var jobPart=this.props.jobPart;
+            var part = jobPart.part;
+            return(
+                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), React.createElement("td", null, jobPart.quantity))
+            );
+        }
+    }
+);
 
 var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
     render:function(){
