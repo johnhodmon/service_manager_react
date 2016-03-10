@@ -93,12 +93,17 @@ var ProductPage=React.createClass(
     {
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 <div className="container-fluid">
 
                     <Navbar activeTab="products" />
 
-                    <ProductPageContent activeId={this.props.params.id} products={products}  />
+                    <ProductPageContent activeId={id} products={products}  />
                 </div>
 
 
@@ -221,7 +226,7 @@ var ProductPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <ProductMainPane/>
+                    <ProductMainPane activeId={this.props.activeId} products={this.props.products}/>
                 </div>
 
             </div>
@@ -600,23 +605,89 @@ var SingleCustomerProduct=React.createClass({
 
 var ProductMainPane=React.createClass({
     render:function(){
+        var products=this.props.products;
+        var product=products[this.props.activeId];
+        var manufacturer=product.manufacturer;
+
+        var partOptions=parts.map(function(part,index){
+            return <PartOption part={part} />
+        });
+        var bom=product.bom.map(function(bi,index)
+            {
+                return(<SingleBomItem bi={bi} />);
+            }
+
+        );
         return(
             <div>
-                <div className="col-md-3">
-                    Manufacturer details here
+                <div className="col-md-8">
+                    <h3><strong>Manufacturer Details</strong></h3>
+                    <p>
+                        {manufacturer.name}<br/>
+                        {manufacturer.street}<br/>
+                        { manufacturer.town}<br/>
+                        {manufacturer.county}<br/>
+                        {manufacturer.phone}<br/>
+                        {manufacturer.email}<br/>
+                    </p>
 
-                </div>
-                <div className="col-md-6">
-                    Part List Here
 
-                </div>
-                <div className="col-md-3">
-                 <div>
-                 Product Details here
-                    </div>
-                    <div>
-                Product diagram here
+
+
+
+                    <h3><strong>Bill of Material</strong></h3>
+                    <p>The customer has no registered products</p>
+                    <table className="table table-striped">
+                        <thead>
+
+                        <tr><th>Part Number</th><th>Description</th><th>Quantity</th> </tr>
+
+                        </thead>
+
+                        <tbody>
+                        {bom}
+
+
+                        </tbody>
+                    </table>
+                    <h3><strong>Add Part to Bill of Material</strong></h3>
+                    <form>
+                        <div className="form-group">
+                            <label for="productNumber">Product</label>
+                            <select>
+                                {partOptions}
+                            </select>
                         </div>
+
+                        <div className="form-group">
+                            <label for="quantity" >Quantity</label>
+                            <select>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <input type="button" className="btn btn-primary" action="submit" value="Add"/>
+                    </form>
+                </div>
+
+                <div className="col-md-4">
+                <h3>Product Details</h3>
+                    <p>
+                        {manufacturer.name} {product.product_number}<br/>
+                        {product.description}<br/>
+
+                    </p>
+
+                    <h3>Exploded View</h3>
+                    <img src={product.image_url} />
                 </div>
 
             </div>
@@ -624,6 +695,33 @@ var ProductMainPane=React.createClass({
         );
     }
 });
+var PartOption=React.createClass(
+    {
+
+        render: function()
+        {
+            var part=this.props.part;
+            return(
+                <option value={part.id}>{part.part_number}:{part.description} </option>
+            );
+        }
+    });
+
+var SingleBomItem=React.createClass(
+    {
+
+        render:function(){
+            var bi=this.props.bi;
+            var part = bi.part;
+            return(
+                <tr><td>{part.part_number}</td><td>{part.description}</td><td>{bi.quantity}</td>
+                    <td><button className="btn btn-primary">Edit</button></td><td><button className="btn btn-primary">Delete</button></td></tr>
+            );
+        }
+    }
+);
+
+
 
 var PartMainPane=React.createClass({
     render:function(){

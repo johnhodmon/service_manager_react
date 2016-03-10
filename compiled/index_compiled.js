@@ -2,7 +2,7 @@
 var products=require('./ProductData.js').products;
 var customers= [
     {
-        id:1,
+        id:0,
         name:'Stella Byrne',
         email:'stellabyrne@jmail.com',
         street: "2 south street",
@@ -26,7 +26,7 @@ var customers= [
     },
 
     {
-        id:2,
+        id:1,
         name:'Roy Murphy',
         email:'roymurphy@jmail.com',
 
@@ -44,7 +44,7 @@ var customers= [
         ]
     },
     {
-        id:3,
+        id:2,
         name:'Ciaran Meaney',
         email:'ciaranmeaney@jmail.com',
 
@@ -69,7 +69,7 @@ var customers= [
         ]
     },
     {
-        id:4,
+        id:3,
         name:'Rie Nolan',
         email:'roynolan@jmail.com',
 
@@ -89,7 +89,7 @@ var customers= [
         ]
     },
     {
-        id:5,
+        id:4,
         name:'Mary Hennessey',
         email:'mhennessey@jmail.com',
 
@@ -110,7 +110,7 @@ var customers= [
 
     },
     {
-        id:6,
+        id:5,
         name: 'Olly Murphy',
         email: 'omurphy@jmail.com',
         street: "Beach View",
@@ -146,7 +146,7 @@ var jobs=
 
 
     {
-        id:1,
+        id:0,
         reported_fault:"Oven not working",
         status:'allocated',
         date:'1st Feb 2016',
@@ -161,7 +161,7 @@ var jobs=
         ]
     },
     {
-        id:2,
+        id:1,
         reported_fault:"Grill not working",
         status:'unallocated',
         date:'1st Feb 2016',
@@ -169,7 +169,7 @@ var jobs=
         customerProduct:customers[0].customerProducts[0]
     },
     {
-        id:3,
+        id:2,
         reported_fault:"Noise from machine",
         status:'allocated',
         date:'2nd Feb 2016',
@@ -183,7 +183,7 @@ var jobs=
             ]
     },
     {
-        id:4,
+        id:3,
         reported_fault:"Machine will not turn on",
         status:'allocated',
         date:'2nd Feb 2016',
@@ -255,7 +255,7 @@ exports.jobs=jobs;
 
 },{"./CustomerData.js":1,"./PartData.js":4}],3:[function(require,module,exports){
 var manufacturers=[
-    { id:1,
+    { id:0,
         name:" Beko",
         street:"1 Greenhill Crescent",
         town:"Watford",
@@ -264,7 +264,7 @@ var manufacturers=[
         phone:"00448009172018",
         email:"info@beko.com"},
 
-    { id:2,
+    { id:1,
         name:"Electrolux",
         street:"Unit 4 Whitemill Industrial Est.",
         town:"Wexford",
@@ -273,7 +273,7 @@ var manufacturers=[
         phone:"0053539126300",
         email:"info@electrolux.com"},
 
-    { id:3,
+    { id:2,
         name:" Belling",
         street:"Stoney Lane",
         town:"Prescot ",
@@ -282,7 +282,7 @@ var manufacturers=[
         phone:"00443448153746",
         email:"info@belling.com"},
 
-    { id:4,
+    { id:3,
         name:" Indesit",
         street:"Morley Way,",
         town:"Peterborough",
@@ -291,7 +291,7 @@ var manufacturers=[
         phone:"00441733568989",
         email:"info@beko.com"},
 
-    { id:5,
+    { id:4,
         name:" Hotpoint",
         street:"25 Kenley Crescent",
         town:"Cork",
@@ -300,7 +300,7 @@ var manufacturers=[
         phone:"003532155987552",
         email:"info@hotpoint.ie"},
 
-    { id:6,
+    { id:5,
         name:"Bosch",
         street:"Postfach 30 02 40",
         town:"Stuttgart",
@@ -670,10 +670,46 @@ var manufacturers=require('./ManufacturerData').manufacturers;
 var products=[
 
     {
-        id:1,
+        id:0,
         manufacturer:manufacturers[0],
         product_number:'HCK1489',
         description:'Cooker, free standing, 60 CM, Electric',
+        image_url:"/img/beko_cooker.jpg",
+        bom:[
+            {
+                part:parts[27],
+                quantity:"2"
+            },
+            {
+                part:parts[31],
+                quantity:"2"
+            },
+            {
+                part:parts[35],
+                quantity:"1"
+            },
+            {
+                part:parts[39],
+                quantity:"1"
+            },
+            {
+                part:parts[43],
+                quantity:"1"
+            },
+            {
+                part:parts[47],
+                quantity:"1"
+            }
+
+        ]
+    },
+
+    {
+        id:1,
+        manufacturer:manufacturers[1],
+        product_number:'ECK6461',
+        description:'Cooker, free standing, 60 CM, Electric',
+        image_url:"/img/electrolux_cooker.png",
         bom:[
             {
                 part:parts[25],
@@ -702,12 +738,12 @@ var products=[
 
         ]
     },
-
     {
         id:2,
-        manufacturer:manufacturers[1],
-        product_number:'ECK6461',
-        description:'Cooker, free standing, 60 CM, Electric',
+        manufacturer:manufacturers[2],
+        product_number:'FSE60DOBLK',
+        description:'Cooker, double oven, electric',
+        image_url:"/img/belling_cooker.png",
         bom:[
             {
                 part:parts[26],
@@ -738,42 +774,10 @@ var products=[
     },
     {
         id:3,
-        manufacturer:manufacturers[2],
-        product_number:'FSE60DOBLK',
-        description:'Cooker, double oven, electric',
-        bom:[
-            {
-                part:parts[27],
-                quantity:"2"
-            },
-            {
-                part:parts[31],
-                quantity:"2"
-            },
-            {
-                part:parts[35],
-                quantity:"1"
-            },
-            {
-                part:parts[39],
-                quantity:"1"
-            },
-            {
-                part:parts[43],
-                quantity:"1"
-            },
-            {
-                part:parts[47],
-                quantity:"1"
-            }
-
-        ]
-    },
-    {
-        id:4,
-        manufacturer:manufacturers[3],
+        manufacturer:manufacturers[4],
         product_number:'BSVC563AK',
         description:'Cooker, double oven, electric',
+        image_url:"/img/hotpoint_cooker.png",
         bom:[
             {
                 part:parts[28],
@@ -804,43 +808,45 @@ var products=[
     },
 
     {
-        id:5,
+        id:4,
         manufacturer:manufacturers[4],
         product_number:'IWSD61251',
         description:'Washing machine, 6KG, A+',
+        image_url:"/img/hotpoint_machine.png",
         bom:[
             {
-                part:parts[0],
+                part:parts[2],
                 quantity:"1"
             },
             {
-                part:parts[4],
+                part:parts[6],
                 quantity:"1"
             },
             {
-                part:parts[8],
+                part:parts[10],
                 quantity:"1"
             },
             {
-                part:parts[12],
+                part:parts[14],
                 quantity:"1"
             },
             {
-                part:parts[16],
+                part:parts[18],
                 quantity:"1"
             },
             {
-                part:parts[20],
+                part:parts[22],
                 quantity:"1"
             }
 
         ]
     },
     {
-        id:6,
+        id:5,
         manufacturer:manufacturers[5],
         product_number:'WAT24460GB',
         description:'Washing machine, 8KG',
+        image_url:"/img/bosch_machine.png",
         bom:[
             {
                 part:parts[1],
@@ -870,33 +876,34 @@ var products=[
         ]
     },
     {
-        id:7,
-        manufacturer:manufacturers[4],
+        id:6,
+        manufacturer:manufacturers[3],
         product_number:'WMBF944G',
         description:'Washing machine, 9KG, A+++, 1400 Spin',
+        image_url:"/img/indesit_machine.png",
         bom:[
             {
-                part:parts[2],
+                part:parts[0],
                 quantity:"1"
             },
             {
-                part:parts[6],
+                part:parts[4],
                 quantity:"1"
             },
             {
-                part:parts[10],
+                part:parts[8],
                 quantity:"1"
             },
             {
-                part:parts[14],
+                part:parts[12],
                 quantity:"1"
             },
             {
-                part:parts[18],
+                part:parts[16],
                 quantity:"1"
             },
             {
-                part:parts[22],
+                part:parts[20],
                 quantity:"1"
             }
 
@@ -904,10 +911,11 @@ var products=[
     },
 
     {
-        id:8,
+        id:7,
         manufacturer:manufacturers[0],
         product_number:'WMG 11464',
         description:'Washing Machine, 11KG, 1400 Spin',
+        image_url:"/img/beko_machine.png",
         bom:[
             {
                 part:parts[3],
@@ -30994,12 +31002,17 @@ var ProductPage=React.createClass(
     {displayName: "ProductPage",
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 React.createElement("div", {className: "container-fluid"}, 
 
                     React.createElement(Navbar, {activeTab: "products"}), 
 
-                    React.createElement(ProductPageContent, {activeId: this.props.params.id, products: products})
+                    React.createElement(ProductPageContent, {activeId: id, products: products})
                 )
 
 
@@ -31122,7 +31135,7 @@ var ProductPageContent=React.createClass({displayName: "ProductPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(ProductMainPane, null)
+                    React.createElement(ProductMainPane, {activeId: this.props.activeId, products: this.props.products})
                 )
 
             )
@@ -31501,23 +31514,89 @@ var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct
 
 var ProductMainPane=React.createClass({displayName: "ProductMainPane",
     render:function(){
+        var products=this.props.products;
+        var product=products[this.props.activeId];
+        var manufacturer=product.manufacturer;
+
+        var partOptions=parts.map(function(part,index){
+            return React.createElement(PartOption, {part: part})
+        });
+        var bom=product.bom.map(function(bi,index)
+            {
+                return(React.createElement(SingleBomItem, {bi: bi}));
+            }
+
+        );
         return(
             React.createElement("div", null, 
-                React.createElement("div", {className: "col-md-3"}, 
-                    "Manufacturer details here"
-
-                ), 
-                React.createElement("div", {className: "col-md-6"}, 
-                    "Part List Here"
-
-                ), 
-                React.createElement("div", {className: "col-md-3"}, 
-                 React.createElement("div", null, 
-                 "Product Details here"
+                React.createElement("div", {className: "col-md-8"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "Manufacturer Details")), 
+                    React.createElement("p", null, 
+                        manufacturer.name, React.createElement("br", null), 
+                        manufacturer.street, React.createElement("br", null), 
+                         manufacturer.town, React.createElement("br", null), 
+                        manufacturer.county, React.createElement("br", null), 
+                        manufacturer.phone, React.createElement("br", null), 
+                        manufacturer.email, React.createElement("br", null)
                     ), 
-                    React.createElement("div", null, 
-                "Product diagram here"
+
+
+
+
+
+                    React.createElement("h3", null, React.createElement("strong", null, "Bill of Material")), 
+                    React.createElement("p", null, "The customer has no registered products"), 
+                    React.createElement("table", {className: "table table-striped"}, 
+                        React.createElement("thead", null, 
+
+                        React.createElement("tr", null, React.createElement("th", null, "Part Number"), React.createElement("th", null, "Description"), React.createElement("th", null, "Quantity"), " ")
+
+                        ), 
+
+                        React.createElement("tbody", null, 
+                        bom
+
+
                         )
+                    ), 
+                    React.createElement("h3", null, React.createElement("strong", null, "Add Part to Bill of Material")), 
+                    React.createElement("form", null, 
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("label", {for: "productNumber"}, "Product"), 
+                            React.createElement("select", null, 
+                                partOptions
+                            )
+                        ), 
+
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("label", {for: "quantity"}, "Quantity"), 
+                            React.createElement("select", null, 
+                                React.createElement("option", {value: "1"}, "1"), 
+                                React.createElement("option", {value: "2"}, "2"), 
+                                React.createElement("option", {value: "3"}, "3"), 
+                                React.createElement("option", {value: "4"}, "4"), 
+                                React.createElement("option", {value: "5"}, "5"), 
+                                React.createElement("option", {value: "6"}, "6"), 
+                                React.createElement("option", {value: "7"}, "7"), 
+                                React.createElement("option", {value: "8"}, "8"), 
+                                React.createElement("option", {value: "9"}, "9"), 
+                                React.createElement("option", {value: "10"}, "10")
+                            )
+                        ), 
+                        React.createElement("input", {type: "button", className: "btn btn-primary", action: "submit", value: "Add"})
+                    )
+                ), 
+
+                React.createElement("div", {className: "col-md-4"}, 
+                React.createElement("h3", null, "Product Details"), 
+                    React.createElement("p", null, 
+                        manufacturer.name, " ", product.product_number, React.createElement("br", null), 
+                        product.description, React.createElement("br", null)
+
+                    ), 
+
+                    React.createElement("h3", null, "Exploded View"), 
+                    React.createElement("img", {src: product.image_url})
                 )
 
             )
@@ -31525,6 +31604,33 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
         );
     }
 });
+var PartOption=React.createClass(
+    {displayName: "PartOption",
+
+        render: function()
+        {
+            var part=this.props.part;
+            return(
+                React.createElement("option", {value: part.id}, part.part_number, ":", part.description, " ")
+            );
+        }
+    });
+
+var SingleBomItem=React.createClass(
+    {displayName: "SingleBomItem",
+
+        render:function(){
+            var bi=this.props.bi;
+            var part = bi.part;
+            return(
+                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), React.createElement("td", null, bi.quantity), 
+                    React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Edit")), React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Delete")))
+            );
+        }
+    }
+);
+
+
 
 var PartMainPane=React.createClass({displayName: "PartMainPane",
     render:function(){
