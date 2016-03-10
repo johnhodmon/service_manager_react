@@ -30969,12 +30969,17 @@ var CustomerPage=React.createClass(
     {displayName: "CustomerPage",
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 React.createElement("div", {className: "container-fluid"}, 
 
                     React.createElement(Navbar, {activeTab: "customers"}), 
 
-                    React.createElement(CustomerPageContent, {activeId: this.props.params.id, customers: customers})
+                    React.createElement(CustomerPageContent, {activeId: id, customers: customers})
                 )
 
 
@@ -31098,7 +31103,7 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(CustomerMainPane, null)
+                    React.createElement(CustomerMainPane, {activeId: this.props.activeId, customers: this.props.customers})
                 )
 
             )
@@ -31388,16 +31393,74 @@ var SingleJobPart=React.createClass(
 
 var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
     render:function(){
+        var customers=this.props.customers;
+        var customer=customers[this.props.activeId];
+        var productOptions=products.map(function(product,index){
+            return React.createElement(ProductOption, {product: product})
+        });
+        var customerProducts=customer.customerProducts.map(function(sp,index)
+        {
+            return(React.createElement(SingleCustomerProduct, {sp: sp}));
+        }
+
+        );
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "col-md-3"}, 
-                    "Customer details here"
+                    React.createElement("h3", null, React.createElement("strong", null, "Customer Details")), 
+                    React.createElement("p", null, 
+                        customer.name, React.createElement("br", null), 
+                        customer.street, React.createElement("br", null), 
+                         customer.town, React.createElement("br", null), 
+                        customer.county, React.createElement("br", null), 
+                        customer.phone, React.createElement("br", null), 
+                        customer.email, React.createElement("br", null)
+                    )
 
                 ), 
                 React.createElement("div", {className: "col-md-6"}, 
                     "Previous Jobs Here", 
-                    React.createElement("div", null, 
-                        "Customer Products Here"
+
+                    React.createElement("h3", null, React.createElement("strong", null, "Customer's Products")), 
+                    React.createElement("p", null, "The customer has no registered products"), 
+                    React.createElement("table", {className: "table table-striped"}, 
+                        React.createElement("thead", null, 
+
+                        React.createElement("tr", null, React.createElement("th", null, "Manufacturer"), React.createElement("th", null, "Model Number"), React.createElement("th", null, "Serial Number"), " ", React.createElement("th", null, "Description"))
+
+                        ), 
+
+                        React.createElement("tbody", null, 
+                        customerProducts
+
+
+                        )
+                    ), 
+                    React.createElement("h3", null, React.createElement("strong", null, "Register product for this customer")), 
+                    React.createElement("form", null, 
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("label", {for: "productNumber"}, "Product"), 
+                            React.createElement("select", null, 
+                                productOptions
+                            )
+                        ), 
+
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("label", {for: "quantity"}, "Quantity"), 
+                            React.createElement("select", null, 
+                                React.createElement("option", {value: "1"}, "1"), 
+                                React.createElement("option", {value: "2"}, "2"), 
+                                React.createElement("option", {value: "3"}, "3"), 
+                                React.createElement("option", {value: "4"}, "4"), 
+                                React.createElement("option", {value: "5"}, "5"), 
+                                React.createElement("option", {value: "6"}, "6"), 
+                                React.createElement("option", {value: "7"}, "7"), 
+                                React.createElement("option", {value: "8"}, "8"), 
+                                React.createElement("option", {value: "9"}, "9"), 
+                                React.createElement("option", {value: "10"}, "10")
+                            )
+                        ), 
+                        React.createElement("input", {type: "button", className: "btn btn-primary", action: "submit", value: "Add"})
                     )
                 ), 
                 React.createElement("div", {className: "col-md-3"}
@@ -31409,6 +31472,32 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
         );
     }
 });
+
+var ProductOption=React.createClass({displayName: "ProductOption",
+    render:function(){
+
+        var product=this.props.product;
+        return(React.createElement("option", {value: product.id}, product.manufacturer.name, " ", product.product_number, " ", product.description.split(",")[0])
+
+        );
+    }
+
+});
+
+var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct",
+
+    render:function()
+    {
+        var sp=this.props.sp;
+        return(
+            React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, sp.product.product_number), 
+                React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description))
+
+        );
+    }
+
+}
+);
 
 var ProductMainPane=React.createClass({displayName: "ProductMainPane",
     render:function(){

@@ -68,12 +68,17 @@ var CustomerPage=React.createClass(
     {
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 <div className="container-fluid">
 
                     <Navbar activeTab="customers" />
 
-                    <CustomerPageContent activeId={this.props.params.id} customers={customers}  />
+                    <CustomerPageContent activeId={id} customers={customers}  />
                 </div>
 
 
@@ -197,7 +202,7 @@ var CustomerPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <CustomerMainPane/>
+                    <CustomerMainPane activeId={this.props.activeId} customers={this.props.customers}/>
                 </div>
 
             </div>
@@ -487,17 +492,75 @@ var SingleJobPart=React.createClass(
 
 var CustomerMainPane=React.createClass({
     render:function(){
+        var customers=this.props.customers;
+        var customer=customers[this.props.activeId];
+        var productOptions=products.map(function(product,index){
+            return <ProductOption product={product} />
+        });
+        var customerProducts=customer.customerProducts.map(function(sp,index)
+        {
+            return(<SingleCustomerProduct sp={sp} />);
+        }
+
+        );
         return(
             <div>
                 <div className="col-md-3">
-                    Customer details here
+                    <h3><strong>Customer Details</strong></h3>
+                    <p>
+                        {customer.name}<br/>
+                        {customer.street}<br/>
+                        { customer.town}<br/>
+                        {customer.county}<br/>
+                        {customer.phone}<br/>
+                        {customer.email}<br/>
+                    </p>
 
                 </div>
                 <div className="col-md-6">
                     Previous Jobs Here
-                    <div>
-                        Customer Products Here
-                    </div>
+
+                    <h3><strong>Customer's Products</strong></h3>
+                    <p>The customer has no registered products</p>
+                    <table className="table table-striped">
+                        <thead>
+
+                        <tr><th>Manufacturer</th><th>Model Number</th><th>Serial Number</th> <th>Description</th></tr>
+
+                        </thead>
+
+                        <tbody>
+                        {customerProducts}
+
+
+                        </tbody>
+                    </table>
+                    <h3><strong>Register product for this customer</strong></h3>
+                    <form>
+                        <div className="form-group">
+                            <label for="productNumber">Product</label>
+                            <select>
+                                {productOptions}
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label for="quantity" >Quantity</label>
+                            <select>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <input type="button" className="btn btn-primary" action="submit" value="Add"/>
+                    </form>
                 </div>
                 <div className="col-md-3">
 
@@ -508,6 +571,32 @@ var CustomerMainPane=React.createClass({
         );
     }
 });
+
+var ProductOption=React.createClass({
+    render:function(){
+
+        var product=this.props.product;
+        return(<option value={product.id}>{product.manufacturer.name} {product.product_number} {product.description.split(",")[0]}</option>
+
+        );
+    }
+
+});
+
+var SingleCustomerProduct=React.createClass({
+
+    render:function()
+    {
+        var sp=this.props.sp;
+        return(
+            <tr><td>{sp.product.manufacturer.name}</td><td>{sp.product.product_number}</td>
+                <td>{sp.serialNumber}</td><td>{sp.product.description}</td></tr>
+
+        );
+    }
+
+}
+);
 
 var ProductMainPane=React.createClass({
     render:function(){
