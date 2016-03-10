@@ -118,12 +118,17 @@ var PartPage=React.createClass(
     {
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 <div className="container-fluid">
 
                     <Navbar activeTab="parts" />
 
-                    <PartPageContent activeId={this.props.params.id} parts={parts}  />
+                    <PartPageContent activeId={id} parts={parts}  />
                 </div>
 
 
@@ -244,7 +249,7 @@ var PartPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <PartMainPane/>
+                    <PartMainPane activeId={this.props.activeId} parts={this.props.parts}/>
                 </div>
 
             </div>
@@ -725,16 +730,32 @@ var SingleBomItem=React.createClass(
 
 var PartMainPane=React.createClass({
     render:function(){
+        var parts=this.props.parts;
+        var part=parts[this.props.activeId]
         return(
+
             <div>
                 <div className="col-md-3">
-                    Part details here
+                    <h3><strong>Part Details</strong></h3>
+                    <p>
+                        {part.part_number}<br/>
+                        {part.part_number}<br/>
+                        {part.cost}<br/>
+                        {part.quantity_in_stock}<br/>
+
+                    </p>
                 </div>
                 <div className="col-md-6">
-                    Where used here
+                    <h3><strong>Products Where Used</strong></h3>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr><th>Product Name</th><th>Description</th><th>quantity</th></tr>
+                        </thead>
+                        <tbody><tr><td>Data</td><td>data</td><td>data</td></tr></tbody>
+                        </table>
                 </div>
                 <div className="col-md-3">
-                    History here
+                    <h3><strong>History</strong></h3>
                 </div>
 
             </div>

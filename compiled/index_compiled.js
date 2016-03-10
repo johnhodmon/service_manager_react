@@ -31027,12 +31027,17 @@ var PartPage=React.createClass(
     {displayName: "PartPage",
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 React.createElement("div", {className: "container-fluid"}, 
 
                     React.createElement(Navbar, {activeTab: "parts"}), 
 
-                    React.createElement(PartPageContent, {activeId: this.props.params.id, parts: parts})
+                    React.createElement(PartPageContent, {activeId: id, parts: parts})
                 )
 
 
@@ -31153,7 +31158,7 @@ var PartPageContent=React.createClass({displayName: "PartPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(PartMainPane, null)
+                    React.createElement(PartMainPane, {activeId: this.props.activeId, parts: this.props.parts})
                 )
 
             )
@@ -31634,16 +31639,32 @@ var SingleBomItem=React.createClass(
 
 var PartMainPane=React.createClass({displayName: "PartMainPane",
     render:function(){
+        var parts=this.props.parts;
+        var part=parts[this.props.activeId]
         return(
+
             React.createElement("div", null, 
                 React.createElement("div", {className: "col-md-3"}, 
-                    "Part details here"
+                    React.createElement("h3", null, React.createElement("strong", null, "Part Details")), 
+                    React.createElement("p", null, 
+                        part.part_number, React.createElement("br", null), 
+                        part.part_number, React.createElement("br", null), 
+                        part.cost, React.createElement("br", null), 
+                        part.quantity_in_stock, React.createElement("br", null)
+
+                    )
                 ), 
                 React.createElement("div", {className: "col-md-6"}, 
-                    "Where used here"
+                    React.createElement("h3", null, React.createElement("strong", null, "Products Where Used")), 
+                    React.createElement("table", {className: "table table-striped"}, 
+                        React.createElement("thead", null, 
+                        React.createElement("tr", null, React.createElement("th", null, "Product Name"), React.createElement("th", null, "Description"), React.createElement("th", null, "quantity"))
+                        ), 
+                        React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", null, "Data"), React.createElement("td", null, "data"), React.createElement("td", null, "data")))
+                        )
                 ), 
                 React.createElement("div", {className: "col-md-3"}, 
-                    "History here"
+                    React.createElement("h3", null, React.createElement("strong", null, "History"))
                 )
 
             )
