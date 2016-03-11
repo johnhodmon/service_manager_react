@@ -184,17 +184,41 @@ var Navbar=React.createClass({
 
 
 var JobPageContent=React.createClass({
+
+
+getInitialState:function()
+{
+    var job=jobs[0];
+    if(job.jobParts!=null) {
+        return ({partsUsedVisibility: "invisible"});
+    }
+
+    return ({partsUsedVisibility: ""});
+
+},
+
+    setPartsUsedVisibility:function(job)
+    {
+        if(job.jobParts!=null) {
+            this.setState({partsUsedVisibility: "invisible"});
+        }
+        else {
+            this.setState({partsUsedVisibility: ""});
+        }
+
+    },
+
     render:function()
     {
 
         return(
             <div className="row">
                 <div className="col-md-2 side-pane">
-                    <JobSideBar activeId={this.props.activeId} jobs={this.props.jobs}/>
+                    <JobSideBar  setPartsUsedVisibility={this.setPartsUsedVisibility} activeId={this.props.activeId} jobs={this.props.jobs}/>
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <JobMainPane activeId={this.props.activeId} jobs={this.props.jobs} parts={this.props.parts}/>
+                    <JobMainPane partsUsedVisibility={this.state.partsUsedVisibility}  activeId={this.props.activeId} jobs={this.props.jobs} parts={this.props.parts}/>
                 </div>
 
             </div>
@@ -282,8 +306,15 @@ var JobSideBar=React.createClass({
         this.setState({ sortBy:value})
     },
 
+   setPartsUsedVisibility:function(job)
+   {
+
+       this.props.setPartsUsedVisibility(job);
+   },
+
     render:function(){
         var jobs=this.props.jobs;
+
         var list=jobs.filter(function(job){
             return job.customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
         }.bind(this));
@@ -298,7 +329,7 @@ var JobSideBar=React.createClass({
                 </div>
                 <div className="row">
 
-            <JobList activeId={this.props.activeId} jobs={sortedList}/>
+            <JobList  setPartsUsedVisibility={this.setPartsUsedVisibility} activeId={this.props.activeId} jobs={sortedList}/>
             </div>
                 </div>
 
@@ -363,9 +394,44 @@ var PartSideBar=React.createClass({
 
 
 var JobMainPane=React.createClass({
+
+    getInitialState: function()
+    {
+        var jobToShow=jobs[this.props.activeId];
+        var product=jobToShow.customerProduct.product;
+        return{visibility:"invisible"
+
+        };
+    },
+
+
+
+    setPartNumber:function(e)
+    {
+        e.preventDefault();
+        this.setState({partNumber:e.target.value})
+    },
+
+    makeVisible:function(e)
+    {
+        e.preventDefault();
+        this.setState({visibility:"" })
+    },
+
+    save:function(e)
+    {
+        e.preventDefault();
+        this.setState({visibility:"invisible" })
+    },
+
+    undo:function(e)
+    {
+        e.preventDefault();
+        this.setState({visibility:"invisible" })
+    },
     render:function(){
         var jobs=this.props.jobs;
-        console.log("activeId"+this.props.activeId);
+        var partsUsedVisibility=this.props.partsUsedVisibility;
         var jobToShow=jobs[this.props.activeId];
         var customer=jobToShow.customer;
         var customerProduct=jobToShow.customerProduct;
@@ -373,13 +439,12 @@ var JobMainPane=React.createClass({
         var jobParts=[];
         var parts=this.props.parts;
 
-
         if(jobToShow.jobParts!=null)
         {
             jobParts=jobToShow.jobParts.map(function(jp,index)
         {
-            return <SingleJobPart jobPart={jp} index={index} />
-        });
+            return <SingleJobPart jobPart={jp} index={index} makeVisible={this.makeVisible}  />
+        }.bind(this));
         }
 
      var selectOptions=product.bom.map(function(bomItem,index){
@@ -415,7 +480,7 @@ var JobMainPane=React.createClass({
 
 
                     <h3><strong>Parts Used</strong></h3>
-                    <p>There were no parts used on this job</p>
+
                         <table className="table table-striped">
                             <thead>
 
@@ -424,37 +489,29 @@ var JobMainPane=React.createClass({
                             </thead>
 
                             <tbody>
+                            <tr className={partsUsedVisibility}><td></td><td>There were no parts used on this job</td><td> Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                             {jobParts}
-
+                            <tr className={this.state.visibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumber}>{selectOptions}</select></td>
+                                <td>
+                                    <select>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <span onClick={this.undo} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                    Cancel <span onClick={this.save} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                </td></tr>
 
                             </tbody>
                             </table>
-                    <h3><strong>Add part used</strong></h3>
-                        <form>
-                            <div className="form-group">
-                                <label for="partNumber">Part Number</label>
-                            <select>
-                                {selectOptions}
-                            </select>
-                                </div>
 
-                            <div className="form-group">
-                                <label for="quantity" >Quantity</label>
-                            <select>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                </select>
-                            </div>
-                            <input type="button" className="btn btn-sm btn-primary" action="submit" value="Add"/>
-                        </form>
 
                     </div>
 
@@ -482,11 +539,13 @@ var JobMainPane=React.createClass({
 var SelectOption=React.createClass(
     {
 
+
        render: function()
        {
            var bomItem=this.props.bomItem;
+
            return(
-               <option value={bomItem.part.part_number}>{bomItem.part.part_number}:{bomItem.part.description} </option>
+               <option value={bomItem.part.part_number}>{bomItem.part.description} </option>
            );
        }
     });
@@ -497,9 +556,16 @@ var SingleJobPart=React.createClass(
         render:function(){
             var jobPart=this.props.jobPart;
             var part = jobPart.part;
+            var makeVisible=this.props.makeVisible;
             return(
-                <tr><td>{part.part_number}</td><td>{part.description}</td><td>{jobPart.quantity}</td>
-                    <td><button className="btn btn-sm btn-primary">Edit</button></td><td><button className="btn btn-sm btn-primary">Delete</button></td></tr>
+                <tr><td>{part.part_number}</td><td>{part.description}</td>
+                    <td>{jobPart.quantity}
+                    <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        Add Part  <span onClick={makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                    </td>
+
+                </tr>
             );
         }
     }
@@ -868,12 +934,16 @@ var PartSearchbox=React.createClass({
 var JobList=React.createClass(
     {
 
+        setPartsUsedVisibility:function(job)
+        {
+
+            this.props.setPartsUsedVisibility(job);
+        },
         render:function()
         {
 
-
             var jobsToDisplay = this.props.jobs.map(function(job,index) {
-                return <SingleJob activeId={this.props.activeId}  job={job} key={index} />
+                return <SingleJob setPartsUsedVisibility={this.setPartsUsedVisibility} activeId={this.props.activeId}  job={job} key={index} />
             }.bind(this));
 
 
@@ -982,7 +1052,11 @@ var PartList=React.createClass(
 var SingleJob=React.createClass({
 
 
-
+    setPartsUsedVisibility:function()
+    {
+        var job=this.props.job;
+        this.props.setPartsUsedVisibility(job);
+    },
 
 
     render: function () {
@@ -990,7 +1064,7 @@ var SingleJob=React.createClass({
 
         return (
 
-            <li  className={(this.props.activeId === ""+job.id) ? "active" : ""} role="presentation" >
+            <li onClick={this.setPartsUsedVisibility} className={(this.props.activeId === ""+job.id) ? "active" : ""} role="presentation" >
 
 
                  <Link  to={"/jobs/"+job.id} ><h3>{job.date}</h3>

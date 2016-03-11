@@ -25,6 +25,16 @@ p
 
 }
 
+span
+{
+    margin: 12px;
+}
+
+.invisible
+{
+    display:none;
+}
+
 .top-nav-div
 {
     margin-top:22px;

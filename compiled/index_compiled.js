@@ -31092,17 +31092,41 @@ var Navbar=React.createClass({displayName: "Navbar",
 
 
 var JobPageContent=React.createClass({displayName: "JobPageContent",
+
+
+getInitialState:function()
+{
+    var job=jobs[0];
+    if(job.jobParts!=null) {
+        return ({partsUsedVisibility: "invisible"});
+    }
+
+    return ({partsUsedVisibility: ""});
+
+},
+
+    setPartsUsedVisibility:function(job)
+    {
+        if(job.jobParts!=null) {
+            this.setState({partsUsedVisibility: "invisible"});
+        }
+        else {
+            this.setState({partsUsedVisibility: ""});
+        }
+
+    },
+
     render:function()
     {
 
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(JobSideBar, {activeId: this.props.activeId, jobs: this.props.jobs})
+                    React.createElement(JobSideBar, {setPartsUsedVisibility: this.setPartsUsedVisibility, activeId: this.props.activeId, jobs: this.props.jobs})
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(JobMainPane, {activeId: this.props.activeId, jobs: this.props.jobs, parts: this.props.parts})
+                    React.createElement(JobMainPane, {partsUsedVisibility: this.state.partsUsedVisibility, activeId: this.props.activeId, jobs: this.props.jobs, parts: this.props.parts})
                 )
 
             )
@@ -31190,8 +31214,15 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
         this.setState({ sortBy:value})
     },
 
+   setPartsUsedVisibility:function(job)
+   {
+
+       this.props.setPartsUsedVisibility(job);
+   },
+
     render:function(){
         var jobs=this.props.jobs;
+
         var list=jobs.filter(function(job){
             return job.customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
         }.bind(this));
@@ -31206,7 +31237,7 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
                 ), 
                 React.createElement("div", {className: "row"}, 
 
-            React.createElement(JobList, {activeId: this.props.activeId, jobs: sortedList})
+            React.createElement(JobList, {setPartsUsedVisibility: this.setPartsUsedVisibility, activeId: this.props.activeId, jobs: sortedList})
             )
                 )
 
@@ -31216,51 +31247,16 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
 
 
 var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
-
-    getInitialState:function()
-    {
-        return(
-        {
-            searchBoxContent: "",
-            sortBy:""
-        }
-        );
-    },
-
-    setSearchText:function(value)
-    {
-        this.setState({ searchBoxContent:value})
-    },
-
-    setSortBy:function(value)
-    {
-        this.setState({ sortBy:value})
-    },
-
-
     render:function(){
-
-        var customers=this.props.customers;
-        var list=customers.filter(function(customer){
-            return customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
-        }.bind(this));
-
-        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
-
-
             React.createElement("div", null, 
 
                 React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(CustomerSearchbox, {setSortBy: this.setSortBy, setSearchText: this.setSearchText})
+                    React.createElement(CustomerSearchbox, null)
                 ), 
                 React.createElement("div", {className: "row"}, 
-<<<<<<< HEAD
-                    React.createElement(CustomerList, {activeId: this.props.activeId, customers: sortedList})
-=======
                     React.createElement("p", null, React.createElement(Link, {to: "customer/new"}, "New Customer +")), 
                     React.createElement(CustomerList, {activeId: this.props.activeId, customers: this.props.customers})
->>>>>>> static-components
                 )
             )
 
@@ -31269,43 +31265,15 @@ var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
 });
 
 var ProductSideBar=React.createClass({displayName: "ProductSideBar",
-
-    getInitialState:function()
-    {
-        return(
-        {
-            searchBoxContent: "",
-
-        }
-        );
-    },
-
-    setSearchText:function(value)
-    {
-        this.setState({ searchBoxContent:value})
-    },
-
-
-
     render:function(){
-        var products=this.props.products;
-        var list=products.filter(function(product){
-            return product.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
-        }.bind(this));
-
-        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(ProductSearchbox, {setSearchText: this.setSearchText})
+                    React.createElement(ProductSearchbox, null)
                 ), 
                 React.createElement("div", {className: "row"}, 
-<<<<<<< HEAD
-                    React.createElement(ProductList, {activeId: this.props.activeId, products: sortedList})
-=======
                     React.createElement("p", null, React.createElement(Link, {to: "product/new"}, "New Product +")), 
                     React.createElement(ProductList, {activeId: this.props.activeId, products: this.props.products})
->>>>>>> static-components
                 )
             )
 
@@ -31314,37 +31282,14 @@ var ProductSideBar=React.createClass({displayName: "ProductSideBar",
 });
 
 var PartSideBar=React.createClass({displayName: "PartSideBar",
-    getInitialState:function()
-    {
-        return(
-        {
-            searchBoxContent: "",
-
-        }
-        );
-    },
-
-    setSearchText:function(value)
-    {
-        this.setState({ searchBoxContent:value})
-
-    },
-
     render:function(){
-        console.log(this.state.searchBoxContent);
-        var parts=this.props.parts;
-        var list=parts.filter(function(part){
-            return part.part_number.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
-        }.bind(this));
-
-        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(PartSearchbox, {setSearchText: this.setSearchText})
+                    React.createElement(PartSearchbox, null)
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement(PartList, {activeId: this.props.activeId, parts: sortedList})
+                    React.createElement(PartList, {activeId: this.props.activeId, parts: this.props.parts})
                 )
             )
 
@@ -31357,9 +31302,44 @@ var PartSideBar=React.createClass({displayName: "PartSideBar",
 
 
 var JobMainPane=React.createClass({displayName: "JobMainPane",
+
+    getInitialState: function()
+    {
+        var jobToShow=jobs[this.props.activeId];
+        var product=jobToShow.customerProduct.product;
+        return{visibility:"invisible"
+
+        };
+    },
+
+
+
+    setPartNumber:function(e)
+    {
+        e.preventDefault();
+        this.setState({partNumber:e.target.value})
+    },
+
+    makeVisible:function(e)
+    {
+        e.preventDefault();
+        this.setState({visibility:"" })
+    },
+
+    save:function(e)
+    {
+        e.preventDefault();
+        this.setState({visibility:"invisible" })
+    },
+
+    undo:function(e)
+    {
+        e.preventDefault();
+        this.setState({visibility:"invisible" })
+    },
     render:function(){
         var jobs=this.props.jobs;
-        console.log("activeId"+this.props.activeId);
+        var partsUsedVisibility=this.props.partsUsedVisibility;
         var jobToShow=jobs[this.props.activeId];
         var customer=jobToShow.customer;
         var customerProduct=jobToShow.customerProduct;
@@ -31367,13 +31347,12 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
         var jobParts=[];
         var parts=this.props.parts;
 
-
         if(jobToShow.jobParts!=null)
         {
             jobParts=jobToShow.jobParts.map(function(jp,index)
         {
-            return React.createElement(SingleJobPart, {jobPart: jp, index: index})
-        });
+            return React.createElement(SingleJobPart, {jobPart: jp, index: index, makeVisible: this.makeVisible})
+        }.bind(this));
         }
 
      var selectOptions=product.bom.map(function(bomItem,index){
@@ -31409,7 +31388,7 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
 
 
                     React.createElement("h3", null, React.createElement("strong", null, "Parts Used")), 
-                    React.createElement("p", null, "There were no parts used on this job"), 
+
                         React.createElement("table", {className: "table table-striped"}, 
                             React.createElement("thead", null, 
 
@@ -31418,37 +31397,29 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
                             ), 
 
                             React.createElement("tbody", null, 
-                            jobParts
-
+                            React.createElement("tr", {className: partsUsedVisibility}, React.createElement("td", null), React.createElement("td", null, "There were no parts used on this job"), React.createElement("td", null, " Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
+                            jobParts, 
+                            React.createElement("tr", {className: this.state.visibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartNumber}, selectOptions)), 
+                                React.createElement("td", null, 
+                                    React.createElement("select", null, 
+                                        React.createElement("option", {value: "1"}, "1"), 
+                                        React.createElement("option", {value: "2"}, "2"), 
+                                        React.createElement("option", {value: "3"}, "3"), 
+                                        React.createElement("option", {value: "4"}, "4"), 
+                                        React.createElement("option", {value: "5"}, "5"), 
+                                        React.createElement("option", {value: "6"}, "6"), 
+                                        React.createElement("option", {value: "7"}, "7"), 
+                                        React.createElement("option", {value: "8"}, "8"), 
+                                        React.createElement("option", {value: "9"}, "9"), 
+                                        React.createElement("option", {value: "10"}, "10")
+                                    ), 
+                                    React.createElement("span", {onClick: this.undo, className: "glyphicon glyphicon-ok", "aria-hidden": "true"}), 
+                                    "Cancel ", React.createElement("span", {onClick: this.save, className: "glyphicon glyphicon-chevron-up", "aria-hidden": "true"})
+                                ))
 
                             )
-                            ), 
-                    React.createElement("h3", null, React.createElement("strong", null, "Add part used")), 
-                        React.createElement("form", null, 
-                            React.createElement("div", {className: "form-group"}, 
-                                React.createElement("label", {for: "partNumber"}, "Part Number"), 
-                            React.createElement("select", null, 
-                                selectOptions
                             )
-                                ), 
 
-                            React.createElement("div", {className: "form-group"}, 
-                                React.createElement("label", {for: "quantity"}, "Quantity"), 
-                            React.createElement("select", null, 
-                                React.createElement("option", {value: "1"}, "1"), 
-                                React.createElement("option", {value: "2"}, "2"), 
-                                React.createElement("option", {value: "3"}, "3"), 
-                                React.createElement("option", {value: "4"}, "4"), 
-                                React.createElement("option", {value: "5"}, "5"), 
-                                React.createElement("option", {value: "6"}, "6"), 
-                                React.createElement("option", {value: "7"}, "7"), 
-                                React.createElement("option", {value: "8"}, "8"), 
-                                React.createElement("option", {value: "9"}, "9"), 
-                                React.createElement("option", {value: "10"}, "10")
-                                )
-                            ), 
-                            React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
-                        )
 
                     ), 
 
@@ -31476,11 +31447,13 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
 var SelectOption=React.createClass(
     {displayName: "SelectOption",
 
+
        render: function()
        {
            var bomItem=this.props.bomItem;
+
            return(
-               React.createElement("option", {value: bomItem.part.part_number}, bomItem.part.part_number, ":", bomItem.part.description, " ")
+               React.createElement("option", {value: bomItem.part.part_number}, bomItem.part.description, " ")
            );
        }
     });
@@ -31491,9 +31464,16 @@ var SingleJobPart=React.createClass(
         render:function(){
             var jobPart=this.props.jobPart;
             var part = jobPart.part;
+            var makeVisible=this.props.makeVisible;
             return(
-                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), React.createElement("td", null, jobPart.quantity), 
-                    React.createElement("td", null, React.createElement("button", {className: "btn btn-sm btn-primary"}, "Edit")), React.createElement("td", null, React.createElement("button", {className: "btn btn-sm btn-primary"}, "Delete")))
+                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), 
+                    React.createElement("td", null, jobPart.quantity, 
+                    React.createElement("span", {className: "glyphicon glyphicon-pencil", "aria-hidden": "true"}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-trash", "aria-hidden": "true"}), 
+                        "Add Part  ", React.createElement("span", {onClick: makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"})
+                    )
+
+                )
             );
         }
     }
@@ -31761,14 +31741,14 @@ var JobSearchbox=React.createClass({displayName: "JobSearchbox",
     setSearchText:function(e)
     {
         e.preventDefault();
-
+        console.log("value: "+e.target.value);
         this.props.setSearchText(e.target.value);
     },
 
     setSortBy:function(e)
     {
         e.preventDefault();
-
+        console.log("sort: "+e.target.value);
         this.props.setSortBy(e.target.value);
     },
     render: function(){
@@ -31797,20 +31777,6 @@ var JobSearchbox=React.createClass({displayName: "JobSearchbox",
 });
 
 var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
-    setSearchText:function(e)
-    {
-        e.preventDefault();
-
-        this.props.setSearchText(e.target.value);
-    },
-
-    setSortBy:function(e)
-    {
-        e.preventDefault();
-
-        this.props.setSortBy(e.target.value);
-    },
-
     render: function(){
 
 
@@ -31819,13 +31785,13 @@ var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
 
             React.createElement("div", null, 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
+                    React.createElement("input", {type: "text", placeholder: "Search"})
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("select", {onChange: this.setSortBy, id: "sort"}, 
+                    React.createElement("select", {id: "sort"}, 
                         React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
-                        React.createElement("option", {value: "name"}, "Name"), 
-                        React.createElement("option", {value: "county"}, "County")
+                        React.createElement("option", {value: "name"}, "Date"), 
+                        React.createElement("option", {value: "customer"}, "Customer")
                     )
                 )
 
@@ -31836,15 +31802,6 @@ var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
 });
 
 var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
-
-    setSearchText:function(e)
-    {
-        e.preventDefault();
-
-        this.props.setSearchText(e.target.value);
-    },
-
-
     render: function(){
 
 
@@ -31853,7 +31810,7 @@ var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
 
 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
+                    React.createElement("input", {type: "text", placeholder: "Search"})
                 )
 
 
@@ -31864,15 +31821,6 @@ var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
 });
 
 var PartSearchbox=React.createClass({displayName: "PartSearchbox",
-
-    setSearchText:function(e)
-    {
-        e.preventDefault();
-
-        this.props.setSearchText(e.target.value);
-    },
-
-
     render: function(){
 
 
@@ -31881,7 +31829,7 @@ var PartSearchbox=React.createClass({displayName: "PartSearchbox",
 
 
             React.createElement("div", {className: "row"}, 
-                React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
+                React.createElement("input", {type: "text", placeholder: "Search"})
             )
 
 
@@ -31894,12 +31842,16 @@ var PartSearchbox=React.createClass({displayName: "PartSearchbox",
 var JobList=React.createClass(
     {displayName: "JobList",
 
+        setPartsUsedVisibility:function(job)
+        {
+
+            this.props.setPartsUsedVisibility(job);
+        },
         render:function()
         {
 
-
             var jobsToDisplay = this.props.jobs.map(function(job,index) {
-                return React.createElement(SingleJob, {activeId: this.props.activeId, job: job, key: index})
+                return React.createElement(SingleJob, {setPartsUsedVisibility: this.setPartsUsedVisibility, activeId: this.props.activeId, job: job, key: index})
             }.bind(this));
 
 
@@ -32008,7 +31960,11 @@ var PartList=React.createClass(
 var SingleJob=React.createClass({displayName: "SingleJob",
 
 
-
+    setPartsUsedVisibility:function()
+    {
+        var job=this.props.job;
+        this.props.setPartsUsedVisibility(job);
+    },
 
 
     render: function () {
@@ -32016,7 +31972,7 @@ var SingleJob=React.createClass({displayName: "SingleJob",
 
         return (
 
-            React.createElement("li", {className: (this.props.activeId === ""+job.id) ? "active" : "", role: "presentation"}, 
+            React.createElement("li", {onClick: this.setPartsUsedVisibility, className: (this.props.activeId === ""+job.id) ? "active" : "", role: "presentation"}, 
 
 
                  React.createElement(Link, {to: "/jobs/"+job.id}, React.createElement("h3", null, job.date), 
