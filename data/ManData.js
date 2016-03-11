@@ -1,5 +1,5 @@
 var manufacturers=[
-    { id:1,
+    { id:0,
         name:" Beko",
         street:"1 Greenhill Crescent",
         town:"Watford",
@@ -8,7 +8,7 @@ var manufacturers=[
         phone:"00448009172018",
         email:"info@beko.com"},
 
-    { id:2,
+    { id:1,
         name:"Electrolux",
         street:"Unit 4 Whitemill Industrial Est.",
         town:"Wexford",
@@ -17,7 +17,7 @@ var manufacturers=[
         phone:"0053539126300",
         email:"info@electrolux.com"},
 
-    { id:3,
+    { id:2,
         name:" Belling",
         street:"Stoney Lane",
         town:"Prescot ",
@@ -26,7 +26,7 @@ var manufacturers=[
         phone:"00443448153746",
         email:"info@belling.com"},
 
-    { id:4,
+    { id:3,
         name:" Indesit",
         street:"Morley Way,",
         town:"Peterborough",
@@ -35,7 +35,7 @@ var manufacturers=[
         phone:"00441733568989",
         email:"info@beko.com"},
 
-    { id:5,
+    { id:4,
         name:" Hotpoint",
         street:"25 Kenley Crescent",
         town:"Cork",
@@ -44,7 +44,7 @@ var manufacturers=[
         phone:"003532155987552",
         email:"info@hotpoint.ie"},
 
-    { id:6,
+    { id:5,
         name:"Bosch",
         street:"Postfach 30 02 40",
         town:"Stuttgart",

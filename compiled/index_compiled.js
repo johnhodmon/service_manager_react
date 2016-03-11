@@ -2,7 +2,7 @@
 var products=require('./ProductData.js').products;
 var customers= [
     {
-        id:1,
+        id:0,
         name:'Stella Byrne',
         email:'stellabyrne@jmail.com',
         street: "2 south street",
@@ -26,7 +26,7 @@ var customers= [
     },
 
     {
-        id:2,
+        id:1,
         name:'Roy Murphy',
         email:'roymurphy@jmail.com',
 
@@ -44,7 +44,7 @@ var customers= [
         ]
     },
     {
-        id:3,
+        id:2,
         name:'Ciaran Meaney',
         email:'ciaranmeaney@jmail.com',
 
@@ -69,7 +69,7 @@ var customers= [
         ]
     },
     {
-        id:4,
+        id:3,
         name:'Rie Nolan',
         email:'roynolan@jmail.com',
 
@@ -89,7 +89,7 @@ var customers= [
         ]
     },
     {
-        id:5,
+        id:4,
         name:'Mary Hennessey',
         email:'mhennessey@jmail.com',
 
@@ -110,7 +110,7 @@ var customers= [
 
     },
     {
-        id:6,
+        id:5,
         name: 'Olly Murphy',
         email: 'omurphy@jmail.com',
         street: "Beach View",
@@ -146,7 +146,7 @@ var jobs=
 
 
     {
-        id:1,
+        id:0,
         reported_fault:"Oven not working",
         status:'allocated',
         date:'1st Feb 2016',
@@ -161,7 +161,7 @@ var jobs=
         ]
     },
     {
-        id:2,
+        id:1,
         reported_fault:"Grill not working",
         status:'unallocated',
         date:'1st Feb 2016',
@@ -169,7 +169,7 @@ var jobs=
         customerProduct:customers[0].customerProducts[0]
     },
     {
-        id:3,
+        id:2,
         reported_fault:"Noise from machine",
         status:'allocated',
         date:'2nd Feb 2016',
@@ -183,7 +183,7 @@ var jobs=
             ]
     },
     {
-        id:4,
+        id:3,
         reported_fault:"Machine will not turn on",
         status:'allocated',
         date:'2nd Feb 2016',
@@ -255,7 +255,7 @@ exports.jobs=jobs;
 
 },{"./CustomerData.js":1,"./PartData.js":4}],3:[function(require,module,exports){
 var manufacturers=[
-    { id:1,
+    { id:0,
         name:" Beko",
         street:"1 Greenhill Crescent",
         town:"Watford",
@@ -264,7 +264,7 @@ var manufacturers=[
         phone:"00448009172018",
         email:"info@beko.com"},
 
-    { id:2,
+    { id:1,
         name:"Electrolux",
         street:"Unit 4 Whitemill Industrial Est.",
         town:"Wexford",
@@ -273,7 +273,7 @@ var manufacturers=[
         phone:"0053539126300",
         email:"info@electrolux.com"},
 
-    { id:3,
+    { id:2,
         name:" Belling",
         street:"Stoney Lane",
         town:"Prescot ",
@@ -282,7 +282,7 @@ var manufacturers=[
         phone:"00443448153746",
         email:"info@belling.com"},
 
-    { id:4,
+    { id:3,
         name:" Indesit",
         street:"Morley Way,",
         town:"Peterborough",
@@ -291,7 +291,7 @@ var manufacturers=[
         phone:"00441733568989",
         email:"info@beko.com"},
 
-    { id:5,
+    { id:4,
         name:" Hotpoint",
         street:"25 Kenley Crescent",
         town:"Cork",
@@ -300,7 +300,7 @@ var manufacturers=[
         phone:"003532155987552",
         email:"info@hotpoint.ie"},
 
-    { id:6,
+    { id:5,
         name:"Bosch",
         street:"Postfach 30 02 40",
         town:"Stuttgart",
@@ -311,7 +311,6 @@ var manufacturers=[
 
 ]
 exports.manufacturers=manufacturers;
-
 
 },{}],4:[function(require,module,exports){
 var parts= [
@@ -666,14 +665,50 @@ exports.parts=parts;
 
 },{}],5:[function(require,module,exports){
 var parts=require('./PartData.js').parts;
-var manufacturers=require('./ManufacturerData').manufacturers;
+var manufacturers=require('./ManData').manufacturers;
 var products=[
 
     {
-        id:1,
+        id:0,
         manufacturer:manufacturers[0],
         product_number:'HCK1489',
         description:'Cooker, free standing, 60 CM, Electric',
+        image_url:"/img/beko_cooker.jpg",
+        bom:[
+            {
+                part:parts[27],
+                quantity:"2"
+            },
+            {
+                part:parts[31],
+                quantity:"2"
+            },
+            {
+                part:parts[35],
+                quantity:"1"
+            },
+            {
+                part:parts[39],
+                quantity:"1"
+            },
+            {
+                part:parts[43],
+                quantity:"1"
+            },
+            {
+                part:parts[47],
+                quantity:"1"
+            }
+
+        ]
+    },
+
+    {
+        id:1,
+        manufacturer:manufacturers[1],
+        product_number:'ECK6461',
+        description:'Cooker, free standing, 60 CM, Electric',
+        image_url:"/img/electrolux_cooker.png",
         bom:[
             {
                 part:parts[25],
@@ -702,12 +737,12 @@ var products=[
 
         ]
     },
-
     {
         id:2,
-        manufacturer:manufacturers[1],
-        product_number:'ECK6461',
-        description:'Cooker, free standing, 60 CM, Electric',
+        manufacturer:manufacturers[2],
+        product_number:'FSE60DOBLK',
+        description:'Cooker, double oven, electric',
+        image_url:"/img/belling_cooker.png",
         bom:[
             {
                 part:parts[26],
@@ -738,42 +773,10 @@ var products=[
     },
     {
         id:3,
-        manufacturer:manufacturers[2],
-        product_number:'FSE60DOBLK',
-        description:'Cooker, double oven, electric',
-        bom:[
-            {
-                part:parts[27],
-                quantity:"2"
-            },
-            {
-                part:parts[31],
-                quantity:"2"
-            },
-            {
-                part:parts[35],
-                quantity:"1"
-            },
-            {
-                part:parts[39],
-                quantity:"1"
-            },
-            {
-                part:parts[43],
-                quantity:"1"
-            },
-            {
-                part:parts[47],
-                quantity:"1"
-            }
-
-        ]
-    },
-    {
-        id:4,
-        manufacturer:manufacturers[3],
+        manufacturer:manufacturers[4],
         product_number:'BSVC563AK',
         description:'Cooker, double oven, electric',
+        image_url:"/img/hotpoint_cooker.png",
         bom:[
             {
                 part:parts[28],
@@ -804,43 +807,45 @@ var products=[
     },
 
     {
-        id:5,
+        id:4,
         manufacturer:manufacturers[4],
         product_number:'IWSD61251',
         description:'Washing machine, 6KG, A+',
+        image_url:"/img/hotpoint_machine.png",
         bom:[
             {
-                part:parts[0],
+                part:parts[2],
                 quantity:"1"
             },
             {
-                part:parts[4],
+                part:parts[6],
                 quantity:"1"
             },
             {
-                part:parts[8],
+                part:parts[10],
                 quantity:"1"
             },
             {
-                part:parts[12],
+                part:parts[14],
                 quantity:"1"
             },
             {
-                part:parts[16],
+                part:parts[18],
                 quantity:"1"
             },
             {
-                part:parts[20],
+                part:parts[22],
                 quantity:"1"
             }
 
         ]
     },
     {
-        id:6,
+        id:5,
         manufacturer:manufacturers[5],
         product_number:'WAT24460GB',
         description:'Washing machine, 8KG',
+        image_url:"/img/bosch_machine.png",
         bom:[
             {
                 part:parts[1],
@@ -870,33 +875,34 @@ var products=[
         ]
     },
     {
-        id:7,
-        manufacturer:manufacturers[4],
+        id:6,
+        manufacturer:manufacturers[3],
         product_number:'WMBF944G',
         description:'Washing machine, 9KG, A+++, 1400 Spin',
+        image_url:"/img/indesit_machine.png",
         bom:[
             {
-                part:parts[2],
+                part:parts[0],
                 quantity:"1"
             },
             {
-                part:parts[6],
+                part:parts[4],
                 quantity:"1"
             },
             {
-                part:parts[10],
+                part:parts[8],
                 quantity:"1"
             },
             {
-                part:parts[14],
+                part:parts[12],
                 quantity:"1"
             },
             {
-                part:parts[18],
+                part:parts[16],
                 quantity:"1"
             },
             {
-                part:parts[22],
+                part:parts[20],
                 quantity:"1"
             }
 
@@ -904,10 +910,11 @@ var products=[
     },
 
     {
-        id:8,
+        id:7,
         manufacturer:manufacturers[0],
         product_number:'WMG 11464',
         description:'Washing Machine, 11KG, 1400 Spin',
+        image_url:"/img/beko_machine.png",
         bom:[
             {
                 part:parts[3],
@@ -940,7 +947,7 @@ var products=[
 
 exports.products=products;
 
-},{"./ManufacturerData":3,"./PartData.js":4}],6:[function(require,module,exports){
+},{"./ManData":3,"./PartData.js":4}],6:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -30905,6 +30912,7 @@ var jobs=require('../data/JobData.js').jobs;
 var customers=require('../data/CustomerData.js').customers;
 var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
+var manufacturers=require('../data/ManData.js').manufacturers;
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -30913,10 +30921,15 @@ var _=require('lodash');
 var IndexRoute = ReactRouter.IndexRoute;
 $(document).ready(function() {
 
-    var dynamic = $('.side-pane');
-    var static = $('.main-pane');
+    var side = $('.side-pane');
+    var main = $('.main-pane');
 
-    static.height(dynamic.height());
+
+        main.height(side.height());
+
+
+
+
 
 });
 
@@ -30939,12 +30952,18 @@ var JobPage=React.createClass(
     {displayName: "JobPage",
         render:function()
             {
+                var id=1;
+                if(this.props.params.id!=null)
+                {
+                    id=this.props.params.id;
+                }
+                console.log("params.id"+this.props.params.id);
                 return(
                    React.createElement("div", {className: "container-fluid"}, 
 
                    React.createElement(Navbar, {activeTab: "jobs"}), 
 
-                   React.createElement(JobPageContent, {activeId: this.props.params.id, jobs: jobs})
+                   React.createElement(JobPageContent, {activeId: id, jobs: jobs, parts: parts})
                    )
 
 
@@ -30958,12 +30977,17 @@ var CustomerPage=React.createClass(
     {displayName: "CustomerPage",
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 React.createElement("div", {className: "container-fluid"}, 
 
                     React.createElement(Navbar, {activeTab: "customers"}), 
 
-                    React.createElement(CustomerPageContent, {activeId: this.props.params.id, customers: customers})
+                    React.createElement(CustomerPageContent, {activeId: id, customers: customers})
                 )
 
 
@@ -30978,12 +31002,17 @@ var ProductPage=React.createClass(
     {displayName: "ProductPage",
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 React.createElement("div", {className: "container-fluid"}, 
 
                     React.createElement(Navbar, {activeTab: "products"}), 
 
-                    React.createElement(ProductPageContent, {activeId: this.props.params.id, products: products})
+                    React.createElement(ProductPageContent, {activeId: id, products: products})
                 )
 
 
@@ -30998,12 +31027,17 @@ var PartPage=React.createClass(
     {displayName: "PartPage",
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 React.createElement("div", {className: "container-fluid"}, 
 
                     React.createElement(Navbar, {activeTab: "parts"}), 
 
-                    React.createElement(PartPageContent, {activeId: this.props.params.id, parts: parts})
+                    React.createElement(PartPageContent, {activeId: id, parts: parts})
                 )
 
 
@@ -31031,10 +31065,10 @@ var Navbar=React.createClass({displayName: "Navbar",
                         ), 
                     React.createElement("div", {className: "col-md-10 top-nav-div"}, 
                         React.createElement("ul", {className: "nav  nav-tabs"}, 
-                            React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs/1", params: {id: 1}}, "Jobs")), 
-                            React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers/1"}, "Customers")), 
-                            React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products/1"}, "Products")), 
-                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts/1"}, "Stock Control")), 
+                            React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs/0", params: {id: 1}}, "Jobs")), 
+                            React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers/0"}, "Customers")), 
+                            React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products/0"}, "Products")), 
+                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts/0"}, "Stock Control")), 
                             React.createElement("li", {role: "presentation", className: "dropdown"}, 
                                 React.createElement("a", {className: "dropdown-toggle", "data-toggle": "dropdown", href: "#", role: "button", "aria-haspopup": "true", "aria-expanded": "false"}, 
                                     "John Hodmon", React.createElement("span", {className: "caret"})
@@ -31060,6 +31094,7 @@ var Navbar=React.createClass({displayName: "Navbar",
 var JobPageContent=React.createClass({displayName: "JobPageContent",
     render:function()
     {
+
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-2 side-pane"}, 
@@ -31067,7 +31102,7 @@ var JobPageContent=React.createClass({displayName: "JobPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(JobMainPane, null)
+                    React.createElement(JobMainPane, {activeId: this.props.activeId, jobs: this.props.jobs, parts: this.props.parts})
                 )
 
             )
@@ -31086,7 +31121,7 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(CustomerMainPane, null)
+                    React.createElement(CustomerMainPane, {activeId: this.props.activeId, customers: this.props.customers})
                 )
 
             )
@@ -31105,7 +31140,7 @@ var ProductPageContent=React.createClass({displayName: "ProductPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(ProductMainPane, null)
+                    React.createElement(ProductMainPane, {activeId: this.props.activeId, products: this.props.products})
                 )
 
             )
@@ -31123,7 +31158,7 @@ var PartPageContent=React.createClass({displayName: "PartPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(PartMainPane, null)
+                    React.createElement(PartMainPane, {activeId: this.props.activeId, parts: this.props.parts})
                 )
 
             )
@@ -31170,6 +31205,7 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
             React.createElement(JobSearchbox, {setSortBy: this.setSortBy, setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
+
             React.createElement(JobList, {activeId: this.props.activeId, jobs: sortedList})
             )
                 )
@@ -31214,11 +31250,17 @@ var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
 
 
             React.createElement("div", null, 
+
                 React.createElement("div", {className: "row search-box-div"}, 
                     React.createElement(CustomerSearchbox, {setSortBy: this.setSortBy, setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
+<<<<<<< HEAD
                     React.createElement(CustomerList, {activeId: this.props.activeId, customers: sortedList})
+=======
+                    React.createElement("p", null, React.createElement(Link, {to: "customer/new"}, "New Customer +")), 
+                    React.createElement(CustomerList, {activeId: this.props.activeId, customers: this.props.customers})
+>>>>>>> static-components
                 )
             )
 
@@ -31258,7 +31300,12 @@ var ProductSideBar=React.createClass({displayName: "ProductSideBar",
                     React.createElement(ProductSearchbox, {setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
+<<<<<<< HEAD
                     React.createElement(ProductList, {activeId: this.props.activeId, products: sortedList})
+=======
+                    React.createElement("p", null, React.createElement(Link, {to: "product/new"}, "New Product +")), 
+                    React.createElement(ProductList, {activeId: this.props.activeId, products: this.props.products})
+>>>>>>> static-components
                 )
             )
 
@@ -31311,36 +31358,208 @@ var PartSideBar=React.createClass({displayName: "PartSideBar",
 
 var JobMainPane=React.createClass({displayName: "JobMainPane",
     render:function(){
+        var jobs=this.props.jobs;
+        console.log("activeId"+this.props.activeId);
+        var jobToShow=jobs[this.props.activeId];
+        var customer=jobToShow.customer;
+        var customerProduct=jobToShow.customerProduct;
+        var product=jobToShow.customerProduct.product;
+        var jobParts=[];
+        var parts=this.props.parts;
+
+
+        if(jobToShow.jobParts!=null)
+        {
+            jobParts=jobToShow.jobParts.map(function(jp,index)
+        {
+            return React.createElement(SingleJobPart, {jobPart: jp, index: index})
+        });
+        }
+
+     var selectOptions=product.bom.map(function(bomItem,index){
+         return React.createElement(SelectOption, {bomItem: bomItem})
+     });
+
+
         return(
             React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-3"}, 
-                "Customer details here"
+                    React.createElement("h3", null, React.createElement("strong", null, "Customer Details")), 
+                  React.createElement("p", null, 
+                        customer.name, React.createElement("br", null), 
+                        customer.street, React.createElement("br", null), 
+                         customer.town, React.createElement("br", null), 
+                        customer.county, React.createElement("br", null), 
+                        customer.phone, React.createElement("br", null), 
+                        customer.email, React.createElement("br", null)
+                    )
                 ), 
+
                 React.createElement("div", {className: "col-md-6"}, 
-                "Job Details Here"
-                ), 
-                React.createElement("div", {className: "col-md-3"}, 
-                   "Product Details here"
+                React.createElement("h3", null, React.createElement("strong", null, "Job Details")), 
+                    React.createElement("p", null, 
+                        "Fault reported on ", jobToShow.date, React.createElement("br", null), 
+                        "Fault description: ", jobToShow.reported_fault, React.createElement("br", null)
+
+                    ), 
+
+
+
+
+
+                    React.createElement("h3", null, React.createElement("strong", null, "Parts Used")), 
+                    React.createElement("p", null, "There were no parts used on this job"), 
+                        React.createElement("table", {className: "table table-striped"}, 
+                            React.createElement("thead", null, 
+
+                            React.createElement("tr", null, React.createElement("th", null, "Part Number"), React.createElement("th", null, "Description"), React.createElement("th", null, "Quantity"), " ")
+
+                            ), 
+
+                            React.createElement("tbody", null, 
+                            jobParts
+
+
+                            )
+                            ), 
+                    React.createElement("h3", null, React.createElement("strong", null, "Add part used")), 
+                        React.createElement("form", null, 
+                            React.createElement("div", {className: "form-group"}, 
+                                React.createElement("label", {for: "partNumber"}, "Part Number"), 
+                            React.createElement("select", null, 
+                                selectOptions
+                            )
+                                ), 
+
+                            React.createElement("div", {className: "form-group"}, 
+                                React.createElement("label", {for: "quantity"}, "Quantity"), 
+                            React.createElement("select", null, 
+                                React.createElement("option", {value: "1"}, "1"), 
+                                React.createElement("option", {value: "2"}, "2"), 
+                                React.createElement("option", {value: "3"}, "3"), 
+                                React.createElement("option", {value: "4"}, "4"), 
+                                React.createElement("option", {value: "5"}, "5"), 
+                                React.createElement("option", {value: "6"}, "6"), 
+                                React.createElement("option", {value: "7"}, "7"), 
+                                React.createElement("option", {value: "8"}, "8"), 
+                                React.createElement("option", {value: "9"}, "9"), 
+                                React.createElement("option", {value: "10"}, "10")
+                                )
+                            ), 
+                            React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
+                        )
+
+                    ), 
+
+                    React.createElement("div", {className: "col-md-3"}, 
+                        React.createElement("h3", null, React.createElement("strong", null, "Product Details")), 
+                        React.createElement("p", null, 
+                            product.manufacturer.name, " ", product.product_number, 
+                            product.description, 
+                            "Serial Number: ", customerProduct.serialNumber
+
+                        )
+                    )
+
+                   )
                 )
 
-            )
+
 
         );
+
+
     }
 });
 
+var SelectOption=React.createClass(
+    {displayName: "SelectOption",
+
+       render: function()
+       {
+           var bomItem=this.props.bomItem;
+           return(
+               React.createElement("option", {value: bomItem.part.part_number}, bomItem.part.part_number, ":", bomItem.part.description, " ")
+           );
+       }
+    });
+
+var SingleJobPart=React.createClass(
+    {displayName: "SingleJobPart",
+
+        render:function(){
+            var jobPart=this.props.jobPart;
+            var part = jobPart.part;
+            return(
+                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), React.createElement("td", null, jobPart.quantity), 
+                    React.createElement("td", null, React.createElement("button", {className: "btn btn-sm btn-primary"}, "Edit")), React.createElement("td", null, React.createElement("button", {className: "btn btn-sm btn-primary"}, "Delete")))
+            );
+        }
+    }
+);
+
 var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
     render:function(){
+        var customers=this.props.customers;
+        var customer=customers[this.props.activeId];
+        var productOptions=products.map(function(product,index){
+            return React.createElement(ProductOption, {product: product})
+        });
+        var customerProducts=customer.customerProducts.map(function(sp,index)
+        {
+            return(React.createElement(SingleCustomerProduct, {sp: sp}));
+        }
+
+        );
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "col-md-3"}, 
-                    "Customer details here"
+                    React.createElement("h3", null, React.createElement("strong", null, "Customer Details")), 
+                    React.createElement("p", null, 
+                        customer.name, React.createElement("br", null), 
+                        customer.street, React.createElement("br", null), 
+                         customer.town, React.createElement("br", null), 
+                        customer.county, React.createElement("br", null), 
+                        customer.phone, React.createElement("br", null), 
+                        customer.email, React.createElement("br", null)
+                    )
 
                 ), 
                 React.createElement("div", {className: "col-md-6"}, 
                     "Previous Jobs Here", 
-                    React.createElement("div", null, 
-                        "Customer Products Here"
+
+                    React.createElement("h3", null, React.createElement("strong", null, "Customer's Products")), 
+                    React.createElement("p", null, "The customer has no registered products"), 
+                    React.createElement("table", {className: "table table-striped"}, 
+                        React.createElement("thead", null, 
+
+                        React.createElement("tr", null, React.createElement("th", null, "Manufacturer"), React.createElement("th", null, "Model Number"), React.createElement("th", null, "Serial Number"), " ", React.createElement("th", null, "Description"))
+
+                        ), 
+
+                        React.createElement("tbody", null, 
+                        customerProducts
+
+
+                        )
+                    ), 
+                    React.createElement(JobForm, {customer: customer, customerProduct: customer.customerProducts[0]}), 
+                    React.createElement("h3", null, React.createElement("strong", null, "Register product for this customer")), 
+                    React.createElement("form", null, 
+                        React.createElement("label", {for: "productNumber"}, "Product"), 
+                        React.createElement("div", {className: "form-group"}, 
+
+                            React.createElement("select", null, 
+                                productOptions
+                            )
+                        ), 
+                        React.createElement("label", null, "Serial Number"), 
+                        React.createElement("div", {className: "form-group"}, 
+                           React.createElement("input", {name: "serialNumber", type: "text"})
+
+                        ), 
+                        React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
                     )
                 ), 
                 React.createElement("div", {className: "col-md-3"}
@@ -31353,25 +31572,118 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
     }
 });
 
+var ProductOption=React.createClass({displayName: "ProductOption",
+    render:function(){
+
+        var product=this.props.product;
+        return(React.createElement("option", {value: product.id}, product.manufacturer.name, " ", product.product_number, " ", product.description.split(",")[0])
+
+        );
+    }
+
+});
+
+var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct",
+
+    render:function()
+    {
+        var sp=this.props.sp;
+        return(
+            React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, sp.product.product_number), 
+                React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description), React.createElement("td", null, 
+                   React.createElement("button", {className: "btn btn-sm btn-primary"}, " Create Job")))
+
+        );
+    }
+
+}
+);
+
 var ProductMainPane=React.createClass({displayName: "ProductMainPane",
     render:function(){
+        var products=this.props.products;
+        var product=products[this.props.activeId];
+        var manufacturer=product.manufacturer;
+
+        var partOptions=parts.map(function(part,index){
+            return React.createElement(PartOption, {part: part})
+        });
+        var bom=product.bom.map(function(bi,index)
+            {
+                return(React.createElement(SingleBomItem, {bi: bi}));
+            }
+
+        );
         return(
             React.createElement("div", null, 
-                React.createElement("div", {className: "col-md-3"}, 
-                    "Manufacturer details here"
-
-                ), 
-                React.createElement("div", {className: "col-md-6"}, 
-                    "Part List Here"
-
-                ), 
-                React.createElement("div", {className: "col-md-3"}, 
-                 React.createElement("div", null, 
-                 "Product Details here"
+                React.createElement("div", {className: "col-md-8"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "Manufacturer Details")), 
+                    React.createElement("p", null, 
+                        manufacturer.name, React.createElement("br", null), 
+                        manufacturer.street, React.createElement("br", null), 
+                         manufacturer.town, React.createElement("br", null), 
+                        manufacturer.county, React.createElement("br", null), 
+                        manufacturer.phone, React.createElement("br", null), 
+                        manufacturer.email, React.createElement("br", null)
                     ), 
-                    React.createElement("div", null, 
-                "Product diagram here"
+
+
+
+
+
+                    React.createElement("h3", null, React.createElement("strong", null, "Bill of Material")), 
+                    React.createElement("p", null, "The customer has no registered products"), 
+                    React.createElement("table", {className: "table table-striped"}, 
+                        React.createElement("thead", null, 
+
+                        React.createElement("tr", null, React.createElement("th", null, "Part Number"), React.createElement("th", null, "Description"), React.createElement("th", null, "Quantity"), " ")
+
+                        ), 
+
+                        React.createElement("tbody", null, 
+                        bom
+
+
                         )
+                    ), 
+                    React.createElement("h3", null, React.createElement("strong", null, "Add Part to Bill of Material")), 
+                    React.createElement("form", null, 
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("label", {for: "productNumber"}, "Product"), 
+                            React.createElement("select", null, 
+                                partOptions
+                            )
+                        ), 
+
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("label", {for: "quantity"}, "Quantity"), 
+                            React.createElement("select", null, 
+                                React.createElement("option", {value: "1"}, "1"), 
+                                React.createElement("option", {value: "2"}, "2"), 
+                                React.createElement("option", {value: "3"}, "3"), 
+                                React.createElement("option", {value: "4"}, "4"), 
+                                React.createElement("option", {value: "5"}, "5"), 
+                                React.createElement("option", {value: "6"}, "6"), 
+                                React.createElement("option", {value: "7"}, "7"), 
+                                React.createElement("option", {value: "8"}, "8"), 
+                                React.createElement("option", {value: "9"}, "9"), 
+                                React.createElement("option", {value: "10"}, "10")
+                            )
+                        ), 
+                        React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
+                    )
+                ), 
+
+                React.createElement("div", {className: "col-md-4"}, 
+                React.createElement("h3", null, "Product Details"), 
+                    React.createElement("p", null, 
+                        manufacturer.name, " ", product.product_number, React.createElement("br", null), 
+                        product.description, React.createElement("br", null)
+
+                    ), 
+
+                    React.createElement("h3", null, "Exploded View"), 
+                    React.createElement("img", {src: product.image_url})
                 )
 
             )
@@ -31379,19 +31691,62 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
         );
     }
 });
+var PartOption=React.createClass(
+    {displayName: "PartOption",
+
+        render: function()
+        {
+            var part=this.props.part;
+            return(
+                React.createElement("option", {value: part.id}, part.part_number, ":", part.description, " ")
+            );
+        }
+    });
+
+var SingleBomItem=React.createClass(
+    {displayName: "SingleBomItem",
+
+        render:function(){
+            var bi=this.props.bi;
+            var part = bi.part;
+            return(
+                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), React.createElement("td", null, bi.quantity), 
+                    React.createElement("td", null, React.createElement("button", {className: "btn btn-sm btn-primary"}, "Edit")), React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Delete")))
+            );
+        }
+    }
+);
+
+
 
 var PartMainPane=React.createClass({displayName: "PartMainPane",
     render:function(){
+        var parts=this.props.parts;
+        var part=parts[this.props.activeId]
         return(
+
             React.createElement("div", null, 
                 React.createElement("div", {className: "col-md-3"}, 
-                    "Part details here"
+                    React.createElement("h3", null, React.createElement("strong", null, "Part Details")), 
+                    React.createElement("p", null, 
+                        part.part_number, React.createElement("br", null), 
+                        part.part_number, React.createElement("br", null), 
+                        part.cost, React.createElement("br", null), 
+                        part.quantity_in_stock, React.createElement("br", null)
+
+                    )
                 ), 
                 React.createElement("div", {className: "col-md-6"}, 
-                    "Where used here"
+                    React.createElement("h3", null, React.createElement("strong", null, "Products Where Used")), 
+                    React.createElement("table", {className: "table table-striped"}, 
+                        React.createElement("thead", null, 
+                        React.createElement("tr", null, React.createElement("th", null, "Product Name"), React.createElement("th", null, "Description"), React.createElement("th", null, "quantity"))
+                        ), 
+                        React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", null, "Data"), React.createElement("td", null, "data"), React.createElement("td", null, "data")))
+                        )
                 ), 
                 React.createElement("div", {className: "col-md-3"}, 
-                    "History here"
+                    React.createElement("h3", null, React.createElement("strong", null, "History"))
                 )
 
             )
@@ -31760,6 +32115,234 @@ var SinglePart=React.createClass({displayName: "SinglePart",
 
 
 
+var JobForm=React.createClass(
+    {displayName: "JobForm",
+
+
+    render:function(){
+        var customerProduct=this.props.customerProduct;
+        var customer=this.props.customer;
+        var product=customerProduct.product;
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+        var today = dd+'/'+mm+'/'+yyyy;
+
+        return(
+            React.createElement("div", null, 
+                React.createElement("h3", null, " Create New Job"), 
+            React.createElement("form", null, 
+                React.createElement("label", null, "Customer Product"), 
+                React.createElement("div", {className: "form-group"}, 
+                React.createElement("input", {type: "text", name: "customerProduct", disabled: true, 
+
+                    value: product.manufacturer.name+" "+product.product_number+product.description.split(",")[0]}
+                )
+                ), 
+                React.createElement("label", null, "Customer"), 
+                    React.createElement("div", {className: "form-group"}, 
+                React.createElement("input", {type: "text", name: "customer", disabled: true, 
+                      value: customer.name+", "+customer.town}
+
+                )
+                        ), 
+
+                        React.createElement("div", {className: "form-group"}, 
+                React.createElement("input", {type: "text", name: "date", hidden: true, 
+                     value: today}
+
+                )
+                            ), 
+                React.createElement("label", null, "Reported Fault"), 
+                            React.createElement("div", {className: "form-group"}, 
+
+                React.createElement("input", {type: "text", name: "reported fault"}
+
+                )
+                            ), 
+
+                React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
+
+            )
+            )
+
+
+      );
+    }
+
+    });
+
+
+var CustomerForm=React.createClass(
+    {displayName: "CustomerForm",
+        render:function()
+        {
+
+
+            return(
+                React.createElement("div", {className: "container-fluid"}, 
+
+                    React.createElement(Navbar, {activeTab: "jobs"}), 
+                    React.createElement("div", {className: "row"}, 
+                        React.createElement("div", {className: "col-md-2 side-pane"}
+                            ), 
+                        React.createElement("div", {className: "col-md-10 main-pane"}, 
+                            React.createElement("div", {className: "row"}, 
+                                React.createElement("div", {className: "col-md-3"}
+                                    ), 
+                                React.createElement("div", {className: "col-md-6"}, 
+                                    React.createElement("form", null, 
+
+
+                                        React.createElement("label", null, "Name"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "name"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Street"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "street"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Town"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "town"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "County"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "county"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Phone Number"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "phone"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "email"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "email"}
+
+                                            )
+                                        ), 
+
+                                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
+
+                                    )
+                                ), 
+                                React.createElement("div", {className: "col-md-3"}
+                                )
+                            )
+                        )
+
+
+                )
+                    )
+
+
+            );
+
+        }
+
+    }
+);
+
+var ProductForm=React.createClass(
+    {displayName: "ProductForm",
+        render:function()
+        {
+
+
+            var manOptions=manufacturers.map(function(man,index){
+                return React.createElement(ManOption, {man: man})});
+            return(
+                React.createElement("div", {className: "container-fluid"}, 
+
+                    React.createElement(Navbar, {activeTab: "jobs"}), 
+                    React.createElement("div", {className: "row"}, 
+                        React.createElement("div", {className: "col-md-2 side-pane"}
+                        ), 
+                        React.createElement("div", {className: "col-md-10 main-pane"}, 
+                            React.createElement("div", {className: "row"}, 
+                                React.createElement("div", {className: "col-md-3"}
+                                ), 
+                                React.createElement("div", {className: "col-md-6"}, 
+                                    React.createElement("form", null, 
+
+
+                                        React.createElement("label", null, "Manufacturer"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("select", {name: "manufacturer"}, 
+                                                manOptions
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Product Number"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "product_number"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Description"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "description"}
+
+                                            )
+                                        ), 
+
+
+                                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
+
+                                    )
+                                ), 
+                                React.createElement("div", {className: "col-md-3"}
+                                )
+                            )
+                        )
+
+
+                    )
+                )
+
+
+            );
+
+        }
+
+    }
+);
+
+
+var ManOption=React.createClass(
+    {displayName: "ManOption",
+        render: function () {
+
+            var man = this.props.man;
+            return (
+                React.createElement("option", null, man.name)
+            );
+        }
+    });
 
 
 ReactDOM.render( (
@@ -31767,6 +32350,8 @@ ReactDOM.render( (
             React.createElement(Route, {path: "/", component: App}, 
                 React.createElement(IndexRoute, {component: JobPage}), 
                 React.createElement(Route, {path: "jobs/:id", component: JobPage}), 
+                React.createElement(Route, {path: "customer/new", component: CustomerForm}), 
+                React.createElement(Route, {path: "product/new", component: ProductForm}), 
                 React.createElement(Route, {path: "customers/:id", component: CustomerPage}), 
                 React.createElement(Route, {path: "products/:id", component: ProductPage}), 
                 React.createElement(Route, {path: "Parts/:id", component: PartPage})
@@ -31776,7 +32361,7 @@ ReactDOM.render( (
     document.getElementById('mount-point')
 );
 
-},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/PartData.js":4,"../data/ProductData.js":5,"lodash":52,"react":207,"react-dom":54,"react-router":74}],211:[function(require,module,exports){
+},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/ManData.js":3,"../data/PartData.js":4,"../data/ProductData.js":5,"lodash":52,"react":207,"react-dom":54,"react-router":74}],211:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

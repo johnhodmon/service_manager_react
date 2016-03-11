@@ -7,7 +7,7 @@ var jobs=
 
 
     {
-        id:1,
+        id:0,
         reported_fault:"Oven not working",
         status:'allocated',
         date:'1st Feb 2016',
@@ -22,7 +22,7 @@ var jobs=
         ]
     },
     {
-        id:2,
+        id:1,
         reported_fault:"Grill not working",
         status:'unallocated',
         date:'1st Feb 2016',
@@ -30,7 +30,7 @@ var jobs=
         customerProduct:customers[0].customerProducts[0]
     },
     {
-        id:3,
+        id:2,
         reported_fault:"Noise from machine",
         status:'allocated',
         date:'2nd Feb 2016',
@@ -44,7 +44,7 @@ var jobs=
             ]
     },
     {
-        id:4,
+        id:3,
         reported_fault:"Machine will not turn on",
         status:'allocated',
         date:'2nd Feb 2016',

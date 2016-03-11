@@ -4,6 +4,7 @@ var jobs=require('../data/JobData.js').jobs;
 var customers=require('../data/CustomerData.js').customers;
 var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
+var manufacturers=require('../data/ManData.js').manufacturers;
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -12,10 +13,15 @@ var _=require('lodash');
 var IndexRoute = ReactRouter.IndexRoute;
 $(document).ready(function() {
 
-    var dynamic = $('.side-pane');
-    var static = $('.main-pane');
+    var side = $('.side-pane');
+    var main = $('.main-pane');
 
-    static.height(dynamic.height());
+
+        main.height(side.height());
+
+
+
+
 
 });
 
@@ -38,12 +44,18 @@ var JobPage=React.createClass(
     {
         render:function()
             {
+                var id=1;
+                if(this.props.params.id!=null)
+                {
+                    id=this.props.params.id;
+                }
+                console.log("params.id"+this.props.params.id);
                 return(
                    <div className="container-fluid">
 
                    <Navbar activeTab="jobs" />
 
-                   <JobPageContent activeId={this.props.params.id} jobs={jobs}  />
+                   <JobPageContent activeId={id} jobs={jobs} parts={parts}  />
                    </div>
 
 
@@ -57,12 +69,17 @@ var CustomerPage=React.createClass(
     {
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 <div className="container-fluid">
 
                     <Navbar activeTab="customers" />
 
-                    <CustomerPageContent activeId={this.props.params.id} customers={customers}  />
+                    <CustomerPageContent activeId={id} customers={customers}  />
                 </div>
 
 
@@ -77,12 +94,17 @@ var ProductPage=React.createClass(
     {
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 <div className="container-fluid">
 
                     <Navbar activeTab="products" />
 
-                    <ProductPageContent activeId={this.props.params.id} products={products}  />
+                    <ProductPageContent activeId={id} products={products}  />
                 </div>
 
 
@@ -97,12 +119,17 @@ var PartPage=React.createClass(
     {
         render:function()
         {
+            var id="1";
+            if(this.props.params.id!=null)
+            {
+                id=this.props.params.id;
+            }
             return(
                 <div className="container-fluid">
 
                     <Navbar activeTab="parts" />
 
-                    <PartPageContent activeId={this.props.params.id} parts={parts}  />
+                    <PartPageContent activeId={id} parts={parts}  />
                 </div>
 
 
@@ -130,10 +157,10 @@ var Navbar=React.createClass({
                         </div>
                     <div className="col-md-10 top-nav-div">
                         <ul className="nav  nav-tabs">
-                            <li className={(this.state.activeTab === "jobs") ? "active" : ""}> <Link to="/jobs/1" params={{id: 1}}>Jobs</Link></li>
-                            <li className={(this.state.activeTab === "customers") ? "active" : ""}> <Link to="/customers/1">Customers</Link></li>
-                            <li className={(this.state.activeTab === "products") ? "active" : ""}>   <Link to="/products/1">Products</Link></li>
-                            <li className={(this.state.activeTab === "parts") ? "active" : ""}>   <Link to="/parts/1">Stock Control</Link></li>
+                            <li className={(this.state.activeTab === "jobs") ? "active" : ""}> <Link to="/jobs/0" params={{id: 1}}>Jobs</Link></li>
+                            <li className={(this.state.activeTab === "customers") ? "active" : ""}> <Link to="/customers/0">Customers</Link></li>
+                            <li className={(this.state.activeTab === "products") ? "active" : ""}>   <Link to="/products/0">Products</Link></li>
+                            <li className={(this.state.activeTab === "parts") ? "active" : ""}>   <Link to="/parts/0">Stock Control</Link></li>
                             <li role="presentation" className="dropdown">
                                 <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     John Hodmon<span className="caret"></span>
@@ -159,6 +186,7 @@ var Navbar=React.createClass({
 var JobPageContent=React.createClass({
     render:function()
     {
+
         return(
             <div className="row">
                 <div className="col-md-2 side-pane">
@@ -166,7 +194,7 @@ var JobPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <JobMainPane/>
+                    <JobMainPane activeId={this.props.activeId} jobs={this.props.jobs} parts={this.props.parts}/>
                 </div>
 
             </div>
@@ -185,7 +213,7 @@ var CustomerPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <CustomerMainPane/>
+                    <CustomerMainPane activeId={this.props.activeId} customers={this.props.customers}/>
                 </div>
 
             </div>
@@ -204,7 +232,7 @@ var ProductPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <ProductMainPane/>
+                    <ProductMainPane activeId={this.props.activeId} products={this.props.products}/>
                 </div>
 
             </div>
@@ -222,7 +250,7 @@ var PartPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <PartMainPane/>
+                    <PartMainPane activeId={this.props.activeId} parts={this.props.parts}/>
                 </div>
 
             </div>
@@ -269,6 +297,7 @@ var JobSideBar=React.createClass({
             <JobSearchbox setSortBy={this.setSortBy} setSearchText={this.setSearchText}/>
                 </div>
                 <div className="row">
+
             <JobList activeId={this.props.activeId} jobs={sortedList}/>
             </div>
                 </div>
@@ -279,45 +308,16 @@ var JobSideBar=React.createClass({
 
 
 var CustomerSideBar=React.createClass({
-
-    getInitialState:function()
-    {
-        return(
-        {
-            searchBoxContent: "",
-            sortBy:""
-        }
-        );
-    },
-
-    setSearchText:function(value)
-    {
-        this.setState({ searchBoxContent:value})
-    },
-
-    setSortBy:function(value)
-    {
-        this.setState({ sortBy:value})
-    },
-
-
     render:function(){
-
-        var customers=this.props.customers;
-        var list=customers.filter(function(customer){
-            return customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
-        }.bind(this));
-
-        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
-
-
             <div>
+
                 <div className="row search-box-div">
-                    <CustomerSearchbox setSortBy={this.setSortBy} setSearchText={this.setSearchText}/>
+                    <CustomerSearchbox/>
                 </div>
                 <div className="row">
-                    <CustomerList activeId={this.props.activeId} customers={sortedList}/>
+                    <p><Link to="customer/new">New Customer +</Link></p>
+                    <CustomerList activeId={this.props.activeId} customers={this.props.customers}/>
                 </div>
             </div>
 
@@ -326,38 +326,15 @@ var CustomerSideBar=React.createClass({
 });
 
 var ProductSideBar=React.createClass({
-
-    getInitialState:function()
-    {
-        return(
-        {
-            searchBoxContent: "",
-
-        }
-        );
-    },
-
-    setSearchText:function(value)
-    {
-        this.setState({ searchBoxContent:value})
-    },
-
-
-
     render:function(){
-        var products=this.props.products;
-        var list=products.filter(function(product){
-            return product.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
-        }.bind(this));
-
-        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             <div>
                 <div className="row search-box-div">
-                    <ProductSearchbox setSearchText={this.setSearchText}/>
+                    <ProductSearchbox/>
                 </div>
                 <div className="row">
-                    <ProductList activeId={this.props.activeId} products={sortedList}/>
+                    <p><Link to="product/new">New Product +</Link></p>
+                    <ProductList activeId={this.props.activeId} products={this.props.products}/>
                 </div>
             </div>
 
@@ -366,37 +343,14 @@ var ProductSideBar=React.createClass({
 });
 
 var PartSideBar=React.createClass({
-    getInitialState:function()
-    {
-        return(
-        {
-            searchBoxContent: "",
-
-        }
-        );
-    },
-
-    setSearchText:function(value)
-    {
-        this.setState({ searchBoxContent:value})
-
-    },
-
     render:function(){
-        console.log(this.state.searchBoxContent);
-        var parts=this.props.parts;
-        var list=parts.filter(function(part){
-            return part.part_number.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
-        }.bind(this));
-
-        var sortedList=_.sortBy(list,this.state.sortBy)
         return(
             <div>
                 <div className="row search-box-div">
-                    <PartSearchbox setSearchText={this.setSearchText}/>
+                    <PartSearchbox/>
                 </div>
                 <div className="row">
-                    <PartList activeId={this.props.activeId} parts={sortedList}/>
+                    <PartList activeId={this.props.activeId} parts={this.props.parts}/>
                 </div>
             </div>
 
@@ -410,37 +364,209 @@ var PartSideBar=React.createClass({
 
 var JobMainPane=React.createClass({
     render:function(){
+        var jobs=this.props.jobs;
+        console.log("activeId"+this.props.activeId);
+        var jobToShow=jobs[this.props.activeId];
+        var customer=jobToShow.customer;
+        var customerProduct=jobToShow.customerProduct;
+        var product=jobToShow.customerProduct.product;
+        var jobParts=[];
+        var parts=this.props.parts;
+
+
+        if(jobToShow.jobParts!=null)
+        {
+            jobParts=jobToShow.jobParts.map(function(jp,index)
+        {
+            return <SingleJobPart jobPart={jp} index={index} />
+        });
+        }
+
+     var selectOptions=product.bom.map(function(bomItem,index){
+         return <SelectOption bomItem={bomItem} />
+     });
+
+
         return(
-            <div>
+            <div >
+                <div className="row">
                 <div className="col-md-3">
-                Customer details here
-                </div>
-                <div className="col-md-6">
-                Job Details Here
-                </div>
-                <div className="col-md-3">
-                   Product Details here
+                    <h3><strong>Customer Details</strong></h3>
+                  <p>
+                        {customer.name}<br/>
+                        {customer.street}<br/>
+                        { customer.town}<br/>
+                        {customer.county}<br/>
+                        {customer.phone}<br/>
+                        {customer.email}<br/>
+                    </p>
                 </div>
 
-            </div>
+                <div className="col-md-6">
+                <h3><strong>Job Details</strong></h3>
+                    <p>
+                        Fault reported on {jobToShow.date}<br/>
+                        Fault description: {jobToShow.reported_fault}<br/>
+
+                    </p>
+
+
+
+
+
+                    <h3><strong>Parts Used</strong></h3>
+                    <p>There were no parts used on this job</p>
+                        <table className="table table-striped">
+                            <thead>
+
+                            <tr><th>Part Number</th><th>Description</th><th>Quantity</th> </tr>
+
+                            </thead>
+
+                            <tbody>
+                            {jobParts}
+
+
+                            </tbody>
+                            </table>
+                    <h3><strong>Add part used</strong></h3>
+                        <form>
+                            <div className="form-group">
+                                <label for="partNumber">Part Number</label>
+                            <select>
+                                {selectOptions}
+                            </select>
+                                </div>
+
+                            <div className="form-group">
+                                <label for="quantity" >Quantity</label>
+                            <select>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                </select>
+                            </div>
+                            <input type="button" className="btn btn-sm btn-primary" action="submit" value="Add"/>
+                        </form>
+
+                    </div>
+
+                    <div className="col-md-3">
+                        <h3><strong>Product Details</strong></h3>
+                        <p>
+                            {product.manufacturer.name} {product.product_number}
+                            {product.description}
+                            Serial Number: {customerProduct.serialNumber}
+
+                        </p>
+                    </div>
+
+                   </div>
+                </div>
+
+
 
         );
+
+
     }
 });
 
+var SelectOption=React.createClass(
+    {
+
+       render: function()
+       {
+           var bomItem=this.props.bomItem;
+           return(
+               <option value={bomItem.part.part_number}>{bomItem.part.part_number}:{bomItem.part.description} </option>
+           );
+       }
+    });
+
+var SingleJobPart=React.createClass(
+    {
+
+        render:function(){
+            var jobPart=this.props.jobPart;
+            var part = jobPart.part;
+            return(
+                <tr><td>{part.part_number}</td><td>{part.description}</td><td>{jobPart.quantity}</td>
+                    <td><button className="btn btn-sm btn-primary">Edit</button></td><td><button className="btn btn-sm btn-primary">Delete</button></td></tr>
+            );
+        }
+    }
+);
+
 var CustomerMainPane=React.createClass({
     render:function(){
+        var customers=this.props.customers;
+        var customer=customers[this.props.activeId];
+        var productOptions=products.map(function(product,index){
+            return <ProductOption product={product} />
+        });
+        var customerProducts=customer.customerProducts.map(function(sp,index)
+        {
+            return(<SingleCustomerProduct sp={sp} />);
+        }
+
+        );
         return(
             <div>
                 <div className="col-md-3">
-                    Customer details here
+                    <h3><strong>Customer Details</strong></h3>
+                    <p>
+                        {customer.name}<br/>
+                        {customer.street}<br/>
+                        { customer.town}<br/>
+                        {customer.county}<br/>
+                        {customer.phone}<br/>
+                        {customer.email}<br/>
+                    </p>
 
                 </div>
                 <div className="col-md-6">
                     Previous Jobs Here
-                    <div>
-                        Customer Products Here
-                    </div>
+
+                    <h3><strong>Customer's Products</strong></h3>
+                    <p>The customer has no registered products</p>
+                    <table className="table table-striped">
+                        <thead>
+
+                        <tr><th>Manufacturer</th><th>Model Number</th><th>Serial Number</th> <th>Description</th></tr>
+
+                        </thead>
+
+                        <tbody>
+                        {customerProducts}
+
+
+                        </tbody>
+                    </table>
+                    <JobForm customer={customer} customerProduct={customer.customerProducts[0]} />
+                    <h3><strong>Register product for this customer</strong></h3>
+                    <form>
+                        <label for="productNumber">Product</label>
+                        <div className="form-group">
+
+                            <select>
+                                {productOptions}
+                            </select>
+                        </div>
+                        <label>Serial Number</label>
+                        <div className="form-group">
+                           <input name="serialNumber" type="text"></input>
+
+                        </div>
+                        <input type="button" className="btn btn-sm btn-primary" action="submit" value="Add"/>
+                    </form>
                 </div>
                 <div className="col-md-3">
 
@@ -451,26 +577,119 @@ var CustomerMainPane=React.createClass({
         );
     }
 });
+
+var ProductOption=React.createClass({
+    render:function(){
+
+        var product=this.props.product;
+        return(<option value={product.id}>{product.manufacturer.name} {product.product_number} {product.description.split(",")[0]}</option>
+
+        );
+    }
+
+});
+
+var SingleCustomerProduct=React.createClass({
+
+    render:function()
+    {
+        var sp=this.props.sp;
+        return(
+            <tr><td>{sp.product.manufacturer.name}</td><td>{sp.product.product_number}</td>
+                <td>{sp.serialNumber}</td><td>{sp.product.description}</td><td>
+                   <button className="btn btn-sm btn-primary"> Create Job</button></td></tr>
+
+        );
+    }
+
+}
+);
 
 var ProductMainPane=React.createClass({
     render:function(){
+        var products=this.props.products;
+        var product=products[this.props.activeId];
+        var manufacturer=product.manufacturer;
+
+        var partOptions=parts.map(function(part,index){
+            return <PartOption part={part} />
+        });
+        var bom=product.bom.map(function(bi,index)
+            {
+                return(<SingleBomItem bi={bi} />);
+            }
+
+        );
         return(
             <div>
-                <div className="col-md-3">
-                    Manufacturer details here
+                <div className="col-md-8">
+                    <h3><strong>Manufacturer Details</strong></h3>
+                    <p>
+                        {manufacturer.name}<br/>
+                        {manufacturer.street}<br/>
+                        { manufacturer.town}<br/>
+                        {manufacturer.county}<br/>
+                        {manufacturer.phone}<br/>
+                        {manufacturer.email}<br/>
+                    </p>
 
-                </div>
-                <div className="col-md-6">
-                    Part List Here
 
-                </div>
-                <div className="col-md-3">
-                 <div>
-                 Product Details here
-                    </div>
-                    <div>
-                Product diagram here
+
+
+
+                    <h3><strong>Bill of Material</strong></h3>
+                    <p>The customer has no registered products</p>
+                    <table className="table table-striped">
+                        <thead>
+
+                        <tr><th>Part Number</th><th>Description</th><th>Quantity</th> </tr>
+
+                        </thead>
+
+                        <tbody>
+                        {bom}
+
+
+                        </tbody>
+                    </table>
+                    <h3><strong>Add Part to Bill of Material</strong></h3>
+                    <form>
+                        <div className="form-group">
+                            <label for="productNumber">Product</label>
+                            <select>
+                                {partOptions}
+                            </select>
                         </div>
+
+                        <div className="form-group">
+                            <label for="quantity" >Quantity</label>
+                            <select>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <input type="button" className="btn btn-sm btn-primary" action="submit" value="Add"/>
+                    </form>
+                </div>
+
+                <div className="col-md-4">
+                <h3>Product Details</h3>
+                    <p>
+                        {manufacturer.name} {product.product_number}<br/>
+                        {product.description}<br/>
+
+                    </p>
+
+                    <h3>Exploded View</h3>
+                    <img src={product.image_url} />
                 </div>
 
             </div>
@@ -478,19 +697,62 @@ var ProductMainPane=React.createClass({
         );
     }
 });
+var PartOption=React.createClass(
+    {
+
+        render: function()
+        {
+            var part=this.props.part;
+            return(
+                <option value={part.id}>{part.part_number}:{part.description} </option>
+            );
+        }
+    });
+
+var SingleBomItem=React.createClass(
+    {
+
+        render:function(){
+            var bi=this.props.bi;
+            var part = bi.part;
+            return(
+                <tr><td>{part.part_number}</td><td>{part.description}</td><td>{bi.quantity}</td>
+                    <td><button className="btn btn-sm btn-primary">Edit</button></td><td><button className="btn btn-primary">Delete</button></td></tr>
+            );
+        }
+    }
+);
+
+
 
 var PartMainPane=React.createClass({
     render:function(){
+        var parts=this.props.parts;
+        var part=parts[this.props.activeId]
         return(
+
             <div>
                 <div className="col-md-3">
-                    Part details here
+                    <h3><strong>Part Details</strong></h3>
+                    <p>
+                        {part.part_number}<br/>
+                        {part.part_number}<br/>
+                        {part.cost}<br/>
+                        {part.quantity_in_stock}<br/>
+
+                    </p>
                 </div>
                 <div className="col-md-6">
-                    Where used here
+                    <h3><strong>Products Where Used</strong></h3>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr><th>Product Name</th><th>Description</th><th>quantity</th></tr>
+                        </thead>
+                        <tbody><tr><td>Data</td><td>data</td><td>data</td></tr></tbody>
+                        </table>
                 </div>
                 <div className="col-md-3">
-                    History here
+                    <h3><strong>History</strong></h3>
                 </div>
 
             </div>
@@ -505,14 +767,14 @@ var JobSearchbox=React.createClass({
     setSearchText:function(e)
     {
         e.preventDefault();
-
+        console.log("value: "+e.target.value);
         this.props.setSearchText(e.target.value);
     },
 
     setSortBy:function(e)
     {
         e.preventDefault();
-
+        console.log("sort: "+e.target.value);
         this.props.setSortBy(e.target.value);
     },
     render: function(){
@@ -541,20 +803,6 @@ var JobSearchbox=React.createClass({
 });
 
 var CustomerSearchbox=React.createClass({
-    setSearchText:function(e)
-    {
-        e.preventDefault();
-
-        this.props.setSearchText(e.target.value);
-    },
-
-    setSortBy:function(e)
-    {
-        e.preventDefault();
-
-        this.props.setSortBy(e.target.value);
-    },
-
     render: function(){
 
 
@@ -563,13 +811,13 @@ var CustomerSearchbox=React.createClass({
 
             <div>
                 <div className="row">
-                    <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
+                    <input type="text"  placeholder="Search"/>
                 </div>
                 <div className="row">
-                    <select onChange={this.setSortBy} id="sort" >
+                    <select id="sort" >
                         <option value="" disabled selected>Sort by: </option>
-                        <option value="name">Name</option>
-                        <option value="county">County</option>
+                        <option value="name">Date</option>
+                        <option value="customer">Customer</option>
                     </select>
                 </div>
 
@@ -580,15 +828,6 @@ var CustomerSearchbox=React.createClass({
 });
 
 var ProductSearchbox=React.createClass({
-
-    setSearchText:function(e)
-    {
-        e.preventDefault();
-
-        this.props.setSearchText(e.target.value);
-    },
-
-
     render: function(){
 
 
@@ -597,7 +836,7 @@ var ProductSearchbox=React.createClass({
 
 
                 <div className="row">
-                    <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
+                    <input type="text"  placeholder="Search"/>
                 </div>
 
 
@@ -608,15 +847,6 @@ var ProductSearchbox=React.createClass({
 });
 
 var PartSearchbox=React.createClass({
-
-    setSearchText:function(e)
-    {
-        e.preventDefault();
-
-        this.props.setSearchText(e.target.value);
-    },
-
-
     render: function(){
 
 
@@ -625,7 +855,7 @@ var PartSearchbox=React.createClass({
 
 
             <div className="row">
-                <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
+                <input type="text"  placeholder="Search"/>
             </div>
 
 
@@ -859,6 +1089,234 @@ var SinglePart=React.createClass({
 
 
 
+var JobForm=React.createClass(
+    {
+
+
+    render:function(){
+        var customerProduct=this.props.customerProduct;
+        var customer=this.props.customer;
+        var product=customerProduct.product;
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+        var today = dd+'/'+mm+'/'+yyyy;
+
+        return(
+            <div>
+                <h3> Create New Job</h3>
+            <form>
+                <label>Customer Product</label>
+                <div className="form-group">
+                <input type="text" name="customerProduct" disabled
+
+                    value={product.manufacturer.name+" "+product.product_number+product.description.split(",")[0] }>
+                </input>
+                </div>
+                <label>Customer</label>
+                    <div className="form-group">
+                <input type="text" name="customer" disabled
+                      value={customer.name+", "+customer.town } >
+
+                </input>
+                        </div>
+
+                        <div className="form-group">
+                <input type="text" name="date" hidden
+                     value={today}>
+
+                </input>
+                            </div>
+                <label>Reported Fault</label>
+                            <div className="form-group">
+
+                <input type="text" name="reported fault">
+
+                </input>
+                            </div>
+
+                <input className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
+
+            </form>
+            </div>
+
+
+      );
+    }
+
+    });
+
+
+var CustomerForm=React.createClass(
+    {
+        render:function()
+        {
+
+
+            return(
+                <div className="container-fluid">
+
+                    <Navbar activeTab="jobs" />
+                    <div className="row">
+                        <div className="col-md-2 side-pane">
+                            </div>
+                        <div className="col-md-10 main-pane">
+                            <div className="row">
+                                <div className="col-md-3">
+                                    </div>
+                                <div className="col-md-6">
+                                    <form>
+
+
+                                        <label>Name</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="name">
+
+                                            </input>
+                                        </div>
+                                        <label>Street</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="street">
+
+                                            </input>
+                                        </div>
+                                        <label>Town</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="town">
+
+                                            </input>
+                                        </div>
+                                        <label>County</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="county">
+
+                                            </input>
+                                        </div>
+                                        <label>Phone Number</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="phone">
+
+                                            </input>
+                                        </div>
+                                        <label>email</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="email">
+
+                                            </input>
+                                        </div>
+
+                                        <input className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
+
+                                    </form>
+                                </div>
+                                <div className="col-md-3">
+                                </div>
+                            </div>
+                        </div>
+
+
+                </div>
+                    </div>
+
+
+            );
+
+        }
+
+    }
+);
+
+var ProductForm=React.createClass(
+    {
+        render:function()
+        {
+
+
+            var manOptions=manufacturers.map(function(man,index){
+                return <ManOption man={man} />});
+            return(
+                <div className="container-fluid">
+
+                    <Navbar activeTab="jobs" />
+                    <div className="row">
+                        <div className="col-md-2 side-pane">
+                        </div>
+                        <div className="col-md-10 main-pane">
+                            <div className="row">
+                                <div className="col-md-3">
+                                </div>
+                                <div className="col-md-6">
+                                    <form>
+
+
+                                        <label>Manufacturer</label>
+                                        <div className="form-group">
+
+                                            <select name="manufacturer">
+                                                {manOptions}
+                                            </select>
+                                        </div>
+                                        <label>Product Number</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="product_number">
+
+                                            </input>
+                                        </div>
+                                        <label>Description</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="description">
+
+                                            </input>
+                                        </div>
+
+
+                                        <input className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
+
+                                    </form>
+                                </div>
+                                <div className="col-md-3">
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            );
+
+        }
+
+    }
+);
+
+
+var ManOption=React.createClass(
+    {
+        render: function () {
+
+            var man = this.props.man;
+            return (
+                <option>{man.name}</option>
+            );
+        }
+    });
 
 
 ReactDOM.render( (
@@ -866,6 +1324,8 @@ ReactDOM.render( (
             <Route path="/" component={App}>
                 <IndexRoute component={JobPage}/>
                 <Route path="jobs/:id" component={JobPage}/>
+                <Route path="customer/new" component={CustomerForm}/>
+                <Route path="product/new" component={ProductForm}/>
                 <Route path="customers/:id" component={CustomerPage} />
                 <Route path="products/:id" component={ProductPage} />
                 <Route path="Parts/:id" component={PartPage} />
