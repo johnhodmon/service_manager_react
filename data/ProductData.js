@@ -1,5 +1,5 @@
 var parts=require('./PartData.js').parts;
-var manufacturers=require('./ManufacturerData').manufacturers;
+var manufacturers=require('./ManData').manufacturers;
 var products=[
 
     {

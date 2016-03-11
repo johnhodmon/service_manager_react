@@ -4,6 +4,7 @@ var jobs=require('../data/JobData.js').jobs;
 var customers=require('../data/CustomerData.js').customers;
 var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
+var manufacturers=require('../data/ManData.js').manufacturers;
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -43,7 +44,7 @@ var JobPage=React.createClass(
     {
         render:function()
             {
-                var id="1";
+                var id=1;
                 if(this.props.params.id!=null)
                 {
                     id=this.props.params.id;
@@ -156,10 +157,10 @@ var Navbar=React.createClass({
                         </div>
                     <div className="col-md-10 top-nav-div">
                         <ul className="nav  nav-tabs">
-                            <li className={(this.state.activeTab === "jobs") ? "active" : ""}> <Link to="/jobs/1" params={{id: 1}}>Jobs</Link></li>
-                            <li className={(this.state.activeTab === "customers") ? "active" : ""}> <Link to="/customers/1">Customers</Link></li>
-                            <li className={(this.state.activeTab === "products") ? "active" : ""}>   <Link to="/products/1">Products</Link></li>
-                            <li className={(this.state.activeTab === "parts") ? "active" : ""}>   <Link to="/parts/1">Stock Control</Link></li>
+                            <li className={(this.state.activeTab === "jobs") ? "active" : ""}> <Link to="/jobs/0" params={{id: 1}}>Jobs</Link></li>
+                            <li className={(this.state.activeTab === "customers") ? "active" : ""}> <Link to="/customers/0">Customers</Link></li>
+                            <li className={(this.state.activeTab === "products") ? "active" : ""}>   <Link to="/products/0">Products</Link></li>
+                            <li className={(this.state.activeTab === "parts") ? "active" : ""}>   <Link to="/parts/0">Stock Control</Link></li>
                             <li role="presentation" className="dropdown">
                                 <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     John Hodmon<span className="caret"></span>
@@ -296,6 +297,7 @@ var JobSideBar=React.createClass({
             <JobSearchbox setSortBy={this.setSortBy} setSearchText={this.setSearchText}/>
                 </div>
                 <div className="row">
+
             <JobList activeId={this.props.activeId} jobs={sortedList}/>
             </div>
                 </div>
@@ -309,10 +311,12 @@ var CustomerSideBar=React.createClass({
     render:function(){
         return(
             <div>
+
                 <div className="row search-box-div">
                     <CustomerSearchbox/>
                 </div>
                 <div className="row">
+                    <p><Link to="customer/new">New Customer +</Link></p>
                     <CustomerList activeId={this.props.activeId} customers={this.props.customers}/>
                 </div>
             </div>
@@ -329,6 +333,7 @@ var ProductSideBar=React.createClass({
                     <ProductSearchbox/>
                 </div>
                 <div className="row">
+                    <p><Link to="product/new">New Product +</Link></p>
                     <ProductList activeId={this.props.activeId} products={this.props.products}/>
                 </div>
             </div>
@@ -448,7 +453,7 @@ var JobMainPane=React.createClass({
                                 <option value="10">10</option>
                                 </select>
                             </div>
-                            <input type="button" className="btn btn-primary" action="submit" value="Add"/>
+                            <input type="button" className="btn btn-sm btn-primary" action="submit" value="Add"/>
                         </form>
 
                     </div>
@@ -494,7 +499,7 @@ var SingleJobPart=React.createClass(
             var part = jobPart.part;
             return(
                 <tr><td>{part.part_number}</td><td>{part.description}</td><td>{jobPart.quantity}</td>
-                    <td><button className="btn btn-primary">Edit</button></td><td><button className="btn btn-primary">Delete</button></td></tr>
+                    <td><button className="btn btn-sm btn-primary">Edit</button></td><td><button className="btn btn-sm btn-primary">Delete</button></td></tr>
             );
         }
     }
@@ -545,31 +550,22 @@ var CustomerMainPane=React.createClass({
 
                         </tbody>
                     </table>
+                    <JobForm customer={customer} customerProduct={customer.customerProducts[0]} />
                     <h3><strong>Register product for this customer</strong></h3>
                     <form>
+                        <label for="productNumber">Product</label>
                         <div className="form-group">
-                            <label for="productNumber">Product</label>
+
                             <select>
                                 {productOptions}
                             </select>
                         </div>
-
+                        <label>Serial Number</label>
                         <div className="form-group">
-                            <label for="quantity" >Quantity</label>
-                            <select>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
+                           <input name="serialNumber" type="text"></input>
+
                         </div>
-                        <input type="button" className="btn btn-primary" action="submit" value="Add"/>
+                        <input type="button" className="btn btn-sm btn-primary" action="submit" value="Add"/>
                     </form>
                 </div>
                 <div className="col-md-3">
@@ -600,7 +596,8 @@ var SingleCustomerProduct=React.createClass({
         var sp=this.props.sp;
         return(
             <tr><td>{sp.product.manufacturer.name}</td><td>{sp.product.product_number}</td>
-                <td>{sp.serialNumber}</td><td>{sp.product.description}</td></tr>
+                <td>{sp.serialNumber}</td><td>{sp.product.description}</td><td>
+                   <button className="btn btn-sm btn-primary"> Create Job</button></td></tr>
 
         );
     }
@@ -679,7 +676,7 @@ var ProductMainPane=React.createClass({
                                 <option value="10">10</option>
                             </select>
                         </div>
-                        <input type="button" className="btn btn-primary" action="submit" value="Add"/>
+                        <input type="button" className="btn btn-sm btn-primary" action="submit" value="Add"/>
                     </form>
                 </div>
 
@@ -720,7 +717,7 @@ var SingleBomItem=React.createClass(
             var part = bi.part;
             return(
                 <tr><td>{part.part_number}</td><td>{part.description}</td><td>{bi.quantity}</td>
-                    <td><button className="btn btn-primary">Edit</button></td><td><button className="btn btn-primary">Delete</button></td></tr>
+                    <td><button className="btn btn-sm btn-primary">Edit</button></td><td><button className="btn btn-primary">Delete</button></td></tr>
             );
         }
     }
@@ -1092,6 +1089,234 @@ var SinglePart=React.createClass({
 
 
 
+var JobForm=React.createClass(
+    {
+
+
+    render:function(){
+        var customerProduct=this.props.customerProduct;
+        var customer=this.props.customer;
+        var product=customerProduct.product;
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+        var today = dd+'/'+mm+'/'+yyyy;
+
+        return(
+            <div>
+                <h3> Create New Job</h3>
+            <form>
+                <label>Customer Product</label>
+                <div className="form-group">
+                <input type="text" name="customerProduct" disabled
+
+                    value={product.manufacturer.name+" "+product.product_number+product.description.split(",")[0] }>
+                </input>
+                </div>
+                <label>Customer</label>
+                    <div className="form-group">
+                <input type="text" name="customer" disabled
+                      value={customer.name+", "+customer.town } >
+
+                </input>
+                        </div>
+
+                        <div className="form-group">
+                <input type="text" name="date" hidden
+                     value={today}>
+
+                </input>
+                            </div>
+                <label>Reported Fault</label>
+                            <div className="form-group">
+
+                <input type="text" name="reported fault">
+
+                </input>
+                            </div>
+
+                <input className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
+
+            </form>
+            </div>
+
+
+      );
+    }
+
+    });
+
+
+var CustomerForm=React.createClass(
+    {
+        render:function()
+        {
+
+
+            return(
+                <div className="container-fluid">
+
+                    <Navbar activeTab="jobs" />
+                    <div className="row">
+                        <div className="col-md-2 side-pane">
+                            </div>
+                        <div className="col-md-10 main-pane">
+                            <div className="row">
+                                <div className="col-md-3">
+                                    </div>
+                                <div className="col-md-6">
+                                    <form>
+
+
+                                        <label>Name</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="name">
+
+                                            </input>
+                                        </div>
+                                        <label>Street</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="street">
+
+                                            </input>
+                                        </div>
+                                        <label>Town</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="town">
+
+                                            </input>
+                                        </div>
+                                        <label>County</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="county">
+
+                                            </input>
+                                        </div>
+                                        <label>Phone Number</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="phone">
+
+                                            </input>
+                                        </div>
+                                        <label>email</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="email">
+
+                                            </input>
+                                        </div>
+
+                                        <input className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
+
+                                    </form>
+                                </div>
+                                <div className="col-md-3">
+                                </div>
+                            </div>
+                        </div>
+
+
+                </div>
+                    </div>
+
+
+            );
+
+        }
+
+    }
+);
+
+var ProductForm=React.createClass(
+    {
+        render:function()
+        {
+
+
+            var manOptions=manufacturers.map(function(man,index){
+                return <ManOption man={man} />});
+            return(
+                <div className="container-fluid">
+
+                    <Navbar activeTab="jobs" />
+                    <div className="row">
+                        <div className="col-md-2 side-pane">
+                        </div>
+                        <div className="col-md-10 main-pane">
+                            <div className="row">
+                                <div className="col-md-3">
+                                </div>
+                                <div className="col-md-6">
+                                    <form>
+
+
+                                        <label>Manufacturer</label>
+                                        <div className="form-group">
+
+                                            <select name="manufacturer">
+                                                {manOptions}
+                                            </select>
+                                        </div>
+                                        <label>Product Number</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="product_number">
+
+                                            </input>
+                                        </div>
+                                        <label>Description</label>
+                                        <div className="form-group">
+
+                                            <input type="text" name="description">
+
+                                            </input>
+                                        </div>
+
+
+                                        <input className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
+
+                                    </form>
+                                </div>
+                                <div className="col-md-3">
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            );
+
+        }
+
+    }
+);
+
+
+var ManOption=React.createClass(
+    {
+        render: function () {
+
+            var man = this.props.man;
+            return (
+                <option>{man.name}</option>
+            );
+        }
+    });
 
 
 ReactDOM.render( (
@@ -1099,6 +1324,8 @@ ReactDOM.render( (
             <Route path="/" component={App}>
                 <IndexRoute component={JobPage}/>
                 <Route path="jobs/:id" component={JobPage}/>
+                <Route path="customer/new" component={CustomerForm}/>
+                <Route path="product/new" component={ProductForm}/>
                 <Route path="customers/:id" component={CustomerPage} />
                 <Route path="products/:id" component={ProductPage} />
                 <Route path="Parts/:id" component={PartPage} />

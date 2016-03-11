@@ -312,7 +312,6 @@ var manufacturers=[
 ]
 exports.manufacturers=manufacturers;
 
-
 },{}],4:[function(require,module,exports){
 var parts= [
 
@@ -666,7 +665,7 @@ exports.parts=parts;
 
 },{}],5:[function(require,module,exports){
 var parts=require('./PartData.js').parts;
-var manufacturers=require('./ManufacturerData').manufacturers;
+var manufacturers=require('./ManData').manufacturers;
 var products=[
 
     {
@@ -948,7 +947,7 @@ var products=[
 
 exports.products=products;
 
-},{"./ManufacturerData":3,"./PartData.js":4}],6:[function(require,module,exports){
+},{"./ManData":3,"./PartData.js":4}],6:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -30913,6 +30912,7 @@ var jobs=require('../data/JobData.js').jobs;
 var customers=require('../data/CustomerData.js').customers;
 var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
+var manufacturers=require('../data/ManData.js').manufacturers;
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -30952,7 +30952,7 @@ var JobPage=React.createClass(
     {displayName: "JobPage",
         render:function()
             {
-                var id="1";
+                var id=1;
                 if(this.props.params.id!=null)
                 {
                     id=this.props.params.id;
@@ -31065,10 +31065,10 @@ var Navbar=React.createClass({displayName: "Navbar",
                         ), 
                     React.createElement("div", {className: "col-md-10 top-nav-div"}, 
                         React.createElement("ul", {className: "nav  nav-tabs"}, 
-                            React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs/1", params: {id: 1}}, "Jobs")), 
-                            React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers/1"}, "Customers")), 
-                            React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products/1"}, "Products")), 
-                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts/1"}, "Stock Control")), 
+                            React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs/0", params: {id: 1}}, "Jobs")), 
+                            React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers/0"}, "Customers")), 
+                            React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products/0"}, "Products")), 
+                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts/0"}, "Stock Control")), 
                             React.createElement("li", {role: "presentation", className: "dropdown"}, 
                                 React.createElement("a", {className: "dropdown-toggle", "data-toggle": "dropdown", href: "#", role: "button", "aria-haspopup": "true", "aria-expanded": "false"}, 
                                     "John Hodmon", React.createElement("span", {className: "caret"})
@@ -31205,6 +31205,7 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
             React.createElement(JobSearchbox, {setSortBy: this.setSortBy, setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
+
             React.createElement(JobList, {activeId: this.props.activeId, jobs: sortedList})
             )
                 )
@@ -31218,10 +31219,12 @@ var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
     render:function(){
         return(
             React.createElement("div", null, 
+
                 React.createElement("div", {className: "row search-box-div"}, 
                     React.createElement(CustomerSearchbox, null)
                 ), 
                 React.createElement("div", {className: "row"}, 
+                    React.createElement("p", null, React.createElement(Link, {to: "customer/new"}, "New Customer +")), 
                     React.createElement(CustomerList, {activeId: this.props.activeId, customers: this.props.customers})
                 )
             )
@@ -31238,6 +31241,7 @@ var ProductSideBar=React.createClass({displayName: "ProductSideBar",
                     React.createElement(ProductSearchbox, null)
                 ), 
                 React.createElement("div", {className: "row"}, 
+                    React.createElement("p", null, React.createElement(Link, {to: "product/new"}, "New Product +")), 
                     React.createElement(ProductList, {activeId: this.props.activeId, products: this.props.products})
                 )
             )
@@ -31357,7 +31361,7 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
                                 React.createElement("option", {value: "10"}, "10")
                                 )
                             ), 
-                            React.createElement("input", {type: "button", className: "btn btn-primary", action: "submit", value: "Add"})
+                            React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
                         )
 
                     ), 
@@ -31403,7 +31407,7 @@ var SingleJobPart=React.createClass(
             var part = jobPart.part;
             return(
                 React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), React.createElement("td", null, jobPart.quantity), 
-                    React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Edit")), React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Delete")))
+                    React.createElement("td", null, React.createElement("button", {className: "btn btn-sm btn-primary"}, "Edit")), React.createElement("td", null, React.createElement("button", {className: "btn btn-sm btn-primary"}, "Delete")))
             );
         }
     }
@@ -31454,31 +31458,22 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
 
                         )
                     ), 
+                    React.createElement(JobForm, {customer: customer, customerProduct: customer.customerProducts[0]}), 
                     React.createElement("h3", null, React.createElement("strong", null, "Register product for this customer")), 
                     React.createElement("form", null, 
+                        React.createElement("label", {for: "productNumber"}, "Product"), 
                         React.createElement("div", {className: "form-group"}, 
-                            React.createElement("label", {for: "productNumber"}, "Product"), 
+
                             React.createElement("select", null, 
                                 productOptions
                             )
                         ), 
-
+                        React.createElement("label", null, "Serial Number"), 
                         React.createElement("div", {className: "form-group"}, 
-                            React.createElement("label", {for: "quantity"}, "Quantity"), 
-                            React.createElement("select", null, 
-                                React.createElement("option", {value: "1"}, "1"), 
-                                React.createElement("option", {value: "2"}, "2"), 
-                                React.createElement("option", {value: "3"}, "3"), 
-                                React.createElement("option", {value: "4"}, "4"), 
-                                React.createElement("option", {value: "5"}, "5"), 
-                                React.createElement("option", {value: "6"}, "6"), 
-                                React.createElement("option", {value: "7"}, "7"), 
-                                React.createElement("option", {value: "8"}, "8"), 
-                                React.createElement("option", {value: "9"}, "9"), 
-                                React.createElement("option", {value: "10"}, "10")
-                            )
+                           React.createElement("input", {name: "serialNumber", type: "text"})
+
                         ), 
-                        React.createElement("input", {type: "button", className: "btn btn-primary", action: "submit", value: "Add"})
+                        React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
                     )
                 ), 
                 React.createElement("div", {className: "col-md-3"}
@@ -31509,7 +31504,8 @@ var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct
         var sp=this.props.sp;
         return(
             React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, sp.product.product_number), 
-                React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description))
+                React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description), React.createElement("td", null, 
+                   React.createElement("button", {className: "btn btn-sm btn-primary"}, " Create Job")))
 
         );
     }
@@ -31588,7 +31584,7 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
                                 React.createElement("option", {value: "10"}, "10")
                             )
                         ), 
-                        React.createElement("input", {type: "button", className: "btn btn-primary", action: "submit", value: "Add"})
+                        React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
                     )
                 ), 
 
@@ -31629,7 +31625,7 @@ var SingleBomItem=React.createClass(
             var part = bi.part;
             return(
                 React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), React.createElement("td", null, bi.quantity), 
-                    React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Edit")), React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Delete")))
+                    React.createElement("td", null, React.createElement("button", {className: "btn btn-sm btn-primary"}, "Edit")), React.createElement("td", null, React.createElement("button", {className: "btn btn-primary"}, "Delete")))
             );
         }
     }
@@ -32001,6 +31997,234 @@ var SinglePart=React.createClass({displayName: "SinglePart",
 
 
 
+var JobForm=React.createClass(
+    {displayName: "JobForm",
+
+
+    render:function(){
+        var customerProduct=this.props.customerProduct;
+        var customer=this.props.customer;
+        var product=customerProduct.product;
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+        var today = dd+'/'+mm+'/'+yyyy;
+
+        return(
+            React.createElement("div", null, 
+                React.createElement("h3", null, " Create New Job"), 
+            React.createElement("form", null, 
+                React.createElement("label", null, "Customer Product"), 
+                React.createElement("div", {className: "form-group"}, 
+                React.createElement("input", {type: "text", name: "customerProduct", disabled: true, 
+
+                    value: product.manufacturer.name+" "+product.product_number+product.description.split(",")[0]}
+                )
+                ), 
+                React.createElement("label", null, "Customer"), 
+                    React.createElement("div", {className: "form-group"}, 
+                React.createElement("input", {type: "text", name: "customer", disabled: true, 
+                      value: customer.name+", "+customer.town}
+
+                )
+                        ), 
+
+                        React.createElement("div", {className: "form-group"}, 
+                React.createElement("input", {type: "text", name: "date", hidden: true, 
+                     value: today}
+
+                )
+                            ), 
+                React.createElement("label", null, "Reported Fault"), 
+                            React.createElement("div", {className: "form-group"}, 
+
+                React.createElement("input", {type: "text", name: "reported fault"}
+
+                )
+                            ), 
+
+                React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
+
+            )
+            )
+
+
+      );
+    }
+
+    });
+
+
+var CustomerForm=React.createClass(
+    {displayName: "CustomerForm",
+        render:function()
+        {
+
+
+            return(
+                React.createElement("div", {className: "container-fluid"}, 
+
+                    React.createElement(Navbar, {activeTab: "jobs"}), 
+                    React.createElement("div", {className: "row"}, 
+                        React.createElement("div", {className: "col-md-2 side-pane"}
+                            ), 
+                        React.createElement("div", {className: "col-md-10 main-pane"}, 
+                            React.createElement("div", {className: "row"}, 
+                                React.createElement("div", {className: "col-md-3"}
+                                    ), 
+                                React.createElement("div", {className: "col-md-6"}, 
+                                    React.createElement("form", null, 
+
+
+                                        React.createElement("label", null, "Name"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "name"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Street"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "street"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Town"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "town"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "County"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "county"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Phone Number"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "phone"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "email"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "email"}
+
+                                            )
+                                        ), 
+
+                                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
+
+                                    )
+                                ), 
+                                React.createElement("div", {className: "col-md-3"}
+                                )
+                            )
+                        )
+
+
+                )
+                    )
+
+
+            );
+
+        }
+
+    }
+);
+
+var ProductForm=React.createClass(
+    {displayName: "ProductForm",
+        render:function()
+        {
+
+
+            var manOptions=manufacturers.map(function(man,index){
+                return React.createElement(ManOption, {man: man})});
+            return(
+                React.createElement("div", {className: "container-fluid"}, 
+
+                    React.createElement(Navbar, {activeTab: "jobs"}), 
+                    React.createElement("div", {className: "row"}, 
+                        React.createElement("div", {className: "col-md-2 side-pane"}
+                        ), 
+                        React.createElement("div", {className: "col-md-10 main-pane"}, 
+                            React.createElement("div", {className: "row"}, 
+                                React.createElement("div", {className: "col-md-3"}
+                                ), 
+                                React.createElement("div", {className: "col-md-6"}, 
+                                    React.createElement("form", null, 
+
+
+                                        React.createElement("label", null, "Manufacturer"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("select", {name: "manufacturer"}, 
+                                                manOptions
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Product Number"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "product_number"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Description"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "description"}
+
+                                            )
+                                        ), 
+
+
+                                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
+
+                                    )
+                                ), 
+                                React.createElement("div", {className: "col-md-3"}
+                                )
+                            )
+                        )
+
+
+                    )
+                )
+
+
+            );
+
+        }
+
+    }
+);
+
+
+var ManOption=React.createClass(
+    {displayName: "ManOption",
+        render: function () {
+
+            var man = this.props.man;
+            return (
+                React.createElement("option", null, man.name)
+            );
+        }
+    });
 
 
 ReactDOM.render( (
@@ -32008,6 +32232,8 @@ ReactDOM.render( (
             React.createElement(Route, {path: "/", component: App}, 
                 React.createElement(IndexRoute, {component: JobPage}), 
                 React.createElement(Route, {path: "jobs/:id", component: JobPage}), 
+                React.createElement(Route, {path: "customer/new", component: CustomerForm}), 
+                React.createElement(Route, {path: "product/new", component: ProductForm}), 
                 React.createElement(Route, {path: "customers/:id", component: CustomerPage}), 
                 React.createElement(Route, {path: "products/:id", component: ProductPage}), 
                 React.createElement(Route, {path: "Parts/:id", component: PartPage})
@@ -32017,7 +32243,7 @@ ReactDOM.render( (
     document.getElementById('mount-point')
 );
 
-},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/PartData.js":4,"../data/ProductData.js":5,"lodash":52,"react":207,"react-dom":54,"react-router":74}],211:[function(require,module,exports){
+},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/ManData.js":3,"../data/PartData.js":4,"../data/ProductData.js":5,"lodash":52,"react":207,"react-dom":54,"react-router":74}],211:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
