@@ -225,9 +225,11 @@ getInitialState:function()
 
     addPartVisible:function()
     {
+        console.log("make visible");
         this.setState ({
 
                 addPartVisibility:""})
+
     },
 
     addPartInVisible:function()
@@ -247,7 +249,7 @@ getInitialState:function()
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <JobMainPane addPartVisible={this.addPartVisible} addPartInVisible={this.addPartInVisible} partsUsedVisibility={this.state.partsUsedVisibility}  jobDisplayed={this.state.jobDisplayed} jobs={this.props.jobs} parts={this.props.parts}/>
+                    <JobMainPane addPartVisibility={this.state.addPartVisibility} addPartVisible={this.addPartVisible} addPartInVisible={this.addPartInVisible} partsUsedVisibility={this.state.partsUsedVisibility}  jobDisplayed={this.state.jobDisplayed} jobs={this.props.jobs} parts={this.props.parts}/>
                 </div>
 
             </div>
@@ -465,14 +467,19 @@ getInitialState:function()
     makeVisible:function()
     {
 
-        this.props.addPartVisible;
+        this.props.addPartVisible();
     },
 
 
 
     undo:function(e)
     {
-        this.props.addPartInVisible;
+        this.props.addPartInVisible();
+    },
+
+    save:function(e)
+    {
+        this.props.addPartInVisible();
     },
 
 
@@ -485,6 +492,7 @@ getInitialState:function()
         var product=jobDisplayed.customerProduct.product;
         var jobParts=[];
         var parts=this.props.parts;
+        console.log("Add Part Visibility"+this.props.addPartVisibility);
 
         if(jobDisplayed.jobParts!=null)
         {
@@ -538,7 +546,7 @@ getInitialState:function()
                             <tbody>
                             <tr className={this.props.partsUsedVisibility}><td></td><td>There were no parts used on this job</td><td> Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                             {jobParts}
-                            <tr className={this.props.partsUsedVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumber}>{selectOptions}</select></td>
+                            <tr className={this.props.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumber}>{selectOptions}</select></td>
                                 <td>
                                     <select>
                                         <option value="1">1</option>

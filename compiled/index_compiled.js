@@ -31519,9 +31519,11 @@ getInitialState:function()
 
     addPartVisible:function()
     {
+        console.log("make visible");
         this.setState ({
 
                 addPartVisibility:""})
+
     },
 
     addPartInVisible:function()
@@ -31541,7 +31543,7 @@ getInitialState:function()
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(JobMainPane, {addPartVisible: this.addPartVisible, addPartInVisible: this.addPartInVisible, partsUsedVisibility: this.state.partsUsedVisibility, jobDisplayed: this.state.jobDisplayed, jobs: this.props.jobs, parts: this.props.parts})
+                    React.createElement(JobMainPane, {addPartVisibility: this.state.addPartVisibility, addPartVisible: this.addPartVisible, addPartInVisible: this.addPartInVisible, partsUsedVisibility: this.state.partsUsedVisibility, jobDisplayed: this.state.jobDisplayed, jobs: this.props.jobs, parts: this.props.parts})
                 )
 
             )
@@ -31759,14 +31761,19 @@ getInitialState:function()
     makeVisible:function()
     {
 
-        this.props.addPartVisible;
+        this.props.addPartVisible();
     },
 
 
 
     undo:function(e)
     {
-        this.props.addPartInVisible;
+        this.props.addPartInVisible();
+    },
+
+    save:function(e)
+    {
+        this.props.addPartInVisible();
     },
 
 
@@ -31779,6 +31786,7 @@ getInitialState:function()
         var product=jobDisplayed.customerProduct.product;
         var jobParts=[];
         var parts=this.props.parts;
+        console.log("Add Part Visibility"+this.props.addPartVisibility);
 
         if(jobDisplayed.jobParts!=null)
         {
@@ -31832,7 +31840,7 @@ getInitialState:function()
                             React.createElement("tbody", null, 
                             React.createElement("tr", {className: this.props.partsUsedVisibility}, React.createElement("td", null), React.createElement("td", null, "There were no parts used on this job"), React.createElement("td", null, " Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
                             jobParts, 
-                            React.createElement("tr", {className: this.props.partsUsedVisibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartNumber}, selectOptions)), 
+                            React.createElement("tr", {className: this.props.addPartVisibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartNumber}, selectOptions)), 
                                 React.createElement("td", null, 
                                     React.createElement("select", null, 
                                         React.createElement("option", {value: "1"}, "1"), 
