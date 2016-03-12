@@ -31355,7 +31355,7 @@ var JobPage=React.createClass(
 
                    React.createElement(Navbar, {activeTab: "jobs"}), 
 
-                   React.createElement(JobPageContent, {activeId: id, jobs: jobs, parts: parts})
+                   React.createElement(JobPageContent, {jobDisplayed: this.props.jobDisplayed, jobs: jobs, parts: parts})
                    )
 
 
@@ -31489,23 +31489,46 @@ var JobPageContent=React.createClass({displayName: "JobPageContent",
 getInitialState:function()
 {
     var job=jobs[0];
+    var puv=""
     if(job.jobParts!=null) {
-        return ({partsUsedVisibility: "invisible"});
+       puv="invisible";
     }
 
-    return ({partsUsedVisibility: ""});
+    return ({
+        partsUsedVisibility:puv,
+        addPartVisibility:"invisible",
+        jobDisplayed:job
+    });
 
 },
 
-    setPartsUsedVisibility:function(job)
+    selectNewJob:function(job)
     {
-        if(job.jobParts!=null) {
-            this.setState({partsUsedVisibility: "invisible"});
-        }
-        else {
-            this.setState({partsUsedVisibility: ""});
-        }
 
+        var puv=""
+        if(job.jobParts!=null) {
+            puv="invisible";
+        }
+       this.setState ({
+            partsUsedVisibility:puv,
+            addPartVisibility:"invisible",
+            jobDisplayed:job
+        });
+
+    },
+
+    addPartVisible:function()
+    {
+        this.setState ({
+
+                addPartVisibility:""})
+    },
+
+    addPartInVisible:function()
+    {
+        this.setState ({
+
+            addPartVisibility:"invisible"})
     },
 
     render:function()
@@ -31514,11 +31537,11 @@ getInitialState:function()
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(JobSideBar, {setPartsUsedVisibility: this.setPartsUsedVisibility, activeId: this.props.activeId, jobs: this.props.jobs})
+                    React.createElement(JobSideBar, {selectNewJob: this.selectNewJob, jobDisplayed: this.state.jobDisplayed, jobs: this.props.jobs})
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(JobMainPane, {partsUsedVisibility: this.state.partsUsedVisibility, activeId: this.props.activeId, jobs: this.props.jobs, parts: this.props.parts})
+                    React.createElement(JobMainPane, {addPartVisible: this.addPartVisible, addPartInVisible: this.addPartInVisible, partsUsedVisibility: this.state.partsUsedVisibility, jobDisplayed: this.state.jobDisplayed, jobs: this.props.jobs, parts: this.props.parts})
                 )
 
             )
@@ -31557,11 +31580,8 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
         this.setState({ sortBy:value})
     },
 
-   setPartsUsedVisibility:function(job)
-   {
 
-       this.props.setPartsUsedVisibility(job);
-   },
+
 
     render:function(){
         var jobs=this.props.jobs;
@@ -31570,7 +31590,7 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
             return job.customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
         }.bind(this));
 
-         var sortedList=_.sortBy(list,this.state.sortBy)
+         var sortedList=_.sortBy(list,this.state.sortBy);
 
 
         return(
@@ -31580,7 +31600,7 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
                 ), 
                 React.createElement("div", {className: "row"}, 
 
-            React.createElement(JobList, {setPartsUsedVisibility: this.setPartsUsedVisibility, activeId: this.props.activeId, jobs: sortedList})
+            React.createElement(JobList, {selectNewJob: this.props.selectNewJob, jobDisplayed: this.props.jobDisplayed, jobs: sortedList})
             )
                 )
 
@@ -31594,6 +31614,128 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
 
 
 
+var JobSearchbox=React.createClass({displayName: "JobSearchbox",
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+        console.log("value: "+e.target.value);
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSortBy:function(e)
+    {
+        e.preventDefault();
+        console.log("sort: "+e.target.value);
+        this.props.setSortBy(e.target.value);
+    },
+    render: function(){
+
+
+
+        return(
+
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("select", {onChange: this.setSortBy, id: "sort"}, 
+                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
+                        React.createElement("option", {value: "date"}, "Date"), 
+                        React.createElement("option", {value: "customer.name"}, "Customer")
+
+                    )
+                )
+
+            )
+        );
+
+    }
+});
+
+
+
+
+
+
+var JobList=React.createClass(
+    {displayName: "JobList",
+
+        setPartsUsedVisibility:function(job)
+        {
+
+            this.props.setPartsUsedVisibility(job);
+        },
+
+
+        render:function()
+        {
+
+            var jobsToDisplay = this.props.jobs.map(function(job,index) {
+                return React.createElement(SingleJob, {jobDisplayed: this.props.jobDisplayed, selectNewJob: this.props.selectNewJob, job: job, key: index})
+            }.bind(this));
+
+
+
+            return(
+
+                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
+                    jobsToDisplay
+
+                )
+
+            );
+        }
+
+    }
+
+
+);
+
+
+
+
+
+
+var SingleJob=React.createClass({displayName: "SingleJob",
+
+
+    setPartsUsedVisibility:function()
+    {
+        var job=this.props.job;
+        this.props.setPartsUsedVisibility(job);
+    },
+
+selectNewJob:function()
+{
+   var job=this.props.job;
+    this.props.selectNewJob(job);
+},
+
+
+    render: function () {
+        var job=this.props.job;
+        var jobDisplayed=this.props.jobDisplayed;
+
+        return (
+
+            React.createElement("li", {onClick: this.selectNewJob, className: (jobDisplayed.id === +job.id) ? "active" : "", role: "presentation"}, 
+
+
+                React.createElement(Link, {to: "/jobs/"+job.id}, React.createElement("h3", null, job.date), 
+                    React.createElement("p", null, job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0], React.createElement("br", null), 
+                        job.customer.name, "  ", React.createElement("br", null), 
+                        job.customer.town, React.createElement("br", null), 
+                        job.status, React.createElement("br", null)))
+
+
+
+
+
+            ));
+    }
+});
 
 
 
@@ -31601,15 +31743,11 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
 
 var JobMainPane=React.createClass({displayName: "JobMainPane",
 
-    getInitialState: function()
-    {
-        var jobToShow=jobs[this.props.activeId];
-        var product=jobToShow.customerProduct.product;
-        return{visibility:"invisible"
 
-        };
-    },
-
+getInitialState:function()
+{
+    return({partNumber:""});
+},
 
 
     setPartNumber:function(e)
@@ -31618,36 +31756,33 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
         this.setState({partNumber:e.target.value})
     },
 
-    makeVisible:function(e)
+    makeVisible:function()
     {
-        e.preventDefault();
-        this.setState({visibility:"" })
+
+        this.props.addPartVisible;
     },
 
-    save:function(e)
-    {
-        e.preventDefault();
-        this.setState({visibility:"invisible" })
-    },
+
 
     undo:function(e)
     {
-        e.preventDefault();
-        this.setState({visibility:"invisible" })
+        this.props.addPartInVisible;
     },
+
+
     render:function(){
         var jobs=this.props.jobs;
-        var partsUsedVisibility=this.props.partsUsedVisibility;
-        var jobToShow=jobs[this.props.activeId];
-        var customer=jobToShow.customer;
-        var customerProduct=jobToShow.customerProduct;
-        var product=jobToShow.customerProduct.product;
+
+        var jobDisplayed=this.props.jobDisplayed;
+        var customer=jobDisplayed.customer;
+        var customerProduct=jobDisplayed.customerProduct;
+        var product=jobDisplayed.customerProduct.product;
         var jobParts=[];
         var parts=this.props.parts;
 
-        if(jobToShow.jobParts!=null)
+        if(jobDisplayed.jobParts!=null)
         {
-            jobParts=jobToShow.jobParts.map(function(jp,index)
+            jobParts=jobDisplayed.jobParts.map(function(jp,index)
         {
             return React.createElement(SingleJobPart, {jobPart: jp, index: index, makeVisible: this.makeVisible})
         }.bind(this));
@@ -31676,8 +31811,8 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
                 React.createElement("div", {className: "col-md-6"}, 
                 React.createElement("h3", null, React.createElement("strong", null, "Job Details")), 
                     React.createElement("p", null, 
-                        "Fault reported on ", jobToShow.date, React.createElement("br", null), 
-                        "Fault description: ", jobToShow.reported_fault, React.createElement("br", null)
+                        "Fault reported on ", jobDisplayed.date, React.createElement("br", null), 
+                        "Fault description: ", jobDisplayed.reported_fault, React.createElement("br", null)
 
                     ), 
 
@@ -31695,9 +31830,9 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
                             ), 
 
                             React.createElement("tbody", null, 
-                            React.createElement("tr", {className: partsUsedVisibility}, React.createElement("td", null), React.createElement("td", null, "There were no parts used on this job"), React.createElement("td", null, " Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
+                            React.createElement("tr", {className: this.props.partsUsedVisibility}, React.createElement("td", null), React.createElement("td", null, "There were no parts used on this job"), React.createElement("td", null, " Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
                             jobParts, 
-                            React.createElement("tr", {className: this.state.visibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartNumber}, selectOptions)), 
+                            React.createElement("tr", {className: this.props.partsUsedVisibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartNumber}, selectOptions)), 
                                 React.createElement("td", null, 
                                     React.createElement("select", null, 
                                         React.createElement("option", {value: "1"}, "1"), 
@@ -31776,139 +31911,6 @@ var SingleJobPart=React.createClass(
         }
     }
 );
-
-
-
-
-
-
-
-
-
-
-var JobSearchbox=React.createClass({displayName: "JobSearchbox",
-
-    setSearchText:function(e)
-    {
-        e.preventDefault();
-        console.log("value: "+e.target.value);
-        this.props.setSearchText(e.target.value);
-    },
-
-    setSortBy:function(e)
-    {
-        e.preventDefault();
-        console.log("sort: "+e.target.value);
-        this.props.setSortBy(e.target.value);
-    },
-    render: function(){
-
-
-
-        return(
-
-                React.createElement("div", null, 
-                    React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
-                     ), 
-                    React.createElement("div", {className: "row"}, 
-                    React.createElement("select", {onChange: this.setSortBy, id: "sort"}, 
-                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
-                        React.createElement("option", {value: "date"}, "Date"), 
-                        React.createElement("option", {value: "customer.name"}, "Customer")
-
-                    )
-                        )
-
-            )
-        );
-
-    }
-});
-
-
-
-
-
-
-var JobList=React.createClass(
-    {displayName: "JobList",
-
-        setPartsUsedVisibility:function(job)
-        {
-
-            this.props.setPartsUsedVisibility(job);
-        },
-        render:function()
-        {
-
-            var jobsToDisplay = this.props.jobs.map(function(job,index) {
-                return React.createElement(SingleJob, {setPartsUsedVisibility: this.setPartsUsedVisibility, activeId: this.props.activeId, job: job, key: index})
-            }.bind(this));
-
-
-
-            return(
-
-                    React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
-                        jobsToDisplay
-
-                    )
-
-            );
-        }
-
-    }
-
-
-);
-
-
-
-
-
-
-var SingleJob=React.createClass({displayName: "SingleJob",
-
-
-    setPartsUsedVisibility:function()
-    {
-        var job=this.props.job;
-        this.props.setPartsUsedVisibility(job);
-    },
-
-
-    render: function () {
-        var job=this.props.job;
-
-        return (
-
-            React.createElement("li", {onClick: this.setPartsUsedVisibility, className: (this.props.activeId === ""+job.id) ? "active" : "", role: "presentation"}, 
-
-
-                 React.createElement(Link, {to: "/jobs/"+job.id}, React.createElement("h3", null, job.date), 
-                    React.createElement("p", null, job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0], React.createElement("br", null), 
-                    job.customer.name, "  ", React.createElement("br", null), 
-                    job.customer.town, React.createElement("br", null), 
-                        job.status, React.createElement("br", null)))
-
-
-
-
-
-            ));
-    }
-});
-
-
-
-
-
-
-
-
-
-
 
 
 
