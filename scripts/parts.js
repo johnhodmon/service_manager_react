@@ -12,22 +12,49 @@ var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
 
 var PartPageContent=React.createClass({
+
+    getInitialState:function()
+    {
+        var part=parts[0];
+
+
+        return ({
+
+            partDisplayed:part
+        });
+
+    },
+
+    selectNewPart:function(part)
+    {
+
+
+        this.setState ({
+
+            partDisplayed:part
+        });
+
+    },
+
+
     render:function()
     {
         return(
             <div className="row">
                 <div className="col-md-2 side-pane">
-                    <PartSideBar activeId={this.props.activeId} parts={this.props.parts}/>
+                    <PartSideBar selectNewPart={this.selectNewPart} partDisplayed={this.state.partDisplayed} parts={this.props.parts}/>
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <PartMainPane activeId={this.props.activeId} parts={this.props.parts}/>
+                    <PartMainPane partDisplayed={this.state.partDisplayed}  parts={this.props.parts}/>
                 </div>
 
             </div>
         );
     }
 });
+
+
 
 var PartSideBar=React.createClass({
     render:function(){
@@ -37,52 +64,13 @@ var PartSideBar=React.createClass({
                     <PartSearchbox/>
                 </div>
                 <div className="row">
-                    <PartList activeId={this.props.activeId} parts={this.props.parts}/>
+                    <PartList selectNewPart={this.props.selectNewPart} partDisplayed={this.props.partDisplayed}  parts={this.props.parts}/>
                 </div>
             </div>
 
         );
     }
 });
-
-
-
-var PartMainPane=React.createClass({
-    render:function(){
-        var parts=this.props.parts;
-        var part=parts[this.props.activeId]
-        return(
-
-            <div>
-                <div className="col-md-3">
-                    <h3><strong>Part Details</strong></h3>
-                    <p>
-                        {part.part_number}<br/>
-                        {part.part_number}<br/>
-                        {part.cost}<br/>
-                        {part.quantity_in_stock}<br/>
-
-                    </p>
-                </div>
-                <div className="col-md-6">
-                    <h3><strong>Products Where Used</strong></h3>
-                    <table className="table table-striped">
-                        <thead>
-                        <tr><th>Product Name</th><th>Description</th><th>quantity</th></tr>
-                        </thead>
-                        <tbody><tr><td>Data</td><td>data</td><td>data</td></tr></tbody>
-                    </table>
-                </div>
-                <div className="col-md-3">
-                    <h3><strong>History</strong></h3>
-                </div>
-
-            </div>
-
-        );
-    }
-});
-
 
 var PartSearchbox=React.createClass({
     render: function(){
@@ -107,12 +95,14 @@ var PartSearchbox=React.createClass({
 var PartList=React.createClass(
     {
 
+
+
         render:function()
         {
 
 
             var partsToDisplay = this.props.parts.map(function(part,index) {
-                return <SinglePart activeId={this.props.activeId}  part={part} key={index} />
+                return <SinglePart selectNewPart={this.props.selectNewPart} partDisplayed={this.props.partDisplayed} activeId={this.props.activeId}  part={part} key={index} />
             }.bind(this));
 
 
@@ -137,14 +127,18 @@ var SinglePart=React.createClass({
 
 
 
-
+    selectNewPart:function()
+    {
+        var part=this.props.part;
+        this.props.selectNewPart(part);
+    },
 
     render: function () {
         var part=this.props.part;
 
         return (
 
-            <li  className={(this.props.activeId === ""+part.id) ? "active" : ""} role="presentation" >
+            <li onClick={this.selectNewPart}   className={(this.props.partDisplayed.id === part.id) ? "active" : ""} role="presentation" >
 
 
                 <Link  to={"/parts/"+part.id} ><h3>{part.description}</h3>
@@ -157,4 +151,45 @@ var SinglePart=React.createClass({
             </li>);
     }
 });
+
+
+
+var PartMainPane=React.createClass({
+    render:function(){
+        var parts=this.props.parts;
+        var partDisplayed=this.props.partDisplayed;
+        return(
+
+            <div>
+                <div className="col-md-3">
+                    <h3><strong>Part Details</strong></h3>
+                    <p>
+                        {partDisplayed.part_number}<br/>
+                        {partDisplayed.part_number}<br/>
+                        {partDisplayed.cost}<br/>
+                        {partDisplayed.quantity_in_stock}<br/>
+
+                    </p>
+                </div>
+                <div className="col-md-6">
+                    <h3><strong>Products Where Used</strong></h3>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr><th>Product Name</th><th>Description</th><th>quantity</th></tr>
+                        </thead>
+                        <tbody><tr><td>Data</td><td>data</td><td>data</td></tr></tbody>
+                    </table>
+                </div>
+                <div className="col-md-3">
+                    <h3><strong>History</strong></h3>
+                </div>
+
+            </div>
+
+        );
+    }
+});
+
+
+
 exports.partPageContent=PartPageContent;

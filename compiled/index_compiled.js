@@ -31966,22 +31966,49 @@ var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
 
 var PartPageContent=React.createClass({displayName: "PartPageContent",
+
+    getInitialState:function()
+    {
+        var part=parts[0];
+
+
+        return ({
+
+            partDisplayed:part
+        });
+
+    },
+
+    selectNewPart:function(part)
+    {
+
+
+        this.setState ({
+
+            partDisplayed:part
+        });
+
+    },
+
+
     render:function()
     {
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(PartSideBar, {activeId: this.props.activeId, parts: this.props.parts})
+                    React.createElement(PartSideBar, {selectNewPart: this.selectNewPart, partDisplayed: this.state.partDisplayed, parts: this.props.parts})
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(PartMainPane, {activeId: this.props.activeId, parts: this.props.parts})
+                    React.createElement(PartMainPane, {partDisplayed: this.state.partDisplayed, parts: this.props.parts})
                 )
 
             )
         );
     }
 });
+
+
 
 var PartSideBar=React.createClass({displayName: "PartSideBar",
     render:function(){
@@ -31991,52 +32018,13 @@ var PartSideBar=React.createClass({displayName: "PartSideBar",
                     React.createElement(PartSearchbox, null)
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement(PartList, {activeId: this.props.activeId, parts: this.props.parts})
+                    React.createElement(PartList, {selectNewPart: this.props.selectNewPart, partDisplayed: this.props.partDisplayed, parts: this.props.parts})
                 )
             )
 
         );
     }
 });
-
-
-
-var PartMainPane=React.createClass({displayName: "PartMainPane",
-    render:function(){
-        var parts=this.props.parts;
-        var part=parts[this.props.activeId]
-        return(
-
-            React.createElement("div", null, 
-                React.createElement("div", {className: "col-md-3"}, 
-                    React.createElement("h3", null, React.createElement("strong", null, "Part Details")), 
-                    React.createElement("p", null, 
-                        part.part_number, React.createElement("br", null), 
-                        part.part_number, React.createElement("br", null), 
-                        part.cost, React.createElement("br", null), 
-                        part.quantity_in_stock, React.createElement("br", null)
-
-                    )
-                ), 
-                React.createElement("div", {className: "col-md-6"}, 
-                    React.createElement("h3", null, React.createElement("strong", null, "Products Where Used")), 
-                    React.createElement("table", {className: "table table-striped"}, 
-                        React.createElement("thead", null, 
-                        React.createElement("tr", null, React.createElement("th", null, "Product Name"), React.createElement("th", null, "Description"), React.createElement("th", null, "quantity"))
-                        ), 
-                        React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", null, "Data"), React.createElement("td", null, "data"), React.createElement("td", null, "data")))
-                    )
-                ), 
-                React.createElement("div", {className: "col-md-3"}, 
-                    React.createElement("h3", null, React.createElement("strong", null, "History"))
-                )
-
-            )
-
-        );
-    }
-});
-
 
 var PartSearchbox=React.createClass({displayName: "PartSearchbox",
     render: function(){
@@ -32061,12 +32049,14 @@ var PartSearchbox=React.createClass({displayName: "PartSearchbox",
 var PartList=React.createClass(
     {displayName: "PartList",
 
+
+
         render:function()
         {
 
 
             var partsToDisplay = this.props.parts.map(function(part,index) {
-                return React.createElement(SinglePart, {activeId: this.props.activeId, part: part, key: index})
+                return React.createElement(SinglePart, {selectNewPart: this.props.selectNewPart, partDisplayed: this.props.partDisplayed, activeId: this.props.activeId, part: part, key: index})
             }.bind(this));
 
 
@@ -32091,14 +32081,18 @@ var SinglePart=React.createClass({displayName: "SinglePart",
 
 
 
-
+    selectNewPart:function()
+    {
+        var part=this.props.part;
+        this.props.selectNewPart(part);
+    },
 
     render: function () {
         var part=this.props.part;
 
         return (
 
-            React.createElement("li", {className: (this.props.activeId === ""+part.id) ? "active" : "", role: "presentation"}, 
+            React.createElement("li", {onClick: this.selectNewPart, className: (this.props.partDisplayed.id === part.id) ? "active" : "", role: "presentation"}, 
 
 
                 React.createElement(Link, {to: "/parts/"+part.id}, React.createElement("h3", null, part.description), 
@@ -32111,6 +32105,47 @@ var SinglePart=React.createClass({displayName: "SinglePart",
             ));
     }
 });
+
+
+
+var PartMainPane=React.createClass({displayName: "PartMainPane",
+    render:function(){
+        var parts=this.props.parts;
+        var partDisplayed=this.props.partDisplayed;
+        return(
+
+            React.createElement("div", null, 
+                React.createElement("div", {className: "col-md-3"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "Part Details")), 
+                    React.createElement("p", null, 
+                        partDisplayed.part_number, React.createElement("br", null), 
+                        partDisplayed.part_number, React.createElement("br", null), 
+                        partDisplayed.cost, React.createElement("br", null), 
+                        partDisplayed.quantity_in_stock, React.createElement("br", null)
+
+                    )
+                ), 
+                React.createElement("div", {className: "col-md-6"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "Products Where Used")), 
+                    React.createElement("table", {className: "table table-striped"}, 
+                        React.createElement("thead", null, 
+                        React.createElement("tr", null, React.createElement("th", null, "Product Name"), React.createElement("th", null, "Description"), React.createElement("th", null, "quantity"))
+                        ), 
+                        React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", null, "Data"), React.createElement("td", null, "data"), React.createElement("td", null, "data")))
+                    )
+                ), 
+                React.createElement("div", {className: "col-md-3"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "History"))
+                )
+
+            )
+
+        );
+    }
+});
+
+
+
 exports.partPageContent=PartPageContent;
 
 },{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/PartData.js":4,"../data/ProductData.js":5,"lodash":52,"react":207,"react-dom":54,"react-router":74}],213:[function(require,module,exports){
