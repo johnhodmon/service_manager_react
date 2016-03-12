@@ -32128,22 +32128,49 @@ var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
 
 var ProductPageContent=React.createClass({displayName: "ProductPageContent",
+
+    getInitialState:function()
+    {
+        var product=products[0];
+
+
+        return ({
+
+            productDisplayed:product
+        });
+
+    },
+
+    selectNewProduct:function(product)
+    {
+
+
+        this.setState ({
+
+            productDisplayed:product
+        });
+
+    },
+
+
     render:function()
     {
+
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(ProductSideBar, {activeId: this.props.activeId, products: this.props.products})
+                    React.createElement(ProductSideBar, {selectNewProduct: this.selectNewProduct, productDisplayed: this.state.productDisplayed, products: this.props.products})
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(ProductMainPane, {activeId: this.props.activeId, products: this.props.products})
+                    React.createElement(ProductMainPane, {productDisplayed: this.state.productDisplayed, products: this.props.products})
                 )
 
             )
         );
     }
 });
+
 
 var ProductSideBar=React.createClass({displayName: "ProductSideBar",
     render:function(){
@@ -32154,7 +32181,7 @@ var ProductSideBar=React.createClass({displayName: "ProductSideBar",
                 ), 
                 React.createElement("div", {className: "row"}, 
                     React.createElement("p", null, React.createElement(Link, {to: "product/new"}, "New Product +")), 
-                    React.createElement(ProductList, {activeId: this.props.activeId, products: this.props.products})
+                    React.createElement(ProductList, {selectNewProduct: this.props.selectNewProduct, products: this.props.products, productDisplayed: this.props.productDisplayed})
                 )
             )
 
@@ -32162,16 +32189,96 @@ var ProductSideBar=React.createClass({displayName: "ProductSideBar",
     }
 });
 
+
+var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
+    render: function(){
+
+
+
+        return(
+
+
+            React.createElement("div", {className: "row"}, 
+                React.createElement("input", {type: "text", placeholder: "Search"})
+            )
+
+
+
+        );
+
+    }
+});
+
+
+var ProductList=React.createClass(
+    {displayName: "ProductList",
+
+        render:function()
+        {
+
+
+            var productsToDisplay = this.props.products.map(function(product,index) {
+                return React.createElement(SingleProduct, {selectNewProduct: this.props.selectNewProduct, productDisplayed: this.props.productDisplayed, product: product, key: index})
+            }.bind(this));
+
+
+
+            return(
+
+                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
+                    productsToDisplay
+
+                )
+
+            );
+        }
+
+    }
+
+
+);
+
+var SingleProduct=React.createClass({displayName: "SingleProduct",
+
+
+    selectNewProduct:function()
+    {
+        var product=this.props.product;
+        this.props.selectNewProduct(product);
+    },
+
+
+    render: function () {
+        var product=this.props.product;
+
+        return (
+
+            React.createElement("li", {onClick: this.selectNewProduct, className: (this.props.productDisplayed.id === product.id) ? "active" : "", role: "presentation"}, 
+
+
+                React.createElement(Link, {to: "/products/"+product.id}, React.createElement("h3", null, product.manufacturer.name+" "+product.product_number), 
+                    React.createElement("p", null, 
+
+                        product.number))
+
+
+
+
+
+            ));
+    }
+});
+
 var ProductMainPane=React.createClass({displayName: "ProductMainPane",
     render:function(){
         var products=this.props.products;
-        var product=products[this.props.activeId];
-        var manufacturer=product.manufacturer;
+        var productDisplayed=this.props.productDisplayed;
+        var manufacturer=productDisplayed.manufacturer;
 
         var partOptions=parts.map(function(part,index){
             return React.createElement(PartOption, {part: part})
         });
-        var bom=product.bom.map(function(bi,index)
+        var bom=productDisplayed.bom.map(function(bi,index)
             {
                 return(React.createElement(SingleBomItem, {bi: bi}));
             }
@@ -32240,13 +32347,13 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
                 React.createElement("div", {className: "col-md-4"}, 
                     React.createElement("h3", null, "Product Details"), 
                     React.createElement("p", null, 
-                        manufacturer.name, " ", product.product_number, React.createElement("br", null), 
-                        product.description, React.createElement("br", null)
+                        manufacturer.name, " ", productDisplayed.product_number, React.createElement("br", null), 
+                        productDisplayed.description, React.createElement("br", null)
 
                     ), 
 
                     React.createElement("h3", null, "Exploded View"), 
-                    React.createElement("img", {src: product.image_url})
+                    React.createElement("img", {src: productDisplayed.image_url})
                 )
 
             )
@@ -32284,80 +32391,6 @@ var SingleBomItem=React.createClass(
 );
 
 
-var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
-    render: function(){
-
-
-
-        return(
-
-
-            React.createElement("div", {className: "row"}, 
-                React.createElement("input", {type: "text", placeholder: "Search"})
-            )
-
-
-
-        );
-
-    }
-});
-
-
-var ProductList=React.createClass(
-    {displayName: "ProductList",
-
-        render:function()
-        {
-
-
-            var productsToDisplay = this.props.products.map(function(product,index) {
-                return React.createElement(SingleProduct, {activeId: this.props.activeId, product: product, key: index})
-            }.bind(this));
-
-
-
-            return(
-
-                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
-                    productsToDisplay
-
-                )
-
-            );
-        }
-
-    }
-
-
-);
-
-var SingleProduct=React.createClass({displayName: "SingleProduct",
-
-
-
-
-
-    render: function () {
-        var product=this.props.product;
-
-        return (
-
-            React.createElement("li", {className: (this.props.activeId === ""+product.id) ? "active" : "", role: "presentation"}, 
-
-
-                React.createElement(Link, {to: "/products/"+product.id}, React.createElement("h3", null, product.manufacturer.name+" "+product.product_number), 
-                    React.createElement("p", null, 
-
-                        product.number))
-
-
-
-
-
-            ));
-    }
-});
 
 
 

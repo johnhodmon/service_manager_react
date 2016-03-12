@@ -12,22 +12,49 @@ var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
 
 var ProductPageContent=React.createClass({
+
+    getInitialState:function()
+    {
+        var product=products[0];
+
+
+        return ({
+
+            productDisplayed:product
+        });
+
+    },
+
+    selectNewProduct:function(product)
+    {
+
+
+        this.setState ({
+
+            productDisplayed:product
+        });
+
+    },
+
+
     render:function()
     {
+
         return(
             <div className="row">
                 <div className="col-md-2 side-pane">
-                    <ProductSideBar activeId={this.props.activeId} products={this.props.products}/>
+                    <ProductSideBar selectNewProduct={this.selectNewProduct} productDisplayed={this.state.productDisplayed} products={this.props.products}/>
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <ProductMainPane activeId={this.props.activeId} products={this.props.products}/>
+                    <ProductMainPane productDisplayed={this.state.productDisplayed} products={this.props.products}/>
                 </div>
 
             </div>
         );
     }
 });
+
 
 var ProductSideBar=React.createClass({
     render:function(){
@@ -38,7 +65,7 @@ var ProductSideBar=React.createClass({
                 </div>
                 <div className="row">
                     <p><Link to="product/new">New Product +</Link></p>
-                    <ProductList activeId={this.props.activeId} products={this.props.products}/>
+                    <ProductList selectNewProduct={this.props.selectNewProduct}  products={this.props.products} productDisplayed={this.props.productDisplayed}/>
                 </div>
             </div>
 
@@ -46,16 +73,96 @@ var ProductSideBar=React.createClass({
     }
 });
 
+
+var ProductSearchbox=React.createClass({
+    render: function(){
+
+
+
+        return(
+
+
+            <div className="row">
+                <input type="text"  placeholder="Search"/>
+            </div>
+
+
+
+        );
+
+    }
+});
+
+
+var ProductList=React.createClass(
+    {
+
+        render:function()
+        {
+
+
+            var productsToDisplay = this.props.products.map(function(product,index) {
+                return <SingleProduct selectNewProduct={this.props.selectNewProduct}  productDisplayed={this.props.productDisplayed}  product={product} key={index} />
+            }.bind(this));
+
+
+
+            return(
+
+                <ul className="nav nav-pills nav-stacked side-nav">
+                    {productsToDisplay}
+
+                </ul>
+
+            );
+        }
+
+    }
+
+
+);
+
+var SingleProduct=React.createClass({
+
+
+    selectNewProduct:function()
+    {
+        var product=this.props.product;
+        this.props.selectNewProduct(product);
+    },
+
+
+    render: function () {
+        var product=this.props.product;
+
+        return (
+
+            <li onClick={this.selectNewProduct} className={(this.props.productDisplayed.id === product.id) ? "active" : ""} role="presentation" >
+
+
+                <Link  to={"/products/"+product.id} ><h3>{product.manufacturer.name+" "+product.product_number}</h3>
+                    <p>
+
+                        {product.number}</p></Link>
+
+
+
+
+
+            </li>);
+    }
+});
+
 var ProductMainPane=React.createClass({
     render:function(){
         var products=this.props.products;
-        var product=products[this.props.activeId];
-        var manufacturer=product.manufacturer;
+        var productDisplayed=this.props.productDisplayed;
+        var manufacturer=productDisplayed.manufacturer;
 
         var partOptions=parts.map(function(part,index){
             return <PartOption part={part} />
         });
-        var bom=product.bom.map(function(bi,index)
+        var bom=productDisplayed.bom.map(function(bi,index)
             {
                 return(<SingleBomItem bi={bi} />);
             }
@@ -124,13 +231,13 @@ var ProductMainPane=React.createClass({
                 <div className="col-md-4">
                     <h3>Product Details</h3>
                     <p>
-                        {manufacturer.name} {product.product_number}<br/>
-                        {product.description}<br/>
+                        {manufacturer.name} {productDisplayed.product_number}<br/>
+                        {productDisplayed.description}<br/>
 
                     </p>
 
                     <h3>Exploded View</h3>
-                    <img src={product.image_url} />
+                    <img src={productDisplayed.image_url} />
                 </div>
 
             </div>
@@ -168,80 +275,6 @@ var SingleBomItem=React.createClass(
 );
 
 
-var ProductSearchbox=React.createClass({
-    render: function(){
-
-
-
-        return(
-
-
-            <div className="row">
-                <input type="text"  placeholder="Search"/>
-            </div>
-
-
-
-        );
-
-    }
-});
-
-
-var ProductList=React.createClass(
-    {
-
-        render:function()
-        {
-
-
-            var productsToDisplay = this.props.products.map(function(product,index) {
-                return <SingleProduct activeId={this.props.activeId}  product={product} key={index} />
-            }.bind(this));
-
-
-
-            return(
-
-                <ul className="nav nav-pills nav-stacked side-nav">
-                    {productsToDisplay}
-
-                </ul>
-
-            );
-        }
-
-    }
-
-
-);
-
-var SingleProduct=React.createClass({
-
-
-
-
-
-    render: function () {
-        var product=this.props.product;
-
-        return (
-
-            <li  className={(this.props.activeId === ""+product.id) ? "active" : ""} role="presentation" >
-
-
-                <Link  to={"/products/"+product.id} ><h3>{product.manufacturer.name+" "+product.product_number}</h3>
-                    <p>
-
-                        {product.number}</p></Link>
-
-
-
-
-
-            </li>);
-    }
-});
 
 
 
