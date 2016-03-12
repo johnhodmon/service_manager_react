@@ -32283,10 +32283,10 @@ var PartMainPane=React.createClass({displayName: "PartMainPane",
                 React.createElement("div", {className: "col-md-3"}, 
                     React.createElement("h3", null, React.createElement("strong", null, "Part Details")), 
                     React.createElement("p", null, 
-                        partDisplayed.part_number, React.createElement("br", null), 
-                        partDisplayed.part_number, React.createElement("br", null), 
-                        partDisplayed.cost, React.createElement("br", null), 
-                        partDisplayed.quantity_in_stock, React.createElement("br", null)
+                       "Part Number: ", partDisplayed.part_number, React.createElement("br", null), 
+                        partDisplayed.description, React.createElement("br", null), 
+                        "Cost: €", partDisplayed.cost, React.createElement("br", null), 
+                        "Qauntity in Stock: ", partDisplayed.quantity_in_stock, React.createElement("br", null)
 
                     )
                 ), 

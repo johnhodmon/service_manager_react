@@ -164,10 +164,10 @@ var PartMainPane=React.createClass({
                 <div className="col-md-3">
                     <h3><strong>Part Details</strong></h3>
                     <p>
-                        {partDisplayed.part_number}<br/>
-                        {partDisplayed.part_number}<br/>
-                        {partDisplayed.cost}<br/>
-                        {partDisplayed.quantity_in_stock}<br/>
+                       Part Number: {partDisplayed.part_number}<br/>
+                        {partDisplayed.description}<br/>
+                        Cost: &#8364;{partDisplayed.cost}<br/>
+                        Qauntity in Stock: {partDisplayed.quantity_in_stock}<br/>
 
                     </p>
                 </div>
