@@ -475,7 +475,7 @@ getInitialState:function()
         var product=jobDisplayed.customerProduct.product;
         var jobParts=[];
         var parts=this.props.parts;
-        console.log("Add Part Visibility"+this.props.addPartVisibility);
+
 
         if(jobDisplayed.jobParts!=null)
         {

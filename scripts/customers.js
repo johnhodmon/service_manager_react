@@ -16,11 +16,17 @@ var CustomerPageContent=React.createClass({
     getInitialState:function()
     {
         var customer=customers[0];
-
+        var cpv=""
+        if(customer.customerProducts!=null) {
+            cpv="invisible";
+        }
 
         return ({
 
-            customerDisplayed:customer
+            customerDisplayed:customer,
+            cpVisibility:cpv,
+            addCpVisibility:"invisible"
+
         });
 
     },
@@ -37,6 +43,20 @@ var CustomerPageContent=React.createClass({
     },
 
 
+    addCustomerProductInVisible:function()
+    {
+        this.setState( {addCpVisibility:"invisible"}  )
+    },
+
+    addCustomerProductVisible:function()
+    {
+        this.setState( {addCpVisibility:""}  )
+    },
+
+
+
+
+
     render:function()
     {
         return(
@@ -46,7 +66,7 @@ var CustomerPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <CustomerMainPane customerDisplayed={this.state.customerDisplayed} customers={this.props.customers}/>
+                    <CustomerMainPane addCustomerProductInVisible={this.addCustomerProductInVisible}   addCustomerProductVisible={this.addCustomerProductVisible} cpVisibility={this.state.cpVisibility} addCpVisibility={this.state.addCpVisibility} customerDisplayed={this.state.customerDisplayed} customers={this.props.customers}/>
                 </div>
 
             </div>
@@ -157,18 +177,42 @@ selectNewCustomer:function()
     }
 });
 var CustomerMainPane=React.createClass({
+
+
+    makeVisible:function()
+    {
+
+        this.props.addCustomerProductVisible();
+    },
+
+
+
+    undo:function(e)
+    {
+        this.props.addCustomerProductInVisible();
+    },
+
+    save:function(e)
+    {
+        this.props.addCustomerProductInVisible();
+    },
+
+
     render:function(){
         var customers=this.props.customers;
-        var customerDisplayed=this.props.customerDisplayed
+        var customerDisplayed=this.props.customerDisplayed;
+        var customerProducts=[];
+
         var productOptions=products.map(function(product,index){
             return <ProductOption product={product} />
         });
-        var customerProducts=customerDisplayed.customerProducts.map(function(sp,index)
-            {
-                return(<SingleCustomerProduct sp={sp} />);
-            }
 
-        );
+        if(customerDisplayed.customerProducts!=null) {
+            customerProducts = customerDisplayed.customerProducts.map(function (sp, index) {
+                    return (<SingleCustomerProduct makeVisible={this.props.addCustomerProductVisible} sp={sp}/>);
+                }.bind(this)
+            );
+        }
         return(
             <div>
                 <div className="col-md-3">
@@ -187,7 +231,7 @@ var CustomerMainPane=React.createClass({
                     Previous Jobs Here
 
                     <h3><strong>Customer's Products</strong></h3>
-                    <p>The customer has no registered products</p>
+
                     <table className="table table-striped">
                         <thead>
 
@@ -196,28 +240,19 @@ var CustomerMainPane=React.createClass({
                         </thead>
 
                         <tbody>
+                        <tr className={this.props.cpVisibility}><td></td><td>This customer has no registered products</td><td> Add Product  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                         {customerProducts}
+                        <tr className={this.props.addCpVisibility}>  <td></td><td><select  >{productOptions}</select></td>
+                            <td>
 
+                                <span onClick={this.undo} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                Cancel <span onClick={this.save} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                            </td></tr>
 
                         </tbody>
                     </table>
                     <JobForm customer={customerDisplayed} customerProduct={customerDisplayed.customerProducts[0]} />
-                    <h3><strong>Register product for this customer</strong></h3>
-                    <form>
-                        <label for="productNumber">Product</label>
-                        <div className="form-group">
 
-                            <select>
-                                {productOptions}
-                            </select>
-                        </div>
-                        <label>Serial Number</label>
-                        <div className="form-group">
-                            <input name="serialNumber" type="text"></input>
-
-                        </div>
-                        <input type="button" className="btn btn-sm btn-primary" action="submit" value="Add"/>
-                    </form>
                 </div>
                 <div className="col-md-3">
 
@@ -248,8 +283,9 @@ var SingleCustomerProduct=React.createClass({
             var sp=this.props.sp;
             return(
                 <tr><td>{sp.product.manufacturer.name}</td><td>{sp.product.product_number}</td>
-                    <td>{sp.serialNumber}</td><td>{sp.product.description}</td><td>
-                        <button className="btn btn-sm btn-primary"> Create Job</button></td></tr>
+                    <td>{sp.serialNumber}</td><td>{sp.product.description}  <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        Add Part  <span onClick={this.props.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td><td>
+                        Create Job</td></tr>
 
             );
         }

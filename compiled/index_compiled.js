@@ -30924,11 +30924,17 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
     getInitialState:function()
     {
         var customer=customers[0];
-
+        var cpv=""
+        if(customer.customerProducts!=null) {
+            cpv="invisible";
+        }
 
         return ({
 
-            customerDisplayed:customer
+            customerDisplayed:customer,
+            cpVisibility:cpv,
+            addCpVisibility:"invisible"
+
         });
 
     },
@@ -30945,6 +30951,20 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
     },
 
 
+    addCustomerProductInVisible:function()
+    {
+        this.setState( {addCpVisibility:"invisible"}  )
+    },
+
+    addCustomerProductVisible:function()
+    {
+        this.setState( {addCpVisibility:""}  )
+    },
+
+
+
+
+
     render:function()
     {
         return(
@@ -30954,7 +30974,7 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(CustomerMainPane, {customerDisplayed: this.state.customerDisplayed, customers: this.props.customers})
+                    React.createElement(CustomerMainPane, {addCustomerProductInVisible: this.addCustomerProductInVisible, addCustomerProductVisible: this.addCustomerProductVisible, cpVisibility: this.state.cpVisibility, addCpVisibility: this.state.addCpVisibility, customerDisplayed: this.state.customerDisplayed, customers: this.props.customers})
                 )
 
             )
@@ -31065,18 +31085,42 @@ selectNewCustomer:function()
     }
 });
 var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
+
+
+    makeVisible:function()
+    {
+
+        this.props.addCustomerProductVisible();
+    },
+
+
+
+    undo:function(e)
+    {
+        this.props.addCustomerProductInVisible();
+    },
+
+    save:function(e)
+    {
+        this.props.addCustomerProductInVisible();
+    },
+
+
     render:function(){
         var customers=this.props.customers;
-        var customerDisplayed=this.props.customerDisplayed
+        var customerDisplayed=this.props.customerDisplayed;
+        var customerProducts=[];
+
         var productOptions=products.map(function(product,index){
             return React.createElement(ProductOption, {product: product})
         });
-        var customerProducts=customerDisplayed.customerProducts.map(function(sp,index)
-            {
-                return(React.createElement(SingleCustomerProduct, {sp: sp}));
-            }
 
-        );
+        if(customerDisplayed.customerProducts!=null) {
+            customerProducts = customerDisplayed.customerProducts.map(function (sp, index) {
+                    return (React.createElement(SingleCustomerProduct, {makeVisible: this.props.addCustomerProductVisible, sp: sp}));
+                }.bind(this)
+            );
+        }
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "col-md-3"}, 
@@ -31095,7 +31139,7 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
                     "Previous Jobs Here", 
 
                     React.createElement("h3", null, React.createElement("strong", null, "Customer's Products")), 
-                    React.createElement("p", null, "The customer has no registered products"), 
+
                     React.createElement("table", {className: "table table-striped"}, 
                         React.createElement("thead", null, 
 
@@ -31104,28 +31148,19 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
                         ), 
 
                         React.createElement("tbody", null, 
-                        customerProducts
+                        React.createElement("tr", {className: this.props.cpVisibility}, React.createElement("td", null), React.createElement("td", null, "This customer has no registered products"), React.createElement("td", null, " Add Product  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
+                        customerProducts, 
+                        React.createElement("tr", {className: this.props.addCpVisibility}, "  ", React.createElement("td", null), React.createElement("td", null, React.createElement("select", null, productOptions)), 
+                            React.createElement("td", null, 
 
+                                React.createElement("span", {onClick: this.undo, className: "glyphicon glyphicon-ok", "aria-hidden": "true"}), 
+                                "Cancel ", React.createElement("span", {onClick: this.save, className: "glyphicon glyphicon-chevron-up", "aria-hidden": "true"})
+                            ))
 
                         )
                     ), 
-                    React.createElement(JobForm, {customer: customerDisplayed, customerProduct: customerDisplayed.customerProducts[0]}), 
-                    React.createElement("h3", null, React.createElement("strong", null, "Register product for this customer")), 
-                    React.createElement("form", null, 
-                        React.createElement("label", {for: "productNumber"}, "Product"), 
-                        React.createElement("div", {className: "form-group"}, 
+                    React.createElement(JobForm, {customer: customerDisplayed, customerProduct: customerDisplayed.customerProducts[0]})
 
-                            React.createElement("select", null, 
-                                productOptions
-                            )
-                        ), 
-                        React.createElement("label", null, "Serial Number"), 
-                        React.createElement("div", {className: "form-group"}, 
-                            React.createElement("input", {name: "serialNumber", type: "text"})
-
-                        ), 
-                        React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
-                    )
                 ), 
                 React.createElement("div", {className: "col-md-3"}
 
@@ -31156,8 +31191,9 @@ var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct
             var sp=this.props.sp;
             return(
                 React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, sp.product.product_number), 
-                    React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description), React.createElement("td", null, 
-                        React.createElement("button", {className: "btn btn-sm btn-primary"}, " Create Job")))
+                    React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description, "  ", React.createElement("span", {className: "glyphicon glyphicon-trash", "aria-hidden": "true"}), 
+                        "Add Part  ", React.createElement("span", {onClick: this.props.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"})), React.createElement("td", null, 
+                        "Create Job"))
 
             );
         }
@@ -31799,7 +31835,7 @@ getInitialState:function()
         var product=jobDisplayed.customerProduct.product;
         var jobParts=[];
         var parts=this.props.parts;
-        console.log("Add Part Visibility"+this.props.addPartVisibility);
+
 
         if(jobDisplayed.jobParts!=null)
         {
