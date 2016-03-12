@@ -12,16 +12,41 @@ var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
 
 var CustomerPageContent=React.createClass({
+
+    getInitialState:function()
+    {
+        var customer=customers[0];
+
+
+        return ({
+
+            customerDisplayed:customer
+        });
+
+    },
+
+    selectNewCustomer:function(customer)
+    {
+
+
+        this.setState ({
+
+            customerDisplayed:customer
+        });
+
+    },
+
+
     render:function()
     {
         return(
             <div className="row">
                 <div className="col-md-2 side-pane">
-                    <CustomerSideBar activeId={this.props.activeId} customers={this.props.customers}/>
+                    <CustomerSideBar customerDisplayed={this.state.customerDisplayed} selectNewCustomer={this.selectNewCustomer} customers={this.props.customers}/>
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <CustomerMainPane activeId={this.props.activeId} customers={this.props.customers}/>
+                    <CustomerMainPane customerDisplayed={this.state.customerDisplayed} customers={this.props.customers}/>
                 </div>
 
             </div>
@@ -39,7 +64,7 @@ var CustomerSideBar=React.createClass({
                 </div>
                 <div className="row">
                     <p><Link to="customer/new">New Customer +</Link></p>
-                    <CustomerList activeId={this.props.activeId} customers={this.props.customers}/>
+                    <CustomerList selectNewCustomer={this.props.selectNewCustomer} customerDisplayed={this.props.customerDisplayed} customers={this.props.customers}/>
                 </div>
             </div>
 
@@ -47,14 +72,98 @@ var CustomerSideBar=React.createClass({
     }
 });
 
+var CustomerSearchbox=React.createClass({
+    render: function(){
+
+
+
+        return(
+
+            <div>
+                <div className="row">
+                    <input type="text"  placeholder="Search"/>
+                </div>
+                <div className="row">
+                    <select id="sort" >
+                        <option value="" disabled selected>Sort by: </option>
+                        <option value="name">Date</option>
+                        <option value="customer">Customer</option>
+                    </select>
+                </div>
+
+            </div>
+        );
+
+    }
+});
+
+var CustomerList=React.createClass(
+    {
+
+        render:function()
+        {
+
+
+            var customersToDisplay = this.props.customers.map(function(customer,index) {
+                return <SingleCustomer customerDisplayed={this.props.customerDisplayed} selectNewCustomer={this.props.selectNewCustomer}   customer={customer} key={index} />
+            }.bind(this));
+
+
+
+            return(
+
+                <ul className="nav nav-pills nav-stacked side-nav">
+                    {customersToDisplay}
+
+                </ul>
+
+            );
+        }
+
+    }
+
+
+);
+
+var SingleCustomer=React.createClass({
+
+
+selectNewCustomer:function()
+{
+    var customer=this.props.customer;
+    this.props.selectNewCustomer(customer);
+},
+
+
+    render: function () {
+        var customer=this.props.customer;
+
+        return (
+
+            <li onClick={this.selectNewCustomer}  className={(this.props.customerDisplayed.id === customer.id) ? "active" : ""} role="presentation" >
+
+
+                <Link  to={"/customers/"+customer.id} ><h3>{customer.name}</h3>
+                    <p>{customer.street}<br/>
+                        {customer.county}  <br/>
+                        {customer.town}<br/>
+                        {customer.county}<br/></p></Link>
+
+
+
+
+
+            </li>);
+    }
+});
 var CustomerMainPane=React.createClass({
     render:function(){
         var customers=this.props.customers;
-        var customer=customers[this.props.activeId];
+        var customerDisplayed=this.props.customerDisplayed
         var productOptions=products.map(function(product,index){
             return <ProductOption product={product} />
         });
-        var customerProducts=customer.customerProducts.map(function(sp,index)
+        var customerProducts=customerDisplayed.customerProducts.map(function(sp,index)
             {
                 return(<SingleCustomerProduct sp={sp} />);
             }
@@ -65,12 +174,12 @@ var CustomerMainPane=React.createClass({
                 <div className="col-md-3">
                     <h3><strong>Customer Details</strong></h3>
                     <p>
-                        {customer.name}<br/>
-                        {customer.street}<br/>
-                        { customer.town}<br/>
-                        {customer.county}<br/>
-                        {customer.phone}<br/>
-                        {customer.email}<br/>
+                        {customerDisplayed.name}<br/>
+                        {customerDisplayed.street}<br/>
+                        { customerDisplayed.town}<br/>
+                        {customerDisplayed.county}<br/>
+                        {customerDisplayed.phone}<br/>
+                        {customerDisplayed.email}<br/>
                     </p>
 
                 </div>
@@ -92,7 +201,7 @@ var CustomerMainPane=React.createClass({
 
                         </tbody>
                     </table>
-                    <JobForm customer={customer} customerProduct={customer.customerProducts[0]} />
+                    <JobForm customer={customerDisplayed} customerProduct={customerDisplayed.customerProducts[0]} />
                     <h3><strong>Register product for this customer</strong></h3>
                     <form>
                         <label for="productNumber">Product</label>
@@ -149,86 +258,7 @@ var SingleCustomerProduct=React.createClass({
 );
 
 
-var CustomerSearchbox=React.createClass({
-    render: function(){
 
-
-
-        return(
-
-            <div>
-                <div className="row">
-                    <input type="text"  placeholder="Search"/>
-                </div>
-                <div className="row">
-                    <select id="sort" >
-                        <option value="" disabled selected>Sort by: </option>
-                        <option value="name">Date</option>
-                        <option value="customer">Customer</option>
-                    </select>
-                </div>
-
-            </div>
-        );
-
-    }
-});
-
-var CustomerList=React.createClass(
-    {
-
-        render:function()
-        {
-
-
-            var customersToDisplay = this.props.customers.map(function(customer,index) {
-                return <SingleCustomer activeId={this.props.activeId}  customer={customer} key={index} />
-            }.bind(this));
-
-
-
-            return(
-
-                <ul className="nav nav-pills nav-stacked side-nav">
-                    {customersToDisplay}
-
-                </ul>
-
-            );
-        }
-
-    }
-
-
-);
-
-var SingleCustomer=React.createClass({
-
-
-
-
-
-    render: function () {
-        var customer=this.props.customer;
-
-        return (
-
-            <li  className={(this.props.activeId === ""+customer.id) ? "active" : ""} role="presentation" >
-
-
-                <Link  to={"/customers/"+customer.id} ><h3>{customer.name}</h3>
-                    <p>{customer.street}<br/>
-                        {customer.county}  <br/>
-                        {customer.town}<br/>
-                        {customer.county}<br/></p></Link>
-
-
-
-
-
-            </li>);
-    }
-});
 
 var CustomerForm=React.createClass(
     {

@@ -30920,16 +30920,41 @@ var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
 
 var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
+
+    getInitialState:function()
+    {
+        var customer=customers[0];
+
+
+        return ({
+
+            customerDisplayed:customer
+        });
+
+    },
+
+    selectNewCustomer:function(customer)
+    {
+
+
+        this.setState ({
+
+            customerDisplayed:customer
+        });
+
+    },
+
+
     render:function()
     {
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(CustomerSideBar, {activeId: this.props.activeId, customers: this.props.customers})
+                    React.createElement(CustomerSideBar, {customerDisplayed: this.state.customerDisplayed, selectNewCustomer: this.selectNewCustomer, customers: this.props.customers})
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(CustomerMainPane, {activeId: this.props.activeId, customers: this.props.customers})
+                    React.createElement(CustomerMainPane, {customerDisplayed: this.state.customerDisplayed, customers: this.props.customers})
                 )
 
             )
@@ -30947,7 +30972,7 @@ var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
                 ), 
                 React.createElement("div", {className: "row"}, 
                     React.createElement("p", null, React.createElement(Link, {to: "customer/new"}, "New Customer +")), 
-                    React.createElement(CustomerList, {activeId: this.props.activeId, customers: this.props.customers})
+                    React.createElement(CustomerList, {selectNewCustomer: this.props.selectNewCustomer, customerDisplayed: this.props.customerDisplayed, customers: this.props.customers})
                 )
             )
 
@@ -30955,14 +30980,98 @@ var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
     }
 });
 
+var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
+    render: function(){
+
+
+
+        return(
+
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("input", {type: "text", placeholder: "Search"})
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("select", {id: "sort"}, 
+                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
+                        React.createElement("option", {value: "name"}, "Date"), 
+                        React.createElement("option", {value: "customer"}, "Customer")
+                    )
+                )
+
+            )
+        );
+
+    }
+});
+
+var CustomerList=React.createClass(
+    {displayName: "CustomerList",
+
+        render:function()
+        {
+
+
+            var customersToDisplay = this.props.customers.map(function(customer,index) {
+                return React.createElement(SingleCustomer, {customerDisplayed: this.props.customerDisplayed, selectNewCustomer: this.props.selectNewCustomer, customer: customer, key: index})
+            }.bind(this));
+
+
+
+            return(
+
+                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
+                    customersToDisplay
+
+                )
+
+            );
+        }
+
+    }
+
+
+);
+
+var SingleCustomer=React.createClass({displayName: "SingleCustomer",
+
+
+selectNewCustomer:function()
+{
+    var customer=this.props.customer;
+    this.props.selectNewCustomer(customer);
+},
+
+
+    render: function () {
+        var customer=this.props.customer;
+
+        return (
+
+            React.createElement("li", {onClick: this.selectNewCustomer, className: (this.props.customerDisplayed.id === customer.id) ? "active" : "", role: "presentation"}, 
+
+
+                React.createElement(Link, {to: "/customers/"+customer.id}, React.createElement("h3", null, customer.name), 
+                    React.createElement("p", null, customer.street, React.createElement("br", null), 
+                        customer.county, "  ", React.createElement("br", null), 
+                        customer.town, React.createElement("br", null), 
+                        customer.county, React.createElement("br", null)))
+
+
+
+
+
+            ));
+    }
+});
 var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
     render:function(){
         var customers=this.props.customers;
-        var customer=customers[this.props.activeId];
+        var customerDisplayed=this.props.customerDisplayed
         var productOptions=products.map(function(product,index){
             return React.createElement(ProductOption, {product: product})
         });
-        var customerProducts=customer.customerProducts.map(function(sp,index)
+        var customerProducts=customerDisplayed.customerProducts.map(function(sp,index)
             {
                 return(React.createElement(SingleCustomerProduct, {sp: sp}));
             }
@@ -30973,12 +31082,12 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
                 React.createElement("div", {className: "col-md-3"}, 
                     React.createElement("h3", null, React.createElement("strong", null, "Customer Details")), 
                     React.createElement("p", null, 
-                        customer.name, React.createElement("br", null), 
-                        customer.street, React.createElement("br", null), 
-                         customer.town, React.createElement("br", null), 
-                        customer.county, React.createElement("br", null), 
-                        customer.phone, React.createElement("br", null), 
-                        customer.email, React.createElement("br", null)
+                        customerDisplayed.name, React.createElement("br", null), 
+                        customerDisplayed.street, React.createElement("br", null), 
+                         customerDisplayed.town, React.createElement("br", null), 
+                        customerDisplayed.county, React.createElement("br", null), 
+                        customerDisplayed.phone, React.createElement("br", null), 
+                        customerDisplayed.email, React.createElement("br", null)
                     )
 
                 ), 
@@ -31000,7 +31109,7 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
 
                         )
                     ), 
-                    React.createElement(JobForm, {customer: customer, customerProduct: customer.customerProducts[0]}), 
+                    React.createElement(JobForm, {customer: customerDisplayed, customerProduct: customerDisplayed.customerProducts[0]}), 
                     React.createElement("h3", null, React.createElement("strong", null, "Register product for this customer")), 
                     React.createElement("form", null, 
                         React.createElement("label", {for: "productNumber"}, "Product"), 
@@ -31057,86 +31166,7 @@ var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct
 );
 
 
-var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
-    render: function(){
 
-
-
-        return(
-
-            React.createElement("div", null, 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {type: "text", placeholder: "Search"})
-                ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("select", {id: "sort"}, 
-                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
-                        React.createElement("option", {value: "name"}, "Date"), 
-                        React.createElement("option", {value: "customer"}, "Customer")
-                    )
-                )
-
-            )
-        );
-
-    }
-});
-
-var CustomerList=React.createClass(
-    {displayName: "CustomerList",
-
-        render:function()
-        {
-
-
-            var customersToDisplay = this.props.customers.map(function(customer,index) {
-                return React.createElement(SingleCustomer, {activeId: this.props.activeId, customer: customer, key: index})
-            }.bind(this));
-
-
-
-            return(
-
-                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
-                    customersToDisplay
-
-                )
-
-            );
-        }
-
-    }
-
-
-);
-
-var SingleCustomer=React.createClass({displayName: "SingleCustomer",
-
-
-
-
-
-    render: function () {
-        var customer=this.props.customer;
-
-        return (
-
-            React.createElement("li", {className: (this.props.activeId === ""+customer.id) ? "active" : "", role: "presentation"}, 
-
-
-                React.createElement(Link, {to: "/customers/"+customer.id}, React.createElement("h3", null, customer.name), 
-                    React.createElement("p", null, customer.street, React.createElement("br", null), 
-                        customer.county, "  ", React.createElement("br", null), 
-                        customer.town, React.createElement("br", null), 
-                        customer.county, React.createElement("br", null)))
-
-
-
-
-
-            ));
-    }
-});
 
 var CustomerForm=React.createClass(
     {displayName: "CustomerForm",
@@ -31344,18 +31374,13 @@ var JobPage=React.createClass(
     {displayName: "JobPage",
         render:function()
             {
-                var id=1;
-                if(this.props.params.id!=null)
-                {
-                    id=this.props.params.id;
-                }
-                console.log("params.id"+this.props.params.id);
+
                 return(
                    React.createElement("div", {className: "container-fluid"}, 
 
                    React.createElement(Navbar, {activeTab: "jobs"}), 
 
-                   React.createElement(JobPageContent, {jobDisplayed: this.props.jobDisplayed, jobs: jobs, parts: parts})
+                   React.createElement(JobPageContent, {jobs: jobs, parts: parts})
                    )
 
 
@@ -31369,17 +31394,13 @@ var CustomerPage=React.createClass(
     {displayName: "CustomerPage",
         render:function()
         {
-            var id="1";
-            if(this.props.params.id!=null)
-            {
-                id=this.props.params.id;
-            }
+
             return(
                 React.createElement("div", {className: "container-fluid"}, 
 
                     React.createElement(Navbar, {activeTab: "customers"}), 
 
-                    React.createElement(CustomerPageContent, {activeId: id, customers: customers})
+                    React.createElement(CustomerPageContent, {customers: customers})
                 )
 
 
@@ -31394,17 +31415,13 @@ var ProductPage=React.createClass(
     {displayName: "ProductPage",
         render:function()
         {
-            var id="1";
-            if(this.props.params.id!=null)
-            {
-                id=this.props.params.id;
-            }
+
             return(
                 React.createElement("div", {className: "container-fluid"}, 
 
                     React.createElement(Navbar, {activeTab: "products"}), 
 
-                    React.createElement(ProductPageContent, {activeId: id, products: products})
+                    React.createElement(ProductPageContent, {products: products})
                 )
 
 
@@ -31419,17 +31436,13 @@ var PartPage=React.createClass(
     {displayName: "PartPage",
         render:function()
         {
-            var id="1";
-            if(this.props.params.id!=null)
-            {
-                id=this.props.params.id;
-            }
+
             return(
                 React.createElement("div", {className: "container-fluid"}, 
 
                     React.createElement(Navbar, {activeTab: "parts"}), 
 
-                    React.createElement(PartPageContent, {activeId: id, parts: parts})
+                    React.createElement(PartPageContent, {parts: parts})
                 )
 
 

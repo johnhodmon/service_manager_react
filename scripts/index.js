@@ -50,18 +50,13 @@ var JobPage=React.createClass(
     {
         render:function()
             {
-                var id=1;
-                if(this.props.params.id!=null)
-                {
-                    id=this.props.params.id;
-                }
-                console.log("params.id"+this.props.params.id);
+
                 return(
                    <div className="container-fluid">
 
                    <Navbar activeTab="jobs" />
 
-                   <JobPageContent jobDisplayed={this.props.jobDisplayed}  jobs={jobs} parts={parts}  />
+                   <JobPageContent  jobs={jobs} parts={parts}  />
                    </div>
 
 
@@ -75,17 +70,13 @@ var CustomerPage=React.createClass(
     {
         render:function()
         {
-            var id="1";
-            if(this.props.params.id!=null)
-            {
-                id=this.props.params.id;
-            }
+
             return(
                 <div className="container-fluid">
 
                     <Navbar activeTab="customers" />
 
-                    <CustomerPageContent activeId={id} customers={customers}  />
+                    <CustomerPageContent customers={customers}  />
                 </div>
 
 
@@ -100,17 +91,13 @@ var ProductPage=React.createClass(
     {
         render:function()
         {
-            var id="1";
-            if(this.props.params.id!=null)
-            {
-                id=this.props.params.id;
-            }
+
             return(
                 <div className="container-fluid">
 
                     <Navbar activeTab="products" />
 
-                    <ProductPageContent activeId={id} products={products}  />
+                    <ProductPageContent  products={products}  />
                 </div>
 
 
@@ -125,17 +112,13 @@ var PartPage=React.createClass(
     {
         render:function()
         {
-            var id="1";
-            if(this.props.params.id!=null)
-            {
-                id=this.props.params.id;
-            }
+
             return(
                 <div className="container-fluid">
 
                     <Navbar activeTab="parts" />
 
-                    <PartPageContent activeId={id} parts={parts}  />
+                    <PartPageContent parts={parts}  />
                 </div>
 
 
