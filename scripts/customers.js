@@ -294,14 +294,17 @@ var CustomerMainPane=React.createClass({
             <div>
                 <div className="col-md-3">
                     <h3><strong>Customer Details</strong></h3>
+
                     <p>
-                        {customerDisplayed.name}<br/>
-                        {customerDisplayed.street}<br/>
-                        { customerDisplayed.town}<br/>
-                        {customerDisplayed.county}<br/>
-                        {customerDisplayed.phone}<br/>
-                        {customerDisplayed.email}<br/>
+                        <Link to={"customers/"+customerDisplayed.id}>{customerDisplayed.name}<br/>
+                            {customerDisplayed.street}<br/>
+                            { customerDisplayed.town}<br/>
+                            {customerDisplayed.county}<br/>
+                            {customerDisplayed.phone}<br/>
+                            {customerDisplayed.email}<br/>
+                        </Link>
                     </p>
+
 
                 </div>
                 <div className="col-md-6">
@@ -319,7 +322,7 @@ var CustomerMainPane=React.createClass({
                         <tbody>
                         <tr className={this.props.cpVisibility}><td></td><td>This customer has no registered products</td><td> Add Product  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                         {customerProducts}
-                        <tr className={this.props.addButtonVisibility}><td></td><td></td><td></td><td>  Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
+                        <tr className={this.props.addButtonVisibility}><td></td><td></td><td></td><td>  Add Product  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                         <tr className={this.props.addCpVisibility}>  <td></td><td><select  >{productOptions}</select></td>
                             <td>
 
@@ -371,7 +374,7 @@ var SingleCustomerProduct=React.createClass({
         {
             var sp=this.props.sp;
             return(
-                <tr><td>{sp.product.manufacturer.name}</td><td>{sp.product.product_number}</td>
+                <tr><td>{sp.product.manufacturer.name}</td><td><Link to={"products/"+sp.product.id}> {sp.product.product_number}</Link></td>
                     <td>{sp.serialNumber}</td><td>{sp.product.description}  <span className={ "glyphicon glyphicon-trash "+this.props.createJobButtonVisibility} aria-hidden="true"></span>
                       </td><td className={this.props.createJobButtonVisibility}
                         onClick={this.createJob}>Create Job <span className="glyphicon glyphicon-plus" aria-hidden="true"></span></td></tr>

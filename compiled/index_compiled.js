@@ -31202,14 +31202,17 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
             React.createElement("div", null, 
                 React.createElement("div", {className: "col-md-3"}, 
                     React.createElement("h3", null, React.createElement("strong", null, "Customer Details")), 
+
                     React.createElement("p", null, 
-                        customerDisplayed.name, React.createElement("br", null), 
-                        customerDisplayed.street, React.createElement("br", null), 
-                         customerDisplayed.town, React.createElement("br", null), 
-                        customerDisplayed.county, React.createElement("br", null), 
-                        customerDisplayed.phone, React.createElement("br", null), 
-                        customerDisplayed.email, React.createElement("br", null)
+                        React.createElement(Link, {to: "customers/"+customerDisplayed.id}, customerDisplayed.name, React.createElement("br", null), 
+                            customerDisplayed.street, React.createElement("br", null), 
+                             customerDisplayed.town, React.createElement("br", null), 
+                            customerDisplayed.county, React.createElement("br", null), 
+                            customerDisplayed.phone, React.createElement("br", null), 
+                            customerDisplayed.email, React.createElement("br", null)
+                        )
                     )
+
 
                 ), 
                 React.createElement("div", {className: "col-md-6"}, 
@@ -31227,7 +31230,7 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
                         React.createElement("tbody", null, 
                         React.createElement("tr", {className: this.props.cpVisibility}, React.createElement("td", null), React.createElement("td", null, "This customer has no registered products"), React.createElement("td", null, " Add Product  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
                         customerProducts, 
-                        React.createElement("tr", {className: this.props.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "  Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
+                        React.createElement("tr", {className: this.props.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "  Add Product  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
                         React.createElement("tr", {className: this.props.addCpVisibility}, "  ", React.createElement("td", null), React.createElement("td", null, React.createElement("select", null, productOptions)), 
                             React.createElement("td", null, 
 
@@ -31279,7 +31282,7 @@ var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct
         {
             var sp=this.props.sp;
             return(
-                React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, sp.product.product_number), 
+                React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, React.createElement(Link, {to: "products/"+sp.product.id}, " ", sp.product.product_number)), 
                     React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description, "  ", React.createElement("span", {className:  "glyphicon glyphicon-trash "+this.props.createJobButtonVisibility, "aria-hidden": "true"})
                       ), React.createElement("td", {className: this.props.createJobButtonVisibility, 
                         onClick: this.createJob}, "Create Job ", React.createElement("span", {className: "glyphicon glyphicon-plus", "aria-hidden": "true"})))
