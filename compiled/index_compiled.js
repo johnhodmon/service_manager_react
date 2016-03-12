@@ -32646,7 +32646,7 @@ var SingleBomItem=React.createClass(
             var part = bi.part;
 
             return(
-                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), 
+                React.createElement("tr", null, React.createElement("td", null, React.createElement(Link, {to: "parts/"+part.id}, part.part_number)), React.createElement("td", null, part.description), 
                     React.createElement("td", null, bi.quantity, 
                         React.createElement("span", {className: "glyphicon glyphicon-pencil "+this.props.addButtonVisibility, "aria-hidden": "true"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-trash "+this.props.addButtonVisibility, "aria-hidden": "true"})

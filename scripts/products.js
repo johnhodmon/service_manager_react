@@ -330,7 +330,7 @@ var SingleBomItem=React.createClass(
             var part = bi.part;
 
             return(
-                <tr><td>{part.part_number}</td><td>{part.description}</td>
+                <tr><td><Link to={"parts/"+part.id}>{part.part_number}</Link></td><td>{part.description}</td>
                     <td>{bi.quantity}
                         <span className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
                         <span className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
