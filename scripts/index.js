@@ -493,7 +493,7 @@ getInitialState:function()
         {
             jobParts=jobDisplayed.jobParts.map(function(jp,index)
         {
-            return <SingleJobPart jobPart={jp} index={index} makeVisible={this.makeVisible}  />
+            return <SingleJobPart addButtonVisibility={this.props.addButtonVisibility} jobPart={jp} index={index} makeVisible={this.makeVisible}  />
         }.bind(this));
         }
 
@@ -611,8 +611,8 @@ var SingleJobPart=React.createClass(
             return(
                 <tr><td>{part.part_number}</td><td>{part.description}</td>
                     <td>{jobPart.quantity}
-                    <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    <span className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
+                    <span className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
 
                     </td>
 

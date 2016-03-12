@@ -16,10 +16,15 @@ var ProductPageContent=React.createClass({
     getInitialState:function()
     {
         var product=products[0];
-
+        var noParts=""
+        if(product.bom!=null) {
+            noParts="invisible";
+        }
 
         return ({
-
+            partsUsedVisibility:noParts,
+            addPartVisibility:"invisible",
+            addButtonVisibility:"",
             productDisplayed:product
         });
 
@@ -29,11 +34,37 @@ var ProductPageContent=React.createClass({
     {
 
 
-        this.setState ({
+        var noParts=""
+        if(product.bom!=null) {
+            noParts="invisible";
+        }
 
+        return ({
+            noPartsVisibility:noParts,
+            addPartVisibility:"invisible",
+            addButtonVisibility:"",
             productDisplayed:product
         });
 
+    },
+
+    addPartVisible:function()
+    {
+        console.log("make visible");
+        this.setState ({
+
+            addPartVisibility:"",
+            addButtonVisibility:"invisible"
+        })
+
+    },
+
+    addPartInVisible:function()
+    {
+        this.setState ({
+
+            addPartVisibility:"invisible",
+            addButtonVisibility:""})
     },
 
 
@@ -47,7 +78,14 @@ var ProductPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <ProductMainPane productDisplayed={this.state.productDisplayed} products={this.props.products}/>
+                    <ProductMainPane
+                        productDisplayed={this.state.productDisplayed}
+                        products={this.props.products}
+                        addPartVisibility={this.state.addPartVisibility}
+                        addPartVisible={this.addPartVisible}
+                        addPartInVisible={this.addPartInVisible}
+                        noPartsVisibility={this.state.noPartsVisibility}
+                        addButtonVisibility={this.state.addButtonVisibility}/>
                 </div>
 
             </div>
@@ -154,6 +192,38 @@ var SingleProduct=React.createClass({
 });
 
 var ProductMainPane=React.createClass({
+
+    getInitialState:function()
+    {
+        return({partNumber:""});
+    },
+
+
+    setPartNumber:function(e)
+    {
+        e.preventDefault();
+        this.setState({partNumber:e.target.value})
+    },
+
+    makeVisible:function()
+    {
+
+        this.props.addPartVisible();
+    },
+
+
+
+    undo:function(e)
+    {
+        this.props.addPartInVisible();
+    },
+
+    save:function(e)
+    {
+        this.props.addPartInVisible();
+    },
+
+
     render:function(){
         var products=this.props.products;
         var productDisplayed=this.props.productDisplayed;
@@ -164,8 +234,8 @@ var ProductMainPane=React.createClass({
         });
         var bom=productDisplayed.bom.map(function(bi,index)
             {
-                return(<SingleBomItem bi={bi} />);
-            }
+                return(<SingleBomItem addButtonVisibility={this.props.addButtonVisibility} bi={bi} />);
+            }.bind(this)
 
         );
         return(
@@ -186,7 +256,7 @@ var ProductMainPane=React.createClass({
 
 
                     <h3><strong>Bill of Material</strong></h3>
-                    <p>The customer has no registered products</p>
+
                     <table className="table table-striped">
                         <thead>
 
@@ -195,37 +265,30 @@ var ProductMainPane=React.createClass({
                         </thead>
 
                         <tbody>
-                        {bom}
 
+                        {bom}
+                        <tr className={this.props.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
+                        <tr className={this.props.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumber}>{partOptions}</select></td>
+                            <td>
+                                <select>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <span onClick={this.undo} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                Cancel <span onClick={this.save} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                            </td></tr>
 
                         </tbody>
                     </table>
-                    <h3><strong>Add Part to Bill of Material</strong></h3>
-                    <form>
-                        <div className="form-group">
-                            <label for="productNumber">Product</label>
-                            <select>
-                                {partOptions}
-                            </select>
-                        </div>
 
-                        <div className="form-group">
-                            <label for="quantity" >Quantity</label>
-                            <select>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                        </div>
-                        <input type="button" className="btn btn-sm btn-primary" action="submit" value="Add"/>
-                    </form>
                 </div>
 
                 <div className="col-md-4">
@@ -259,21 +322,26 @@ var PartOption=React.createClass(
     });
 
 
-
 var SingleBomItem=React.createClass(
     {
 
         render:function(){
             var bi=this.props.bi;
             var part = bi.part;
+
             return(
-                <tr><td>{part.part_number}</td><td>{part.description}</td><td>{bi.quantity}</td>
-                    <td><button className="btn btn-sm btn-primary">Edit</button></td><td><button className="btn btn-primary">Delete</button></td></tr>
+                <tr><td>{part.part_number}</td><td>{part.description}</td>
+                    <td>{bi.quantity}
+                        <span className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
+                        <span className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
+
+                    </td>
+
+                </tr>
             );
         }
     }
 );
-
 
 
 

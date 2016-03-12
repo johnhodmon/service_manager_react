@@ -48,6 +48,7 @@ var CustomerPageContent=React.createClass({
             customerDisplayed:customer,
             addCpVisibility:"invisible",
             addButtonVisibility:"visible",
+            createJobButtonVisibility:"",
             cpVisibility:cpv
         });
 
@@ -58,21 +59,30 @@ var CustomerPageContent=React.createClass({
     {
         this.setState( {
             addCpVisibility:"invisible",
-            addButtonVisibility:"visible"
+            addButtonVisibility:"",
+            createJobButtonVisibility:"",
+
+
 
         }  )
     },
 
     addCustomerProductVisible:function()
     {
-        this.setState( {addCpVisibility:"",
-            addButtonVisibility:"invisible"}  )
+        this.setState( {
+            addCpVisibility:"",
+            addButtonVisibility:"invisible",
+            createJobButtonVisibility:"invisible",
+
+
+        }  )
     },
 
     saveJob:function()
     {
         this.setState( {
             createJobFormVisibility:"invisible",
+            addButtonVisibility:"",
             createJobButtonVisibility:"",
         });
     },
@@ -81,6 +91,7 @@ var CustomerPageContent=React.createClass({
     {
         this.setState( {
             createJobFormVisibility:"invisible",
+            addButtonVisibility:"",
             createJobButtonVisibility:"",});
     },
 
@@ -90,10 +101,12 @@ var CustomerPageContent=React.createClass({
             createJobFormVisibility:"",
             addButtonVisibility:"invisible",
             createJobButtonVisibility:"invisible",
+            addButtonVisibility:"invisible",
             jobFormCustomerProduct:customerProduct.product.manufacturer.name+" "
             +customerProduct.product.product_number
             +customerProduct.product.description.split(",")[0],
-            jobFormCustomer:customer.name+", "+customer.town
+            jobFormCustomer:customer.name+", "+customer.town,
+            createJobButtonVisibility:"invisible",
 
         });
     },
@@ -359,7 +372,7 @@ var SingleCustomerProduct=React.createClass({
             var sp=this.props.sp;
             return(
                 <tr><td>{sp.product.manufacturer.name}</td><td>{sp.product.product_number}</td>
-                    <td>{sp.serialNumber}</td><td>{sp.product.description}  <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    <td>{sp.serialNumber}</td><td>{sp.product.description}  <span className={ "glyphicon glyphicon-trash "+this.props.createJobButtonVisibility} aria-hidden="true"></span>
                       </td><td className={this.props.createJobButtonVisibility}
                         onClick={this.createJob}>Create Job <span className="glyphicon glyphicon-plus" aria-hidden="true"></span></td></tr>
 
