@@ -186,6 +186,7 @@ getInitialState:function()
     return ({
         partsUsedVisibility:puv,
         addPartVisibility:"invisible",
+        addButtonVisibility:"",
         jobDisplayed:job
     });
 
@@ -201,6 +202,7 @@ getInitialState:function()
        this.setState ({
             partsUsedVisibility:puv,
             addPartVisibility:"invisible",
+            addButtonVisibility:"",
             jobDisplayed:job
         });
 
@@ -211,7 +213,9 @@ getInitialState:function()
         console.log("make visible");
         this.setState ({
 
-                addPartVisibility:""})
+                addPartVisibility:"",
+            addButtonVisibility:"invisible"
+        })
 
     },
 
@@ -219,7 +223,8 @@ getInitialState:function()
     {
         this.setState ({
 
-            addPartVisibility:"invisible"})
+            addPartVisibility:"invisible",
+            addButtonVisibility:""})
     },
 
     render:function()
@@ -232,7 +237,14 @@ getInitialState:function()
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <JobMainPane addPartVisibility={this.state.addPartVisibility} addPartVisible={this.addPartVisible} addPartInVisible={this.addPartInVisible} partsUsedVisibility={this.state.partsUsedVisibility}  jobDisplayed={this.state.jobDisplayed} jobs={this.props.jobs} parts={this.props.parts}/>
+                    <JobMainPane addPartVisibility={this.state.addPartVisibility}
+                                 addPartVisible={this.addPartVisible}
+                                 addPartInVisible={this.addPartInVisible}
+                                 partsUsedVisibility={this.state.partsUsedVisibility}
+                                 addButtonVisibility={this.state.addButtonVisibility}
+                                 jobDisplayed={this.state.jobDisplayed}
+                                 jobs={this.props.jobs}
+                                 parts={this.props.parts}/>
                 </div>
 
             </div>
@@ -527,8 +539,9 @@ getInitialState:function()
                             </thead>
 
                             <tbody>
-                            <tr className={this.props.partsUsedVisibility}><td></td><td>There were no parts used on this job</td><td> Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
+                            <tr className={this.props.partsUsedVisibility}><td></td><td>There were no parts used on this job</td><td></td></tr>
                             {jobParts}
+                            <tr className={this.props.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                             <tr className={this.props.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumber}>{selectOptions}</select></td>
                                 <td>
                                     <select>
@@ -600,7 +613,7 @@ var SingleJobPart=React.createClass(
                     <td>{jobPart.quantity}
                     <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        Add Part  <span onClick={makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+
                     </td>
 
                 </tr>

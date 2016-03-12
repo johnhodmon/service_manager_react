@@ -25,7 +25,12 @@ var CustomerPageContent=React.createClass({
 
             customerDisplayed:customer,
             cpVisibility:cpv,
-            addCpVisibility:"invisible"
+            addCpVisibility:"invisible",
+            addButtonVisibility:"visible",
+            createJobFormVisibility:"invisible",
+            jobFormCustomerProduct:"",
+            jobFormCustomer:"",
+            createJobButtonVisibility:"",
 
         });
 
@@ -33,11 +38,17 @@ var CustomerPageContent=React.createClass({
 
     selectNewCustomer:function(customer)
     {
-
+        var cpv=""
+        if(customer.customerProducts!=null) {
+            cpv="invisible";
+        }
 
         this.setState ({
 
-            customerDisplayed:customer
+            customerDisplayed:customer,
+            addCpVisibility:"invisible",
+            addButtonVisibility:"visible",
+            cpVisibility:cpv
         });
 
     },
@@ -45,14 +56,47 @@ var CustomerPageContent=React.createClass({
 
     addCustomerProductInVisible:function()
     {
-        this.setState( {addCpVisibility:"invisible"}  )
+        this.setState( {
+            addCpVisibility:"invisible",
+            addButtonVisibility:"visible"
+
+        }  )
     },
 
     addCustomerProductVisible:function()
     {
-        this.setState( {addCpVisibility:""}  )
+        this.setState( {addCpVisibility:"",
+            addButtonVisibility:"invisible"}  )
     },
 
+    saveJob:function()
+    {
+        this.setState( {
+            createJobFormVisibility:"invisible",
+            createJobButtonVisibility:"",
+        });
+    },
+
+    cancelJobSave:function()
+    {
+        this.setState( {
+            createJobFormVisibility:"invisible",
+            createJobButtonVisibility:"",});
+    },
+
+    createJob:function(customer,customerProduct)
+    {
+        this.setState( {
+            createJobFormVisibility:"",
+            addButtonVisibility:"invisible",
+            createJobButtonVisibility:"invisible",
+            jobFormCustomerProduct:customerProduct.product.manufacturer.name+" "
+            +customerProduct.product.product_number
+            +customerProduct.product.description.split(",")[0],
+            jobFormCustomer:customer.name+", "+customer.town
+
+        });
+    },
 
 
 
@@ -66,7 +110,20 @@ var CustomerPageContent=React.createClass({
 
                 </div>
                 <div className="col-md-10 main-pane">
-                    <CustomerMainPane addCustomerProductInVisible={this.addCustomerProductInVisible}   addCustomerProductVisible={this.addCustomerProductVisible} cpVisibility={this.state.cpVisibility} addCpVisibility={this.state.addCpVisibility} customerDisplayed={this.state.customerDisplayed} customers={this.props.customers}/>
+                    <CustomerMainPane addCustomerProductInVisible={this.addCustomerProductInVisible}
+                                      addCustomerProductVisible={this.addCustomerProductVisible}
+                                      cpVisibility={this.state.cpVisibility}
+                                      addCpVisibility={this.state.addCpVisibility}
+                                      customerDisplayed={this.state.customerDisplayed}
+                                      addButtonVisibility={this.state.addButtonVisibility}
+                                      createJobFormVisibility={this.state.createJobFormVisibility}
+                                      jobFormCustomer={this.state.jobFormCustomer}
+                                      jobFormCustomerProduct={this.state.jobFormCustomerProduct}
+                                      createJob={this.createJob}
+                                      saveJob={this.saveJob}
+                                      createJobButtonVisibility={this.state.createJobButtonVisibility}
+                                      cancelJobSave={this.cancelJobSave}
+                                      customers={this.props.customers}/>
                 </div>
 
             </div>
@@ -209,7 +266,14 @@ var CustomerMainPane=React.createClass({
 
         if(customerDisplayed.customerProducts!=null) {
             customerProducts = customerDisplayed.customerProducts.map(function (sp, index) {
-                    return (<SingleCustomerProduct makeVisible={this.props.addCustomerProductVisible} sp={sp}/>);
+                    return (<SingleCustomerProduct
+                        customerDisplayed={customerDisplayed}
+                        createJob={this.props.createJob}
+                        createJobButtonVisibility={this.props.createJobButtonVisibility}
+                        makeVisible={this.props.addCustomerProductVisible}
+                        sp={sp}
+
+                    />);
                 }.bind(this)
             );
         }
@@ -242,6 +306,7 @@ var CustomerMainPane=React.createClass({
                         <tbody>
                         <tr className={this.props.cpVisibility}><td></td><td>This customer has no registered products</td><td> Add Product  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                         {customerProducts}
+                        <tr className={this.props.addButtonVisibility}><td></td><td></td><td></td><td>  Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                         <tr className={this.props.addCpVisibility}>  <td></td><td><select  >{productOptions}</select></td>
                             <td>
 
@@ -251,8 +316,13 @@ var CustomerMainPane=React.createClass({
 
                         </tbody>
                     </table>
-                    <JobForm customer={customerDisplayed} customerProduct={customerDisplayed.customerProducts[0]} />
-
+                    <div className={this.props.createJobFormVisibility}>
+                    <JobForm jobFormCustomer={this.props.jobFormCustomer}
+                             jobFormCustomerProduct={this.props.jobFormCustomerProduct}
+                             saveJob={this.props.saveJob}
+                             cancelJobSave={this.props.cancelJobSave}
+                    />
+                    </div>
                 </div>
                 <div className="col-md-3">
 
@@ -278,14 +348,20 @@ var ProductOption=React.createClass({
 
 var SingleCustomerProduct=React.createClass({
 
+    createJob:function()
+    {
+        var sp=this.props.sp;
+        var  customerDisplayed=this.props.customerDisplayed;
+        this.props.createJob(customerDisplayed,sp)
+    },
         render:function()
         {
             var sp=this.props.sp;
             return(
                 <tr><td>{sp.product.manufacturer.name}</td><td>{sp.product.product_number}</td>
                     <td>{sp.serialNumber}</td><td>{sp.product.description}  <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        Add Part  <span onClick={this.props.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td><td>
-                        Create Job</td></tr>
+                      </td><td className={this.props.createJobButtonVisibility}
+                        onClick={this.createJob}>Create Job <span className="glyphicon glyphicon-plus" aria-hidden="true"></span></td></tr>
 
             );
         }
@@ -387,9 +463,9 @@ var JobForm=React.createClass(
 
 
         render:function(){
-            var customerProduct=this.props.customerProduct;
-            var customer=this.props.customer;
-            var product=customerProduct.product;
+
+
+
             var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth()+1;
@@ -410,13 +486,13 @@ var JobForm=React.createClass(
                         <div className="form-group">
                             <input type="text" name="customerProduct" disabled
 
-                                   value={product.manufacturer.name+" "+product.product_number+product.description.split(",")[0] }>
+                                   value={  this.props.jobFormCustomerProduct      }>
                             </input>
                         </div>
                         <label>Customer</label>
                         <div className="form-group">
                             <input type="text" name="customer" disabled
-                                   value={customer.name+", "+customer.town } >
+                                   value={   this.props.jobFormCustomer } >
 
                             </input>
                         </div>
@@ -434,8 +510,8 @@ var JobForm=React.createClass(
 
                             </input>
                         </div>
-
-                        <input className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
+                        <input onClick={this.props.saveJob} className="btn btn-sm btn-primary" type="cancel" value="Cancel"></input>
+                        <input onClick={this.props.cancelJobSave} className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
 
                     </form>
                 </div>

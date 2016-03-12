@@ -30933,7 +30933,12 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
 
             customerDisplayed:customer,
             cpVisibility:cpv,
-            addCpVisibility:"invisible"
+            addCpVisibility:"invisible",
+            addButtonVisibility:"visible",
+            createJobFormVisibility:"invisible",
+            jobFormCustomerProduct:"",
+            jobFormCustomer:"",
+            createJobButtonVisibility:"",
 
         });
 
@@ -30941,11 +30946,17 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
 
     selectNewCustomer:function(customer)
     {
-
+        var cpv=""
+        if(customer.customerProducts!=null) {
+            cpv="invisible";
+        }
 
         this.setState ({
 
-            customerDisplayed:customer
+            customerDisplayed:customer,
+            addCpVisibility:"invisible",
+            addButtonVisibility:"visible",
+            cpVisibility:cpv
         });
 
     },
@@ -30953,14 +30964,47 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
 
     addCustomerProductInVisible:function()
     {
-        this.setState( {addCpVisibility:"invisible"}  )
+        this.setState( {
+            addCpVisibility:"invisible",
+            addButtonVisibility:"visible"
+
+        }  )
     },
 
     addCustomerProductVisible:function()
     {
-        this.setState( {addCpVisibility:""}  )
+        this.setState( {addCpVisibility:"",
+            addButtonVisibility:"invisible"}  )
     },
 
+    saveJob:function()
+    {
+        this.setState( {
+            createJobFormVisibility:"invisible",
+            createJobButtonVisibility:"",
+        });
+    },
+
+    cancelJobSave:function()
+    {
+        this.setState( {
+            createJobFormVisibility:"invisible",
+            createJobButtonVisibility:"",});
+    },
+
+    createJob:function(customer,customerProduct)
+    {
+        this.setState( {
+            createJobFormVisibility:"",
+            addButtonVisibility:"invisible",
+            createJobButtonVisibility:"invisible",
+            jobFormCustomerProduct:customerProduct.product.manufacturer.name+" "
+            +customerProduct.product.product_number
+            +customerProduct.product.description.split(",")[0],
+            jobFormCustomer:customer.name+", "+customer.town
+
+        });
+    },
 
 
 
@@ -30974,7 +31018,20 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(CustomerMainPane, {addCustomerProductInVisible: this.addCustomerProductInVisible, addCustomerProductVisible: this.addCustomerProductVisible, cpVisibility: this.state.cpVisibility, addCpVisibility: this.state.addCpVisibility, customerDisplayed: this.state.customerDisplayed, customers: this.props.customers})
+                    React.createElement(CustomerMainPane, {addCustomerProductInVisible: this.addCustomerProductInVisible, 
+                                      addCustomerProductVisible: this.addCustomerProductVisible, 
+                                      cpVisibility: this.state.cpVisibility, 
+                                      addCpVisibility: this.state.addCpVisibility, 
+                                      customerDisplayed: this.state.customerDisplayed, 
+                                      addButtonVisibility: this.state.addButtonVisibility, 
+                                      createJobFormVisibility: this.state.createJobFormVisibility, 
+                                      jobFormCustomer: this.state.jobFormCustomer, 
+                                      jobFormCustomerProduct: this.state.jobFormCustomerProduct, 
+                                      createJob: this.createJob, 
+                                      saveJob: this.saveJob, 
+                                      createJobButtonVisibility: this.state.createJobButtonVisibility, 
+                                      cancelJobSave: this.cancelJobSave, 
+                                      customers: this.props.customers})
                 )
 
             )
@@ -31117,7 +31174,14 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
 
         if(customerDisplayed.customerProducts!=null) {
             customerProducts = customerDisplayed.customerProducts.map(function (sp, index) {
-                    return (React.createElement(SingleCustomerProduct, {makeVisible: this.props.addCustomerProductVisible, sp: sp}));
+                    return (React.createElement(SingleCustomerProduct, {
+                        customerDisplayed: customerDisplayed, 
+                        createJob: this.props.createJob, 
+                        createJobButtonVisibility: this.props.createJobButtonVisibility, 
+                        makeVisible: this.props.addCustomerProductVisible, 
+                        sp: sp}
+
+                    ));
                 }.bind(this)
             );
         }
@@ -31150,6 +31214,7 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
                         React.createElement("tbody", null, 
                         React.createElement("tr", {className: this.props.cpVisibility}, React.createElement("td", null), React.createElement("td", null, "This customer has no registered products"), React.createElement("td", null, " Add Product  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
                         customerProducts, 
+                        React.createElement("tr", {className: this.props.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "  Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
                         React.createElement("tr", {className: this.props.addCpVisibility}, "  ", React.createElement("td", null), React.createElement("td", null, React.createElement("select", null, productOptions)), 
                             React.createElement("td", null, 
 
@@ -31159,8 +31224,13 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
 
                         )
                     ), 
-                    React.createElement(JobForm, {customer: customerDisplayed, customerProduct: customerDisplayed.customerProducts[0]})
-
+                    React.createElement("div", {className: this.props.createJobFormVisibility}, 
+                    React.createElement(JobForm, {jobFormCustomer: this.props.jobFormCustomer, 
+                             jobFormCustomerProduct: this.props.jobFormCustomerProduct, 
+                             saveJob: this.props.saveJob, 
+                             cancelJobSave: this.props.cancelJobSave}
+                    )
+                    )
                 ), 
                 React.createElement("div", {className: "col-md-3"}
 
@@ -31186,14 +31256,20 @@ var ProductOption=React.createClass({displayName: "ProductOption",
 
 var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct",
 
+    createJob:function()
+    {
+        var sp=this.props.sp;
+        var  customerDisplayed=this.props.customerDisplayed;
+        this.props.createJob(customerDisplayed,sp)
+    },
         render:function()
         {
             var sp=this.props.sp;
             return(
                 React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, sp.product.product_number), 
-                    React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description, "  ", React.createElement("span", {className: "glyphicon glyphicon-trash", "aria-hidden": "true"}), 
-                        "Add Part  ", React.createElement("span", {onClick: this.props.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"})), React.createElement("td", null, 
-                        "Create Job"))
+                    React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description, "  ", React.createElement("span", {className: "glyphicon glyphicon-trash", "aria-hidden": "true"})
+                      ), React.createElement("td", {className: this.props.createJobButtonVisibility, 
+                        onClick: this.createJob}, "Create Job ", React.createElement("span", {className: "glyphicon glyphicon-plus", "aria-hidden": "true"})))
 
             );
         }
@@ -31295,9 +31371,9 @@ var JobForm=React.createClass(
 
 
         render:function(){
-            var customerProduct=this.props.customerProduct;
-            var customer=this.props.customer;
-            var product=customerProduct.product;
+
+
+
             var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth()+1;
@@ -31318,13 +31394,13 @@ var JobForm=React.createClass(
                         React.createElement("div", {className: "form-group"}, 
                             React.createElement("input", {type: "text", name: "customerProduct", disabled: true, 
 
-                                   value: product.manufacturer.name+" "+product.product_number+product.description.split(",")[0]}
+                                   value:   this.props.jobFormCustomerProduct}
                             )
                         ), 
                         React.createElement("label", null, "Customer"), 
                         React.createElement("div", {className: "form-group"}, 
                             React.createElement("input", {type: "text", name: "customer", disabled: true, 
-                                   value: customer.name+", "+customer.town}
+                                   value:    this.props.jobFormCustomer}
 
                             )
                         ), 
@@ -31342,8 +31418,8 @@ var JobForm=React.createClass(
 
                             )
                         ), 
-
-                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
+                        React.createElement("input", {onClick: this.props.saveJob, className: "btn btn-sm btn-primary", type: "cancel", value: "Cancel"}), 
+                        React.createElement("input", {onClick: this.props.cancelJobSave, className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
 
                     )
                 )
@@ -31546,6 +31622,7 @@ getInitialState:function()
     return ({
         partsUsedVisibility:puv,
         addPartVisibility:"invisible",
+        addButtonVisibility:"",
         jobDisplayed:job
     });
 
@@ -31561,6 +31638,7 @@ getInitialState:function()
        this.setState ({
             partsUsedVisibility:puv,
             addPartVisibility:"invisible",
+            addButtonVisibility:"",
             jobDisplayed:job
         });
 
@@ -31571,7 +31649,9 @@ getInitialState:function()
         console.log("make visible");
         this.setState ({
 
-                addPartVisibility:""})
+                addPartVisibility:"",
+            addButtonVisibility:"invisible"
+        })
 
     },
 
@@ -31579,7 +31659,8 @@ getInitialState:function()
     {
         this.setState ({
 
-            addPartVisibility:"invisible"})
+            addPartVisibility:"invisible",
+            addButtonVisibility:""})
     },
 
     render:function()
@@ -31592,7 +31673,14 @@ getInitialState:function()
 
                 ), 
                 React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(JobMainPane, {addPartVisibility: this.state.addPartVisibility, addPartVisible: this.addPartVisible, addPartInVisible: this.addPartInVisible, partsUsedVisibility: this.state.partsUsedVisibility, jobDisplayed: this.state.jobDisplayed, jobs: this.props.jobs, parts: this.props.parts})
+                    React.createElement(JobMainPane, {addPartVisibility: this.state.addPartVisibility, 
+                                 addPartVisible: this.addPartVisible, 
+                                 addPartInVisible: this.addPartInVisible, 
+                                 partsUsedVisibility: this.state.partsUsedVisibility, 
+                                 addButtonVisibility: this.state.addButtonVisibility, 
+                                 jobDisplayed: this.state.jobDisplayed, 
+                                 jobs: this.props.jobs, 
+                                 parts: this.props.parts})
                 )
 
             )
@@ -31887,8 +31975,9 @@ getInitialState:function()
                             ), 
 
                             React.createElement("tbody", null, 
-                            React.createElement("tr", {className: this.props.partsUsedVisibility}, React.createElement("td", null), React.createElement("td", null, "There were no parts used on this job"), React.createElement("td", null, " Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
+                            React.createElement("tr", {className: this.props.partsUsedVisibility}, React.createElement("td", null), React.createElement("td", null, "There were no parts used on this job"), React.createElement("td", null)), 
                             jobParts, 
+                            React.createElement("tr", {className: this.props.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
                             React.createElement("tr", {className: this.props.addPartVisibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartNumber}, selectOptions)), 
                                 React.createElement("td", null, 
                                     React.createElement("select", null, 
@@ -31959,8 +32048,8 @@ var SingleJobPart=React.createClass(
                 React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), 
                     React.createElement("td", null, jobPart.quantity, 
                     React.createElement("span", {className: "glyphicon glyphicon-pencil", "aria-hidden": "true"}), 
-                    React.createElement("span", {className: "glyphicon glyphicon-trash", "aria-hidden": "true"}), 
-                        "Add Part  ", React.createElement("span", {onClick: makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"})
+                    React.createElement("span", {className: "glyphicon glyphicon-trash", "aria-hidden": "true"})
+
                     )
 
                 )
