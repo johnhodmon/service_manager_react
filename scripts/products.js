@@ -15,7 +15,7 @@ var ProductPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var product=products[0];
+        var product=products[this.props.id];
         var noParts=""
         if(product.bom!=null) {
             noParts="invisible";

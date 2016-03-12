@@ -15,7 +15,7 @@ var CustomerPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var customer=customers[0];
+        var customer=customers[this.props.id];
         var cpv=""
         if(customer.customerProducts!=null) {
             cpv="invisible";

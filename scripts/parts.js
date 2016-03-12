@@ -15,7 +15,7 @@ var PartPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var part=parts[0];
+        var part=parts[this.props.id];
 
 
         return ({

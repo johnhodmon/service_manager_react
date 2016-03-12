@@ -10,7 +10,6 @@ var jobs=require('../data/JobData.js').jobs;
 var customers=require('../data/CustomerData.js').customers;
 var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
-var manufacturers=require('../data/ManData.js').manufacturers;
 var JobPageContent=require('./jobs.js').jobPageContent;
 var CustomerPageContent=require('./customers.js').customerPageContent;
 var ProductPageContent=require('./products.js').productPageContent;
@@ -57,7 +56,7 @@ var JobPage=React.createClass(
 
                    <Navbar activeTab="jobs" />
 
-                   <JobPageContent  jobs={jobs} parts={parts}  />
+                   <JobPageContent id={this.props.params.id}  jobs={jobs} parts={parts}  />
                    </div>
 
 
@@ -77,7 +76,7 @@ var CustomerPage=React.createClass(
 
                     <Navbar activeTab="customers" />
 
-                    <CustomerPageContent customers={customers}  />
+                    <CustomerPageContent id={this.props.params.id}  customers={customers}  />
                 </div>
 
 
@@ -98,7 +97,7 @@ var ProductPage=React.createClass(
 
                     <Navbar activeTab="products" />
 
-                    <ProductPageContent  products={products}  />
+                    <ProductPageContent id={this.props.params.id}   products={products}  />
                 </div>
 
 
@@ -119,7 +118,7 @@ var PartPage=React.createClass(
 
                     <Navbar activeTab="parts" />
 
-                    <PartPageContent parts={parts}  />
+                    <PartPageContent id={this.props.params.id}  parts={parts}  />
                 </div>
 
 
@@ -147,10 +146,10 @@ var Navbar=React.createClass({
                         </div>
                     <div className="col-md-10 top-nav-div">
                         <ul className="nav  nav-tabs">
-                            <li className={(this.state.activeTab === "jobs") ? "active" : ""}> <Link to="/jobs">Jobs</Link></li>
-                            <li className={(this.state.activeTab === "customers") ? "active" : ""}> <Link to="/customers">Customers</Link></li>
-                            <li className={(this.state.activeTab === "products") ? "active" : ""}>   <Link to="/products">Products</Link></li>
-                            <li className={(this.state.activeTab === "parts") ? "active" : ""}>   <Link to="/parts">Stock Control</Link></li>
+                            <li className={(this.state.activeTab === "jobs") ? "active" : ""}> <Link to="/jobs/0">Jobs</Link></li>
+                            <li className={(this.state.activeTab === "customers") ? "active" : ""}> <Link to="/customers/0">Customers</Link></li>
+                            <li className={(this.state.activeTab === "products") ? "active" : ""}>   <Link to="/products/0">Products</Link></li>
+                            <li className={(this.state.activeTab === "parts") ? "active" : ""}>   <Link to="/parts/0">Stock Control</Link></li>
                             <li role="presentation" className="dropdown">
                                 <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     John Hodmon<span className="caret"></span>
@@ -180,12 +179,12 @@ ReactDOM.render( (
         <Router >
             <Route path="/" component={App}>
                 <IndexRoute component={JobPage}/>
-                <Route path="jobs" component={JobPage}/>
-                <Route path="customers/new" component={CustomerForm}/>
-                <Route path="products/new" component={ProductForm}/>
-                <Route path="customers" component={CustomerPage} />
-                <Route path="products" component={ProductPage} />
-                <Route path="Parts" component={PartPage} />
+                <Route path="jobs/:id" component={JobPage}/>
+                <Route path="new_customer" component={CustomerForm}/>
+                <Route path="new_product" component={ProductForm}/>
+                <Route path="customers/:id" component={CustomerPage} />
+                <Route path="products/:id" component={ProductPage} />
+                <Route path="parts/:id" component={PartPage} />
             </Route>
         </Router>
     ),

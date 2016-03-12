@@ -30923,7 +30923,7 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
 
     getInitialState:function()
     {
-        var customer=customers[0];
+        var customer=customers[this.props.id];
         var cpv=""
         if(customer.customerProducts!=null) {
             cpv="invisible";
@@ -31459,7 +31459,6 @@ var jobs=require('../data/JobData.js').jobs;
 var customers=require('../data/CustomerData.js').customers;
 var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
-var manufacturers=require('../data/ManData.js').manufacturers;
 var JobPageContent=require('./jobs.js').jobPageContent;
 var CustomerPageContent=require('./customers.js').customerPageContent;
 var ProductPageContent=require('./products.js').productPageContent;
@@ -31506,7 +31505,7 @@ var JobPage=React.createClass(
 
                    React.createElement(Navbar, {activeTab: "jobs"}), 
 
-                   React.createElement(JobPageContent, {jobs: jobs, parts: parts})
+                   React.createElement(JobPageContent, {id: this.props.params.id, jobs: jobs, parts: parts})
                    )
 
 
@@ -31526,7 +31525,7 @@ var CustomerPage=React.createClass(
 
                     React.createElement(Navbar, {activeTab: "customers"}), 
 
-                    React.createElement(CustomerPageContent, {customers: customers})
+                    React.createElement(CustomerPageContent, {id: this.props.params.id, customers: customers})
                 )
 
 
@@ -31547,7 +31546,7 @@ var ProductPage=React.createClass(
 
                     React.createElement(Navbar, {activeTab: "products"}), 
 
-                    React.createElement(ProductPageContent, {products: products})
+                    React.createElement(ProductPageContent, {id: this.props.params.id, products: products})
                 )
 
 
@@ -31568,7 +31567,7 @@ var PartPage=React.createClass(
 
                     React.createElement(Navbar, {activeTab: "parts"}), 
 
-                    React.createElement(PartPageContent, {parts: parts})
+                    React.createElement(PartPageContent, {id: this.props.params.id, parts: parts})
                 )
 
 
@@ -31596,10 +31595,10 @@ var Navbar=React.createClass({displayName: "Navbar",
                         ), 
                     React.createElement("div", {className: "col-md-10 top-nav-div"}, 
                         React.createElement("ul", {className: "nav  nav-tabs"}, 
-                            React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs"}, "Jobs")), 
-                            React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers"}, "Customers")), 
-                            React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products"}, "Products")), 
-                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts"}, "Stock Control")), 
+                            React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs/0"}, "Jobs")), 
+                            React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers/0"}, "Customers")), 
+                            React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products/0"}, "Products")), 
+                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts/0"}, "Stock Control")), 
                             React.createElement("li", {role: "presentation", className: "dropdown"}, 
                                 React.createElement("a", {className: "dropdown-toggle", "data-toggle": "dropdown", href: "#", role: "button", "aria-haspopup": "true", "aria-expanded": "false"}, 
                                     "John Hodmon", React.createElement("span", {className: "caret"})
@@ -31629,19 +31628,19 @@ ReactDOM.render( (
         React.createElement(Router, null, 
             React.createElement(Route, {path: "/", component: App}, 
                 React.createElement(IndexRoute, {component: JobPage}), 
-                React.createElement(Route, {path: "jobs", component: JobPage}), 
-                React.createElement(Route, {path: "customers/new", component: CustomerForm}), 
-                React.createElement(Route, {path: "products/new", component: ProductForm}), 
-                React.createElement(Route, {path: "customers", component: CustomerPage}), 
-                React.createElement(Route, {path: "products", component: ProductPage}), 
-                React.createElement(Route, {path: "Parts", component: PartPage})
+                React.createElement(Route, {path: "jobs/:id", component: JobPage}), 
+                React.createElement(Route, {path: "new_customer", component: CustomerForm}), 
+                React.createElement(Route, {path: "new_product", component: ProductForm}), 
+                React.createElement(Route, {path: "customers/:id", component: CustomerPage}), 
+                React.createElement(Route, {path: "products/:id", component: ProductPage}), 
+                React.createElement(Route, {path: "parts/:id", component: PartPage})
             )
         )
     ),
     document.getElementById('mount-point')
 );
 
-},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/ManData.js":3,"../data/PartData.js":4,"../data/ProductData.js":5,"./customers.js":210,"./jobs.js":212,"./parts.js":213,"./products.js":214,"lodash":52,"react":207,"react-dom":54,"react-router":74}],212:[function(require,module,exports){
+},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/PartData.js":4,"../data/ProductData.js":5,"./customers.js":210,"./jobs.js":212,"./parts.js":213,"./products.js":214,"lodash":52,"react":207,"react-dom":54,"react-router":74}],212:[function(require,module,exports){
 ReactDOM = require('react-dom');
 var React = require('react');
 var ReactRouter = require('react-router');
@@ -31659,7 +31658,12 @@ var JobPageContent=React.createClass({displayName: "JobPageContent",
 
     getInitialState:function()
     {
-        var job=jobs[0];
+       var id=0;
+        if(this.props.id!=null)
+        {
+            id=this.props.id;
+        }
+        var job=jobs[id];
         var puv=""
         if(job.jobParts!=null) {
             puv="invisible";
@@ -31990,12 +31994,13 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
                     React.createElement("div", {className: "col-md-3"}, 
                         React.createElement("h3", null, React.createElement("strong", null, "Customer Details")), 
                         React.createElement("p", null, 
-                            customer.name, React.createElement("br", null), 
+                            React.createElement(Link, {to: "customers/"+customer.id}, customer.name, React.createElement("br", null), 
                             customer.street, React.createElement("br", null), 
                              customer.town, React.createElement("br", null), 
                             customer.county, React.createElement("br", null), 
                             customer.phone, React.createElement("br", null), 
                             customer.email, React.createElement("br", null)
+                                )
                         )
                     ), 
 
@@ -32051,9 +32056,11 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
                     React.createElement("div", {className: "col-md-3"}, 
                         React.createElement("h3", null, React.createElement("strong", null, "Product Details")), 
                         React.createElement("p", null, 
-                            product.manufacturer.name, " ", product.product_number, 
-                            product.description, 
+                            React.createElement(Link, {to: "products/"+product.id}, 
+                            product.manufacturer.name, " ", product.product_number, React.createElement("br", null), 
+                            product.description, React.createElement("br", null), 
                             "Serial Number: ", customerProduct.serialNumber
+                                )
 
                         )
                     )
@@ -32091,7 +32098,7 @@ var SingleJobPart=React.createClass(
             var part = jobPart.part;
             var makeVisible=this.props.makeVisible;
             return(
-                React.createElement("tr", null, React.createElement("td", null, part.part_number), React.createElement("td", null, part.description), 
+                React.createElement("tr", null, React.createElement("td", null, React.createElement(Link, {to: "parts/"+part.id}, part.part_number)), React.createElement("td", null, part.description), 
                     React.createElement("td", null, jobPart.quantity, 
                         React.createElement("span", {className: "glyphicon glyphicon-pencil "+this.props.addButtonVisibility, "aria-hidden": "true"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-trash "+this.props.addButtonVisibility, "aria-hidden": "true"})
@@ -32124,7 +32131,7 @@ var PartPageContent=React.createClass({displayName: "PartPageContent",
 
     getInitialState:function()
     {
-        var part=parts[0];
+        var part=parts[this.props.id];
 
 
         return ({
@@ -32321,7 +32328,7 @@ var ProductPageContent=React.createClass({displayName: "ProductPageContent",
 
     getInitialState:function()
     {
-        var product=products[0];
+        var product=products[this.props.id];
         var noParts=""
         if(product.bom!=null) {
             noParts="invisible";

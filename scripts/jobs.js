@@ -15,7 +15,12 @@ var JobPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var job=jobs[0];
+       var id=0;
+        if(this.props.id!=null)
+        {
+            id=this.props.id;
+        }
+        var job=jobs[id];
         var puv=""
         if(job.jobParts!=null) {
             puv="invisible";
@@ -346,12 +351,13 @@ var JobMainPane=React.createClass({
                     <div className="col-md-3">
                         <h3><strong>Customer Details</strong></h3>
                         <p>
-                            {customer.name}<br/>
+                            <Link to={"customers/"+customer.id}>{customer.name}<br/>
                             {customer.street}<br/>
                             { customer.town}<br/>
                             {customer.county}<br/>
                             {customer.phone}<br/>
                             {customer.email}<br/>
+                                </Link>
                         </p>
                     </div>
 
@@ -407,9 +413,11 @@ var JobMainPane=React.createClass({
                     <div className="col-md-3">
                         <h3><strong>Product Details</strong></h3>
                         <p>
-                            {product.manufacturer.name} {product.product_number}
-                            {product.description}
+                            <Link to={"products/"+product.id}>
+                            {product.manufacturer.name} {product.product_number}<br/>
+                            {product.description}<br/>
                             Serial Number: {customerProduct.serialNumber}
+                                </Link>
 
                         </p>
                     </div>
@@ -447,7 +455,7 @@ var SingleJobPart=React.createClass(
             var part = jobPart.part;
             var makeVisible=this.props.makeVisible;
             return(
-                <tr><td>{part.part_number}</td><td>{part.description}</td>
+                <tr><td><Link to={"parts/"+part.id}>{part.part_number}</Link></td><td>{part.description}</td>
                     <td>{jobPart.quantity}
                         <span className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
                         <span className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
