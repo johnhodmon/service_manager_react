@@ -1163,7 +1163,7 @@ var EventListener = {
 
 module.exports = EventListener;
 }).call(this,require('_process'))
-},{"./emptyFunction":16,"_process":211}],10:[function(require,module,exports){
+},{"./emptyFunction":16,"_process":214}],10:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -1503,7 +1503,7 @@ function createNodesFromMarkup(markup, handleScript) {
 
 module.exports = createNodesFromMarkup;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":10,"./createArrayFromMixed":14,"./getMarkupWrap":20,"./invariant":24,"_process":211}],16:[function(require,module,exports){
+},{"./ExecutionEnvironment":10,"./createArrayFromMixed":14,"./getMarkupWrap":20,"./invariant":24,"_process":214}],16:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -1565,7 +1565,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":211}],18:[function(require,module,exports){
+},{"_process":214}],18:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -1726,7 +1726,7 @@ function getMarkupWrap(nodeName) {
 
 module.exports = getMarkupWrap;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":10,"./invariant":24,"_process":211}],21:[function(require,module,exports){
+},{"./ExecutionEnvironment":10,"./invariant":24,"_process":214}],21:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -1892,7 +1892,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":211}],25:[function(require,module,exports){
+},{"_process":214}],25:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -1993,7 +1993,7 @@ var keyMirror = function (obj) {
 
 module.exports = keyMirror;
 }).call(this,require('_process'))
-},{"./invariant":24,"_process":211}],28:[function(require,module,exports){
+},{"./invariant":24,"_process":214}],28:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -2283,7 +2283,7 @@ function toArray(obj) {
 
 module.exports = toArray;
 }).call(this,require('_process'))
-},{"./invariant":24,"_process":211}],35:[function(require,module,exports){
+},{"./invariant":24,"_process":214}],35:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -2343,7 +2343,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":16,"_process":211}],36:[function(require,module,exports){
+},{"./emptyFunction":16,"_process":214}],36:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -2510,7 +2510,7 @@ function readState(key) {
   return null;
 }
 }).call(this,require('_process'))
-},{"_process":211,"warning":209}],39:[function(require,module,exports){
+},{"_process":214,"warning":209}],39:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -2642,7 +2642,7 @@ function parsePath(path) {
   };
 }
 }).call(this,require('_process'))
-},{"_process":211,"warning":209}],42:[function(require,module,exports){
+},{"_process":214,"warning":209}],42:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2685,7 +2685,7 @@ function createDOMHistory(options) {
 exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./DOMUtils":39,"./ExecutionEnvironment":40,"./createHistory":44,"_process":211,"invariant":51}],43:[function(require,module,exports){
+},{"./DOMUtils":39,"./ExecutionEnvironment":40,"./createHistory":44,"_process":214,"invariant":51}],43:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2934,7 +2934,7 @@ function createHashHistory() {
 exports['default'] = createHashHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":36,"./DOMStateStorage":38,"./DOMUtils":39,"./ExecutionEnvironment":40,"./PathUtils":41,"./createDOMHistory":42,"_process":211,"invariant":51,"warning":209}],44:[function(require,module,exports){
+},{"./Actions":36,"./DOMStateStorage":38,"./DOMUtils":39,"./ExecutionEnvironment":40,"./PathUtils":41,"./createDOMHistory":42,"_process":214,"invariant":51,"warning":209}],44:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3225,7 +3225,7 @@ function createHistory() {
 exports['default'] = createHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":36,"./AsyncUtils":37,"./PathUtils":41,"./createLocation":45,"./deprecate":47,"./runTransitionHook":48,"_process":211,"deep-equal":6,"warning":209}],45:[function(require,module,exports){
+},{"./Actions":36,"./AsyncUtils":37,"./PathUtils":41,"./createLocation":45,"./deprecate":47,"./runTransitionHook":48,"_process":214,"deep-equal":6,"warning":209}],45:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3279,7 +3279,7 @@ function createLocation() {
 exports['default'] = createLocation;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":36,"./PathUtils":41,"_process":211,"warning":209}],46:[function(require,module,exports){
+},{"./Actions":36,"./PathUtils":41,"_process":214,"warning":209}],46:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3436,7 +3436,7 @@ function createMemoryHistory() {
 exports['default'] = createMemoryHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":36,"./PathUtils":41,"./createHistory":44,"_process":211,"invariant":51,"warning":209}],47:[function(require,module,exports){
+},{"./Actions":36,"./PathUtils":41,"./createHistory":44,"_process":214,"invariant":51,"warning":209}],47:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3458,7 +3458,7 @@ function deprecate(fn, message) {
 exports['default'] = deprecate;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":211,"warning":209}],48:[function(require,module,exports){
+},{"_process":214,"warning":209}],48:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3485,7 +3485,7 @@ function runTransitionHook(hook, location, callback) {
 exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":211,"warning":209}],49:[function(require,module,exports){
+},{"_process":214,"warning":209}],49:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -3800,7 +3800,7 @@ function useQueries(createHistory) {
 exports['default'] = useQueries;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./PathUtils":41,"./deprecate":47,"./runTransitionHook":48,"_process":211,"query-string":53,"warning":209}],51:[function(require,module,exports){
+},{"./PathUtils":41,"./deprecate":47,"./runTransitionHook":48,"_process":214,"query-string":53,"warning":209}],51:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -3855,7 +3855,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":211}],52:[function(require,module,exports){
+},{"_process":214}],52:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -10926,7 +10926,7 @@ var IndexRedirect = (function (_Component) {
 exports['default'] = IndexRedirect;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./PropTypes":63,"./Redirect":64,"_process":211,"invariant":51,"react":207,"warning":209}],59:[function(require,module,exports){
+},{"./PropTypes":63,"./Redirect":64,"_process":214,"invariant":51,"react":207,"warning":209}],59:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -11005,7 +11005,7 @@ var IndexRoute = (function (_Component) {
 exports['default'] = IndexRoute;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./PropTypes":63,"./RouteUtils":67,"_process":211,"invariant":51,"react":207,"warning":209}],60:[function(require,module,exports){
+},{"./PropTypes":63,"./RouteUtils":67,"_process":214,"invariant":51,"react":207,"warning":209}],60:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -11072,7 +11072,7 @@ var Lifecycle = {
 exports['default'] = Lifecycle;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":211,"invariant":51,"react":207}],61:[function(require,module,exports){
+},{"_process":214,"invariant":51,"react":207}],61:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11476,7 +11476,7 @@ function formatPattern(pattern, params) {
   return pathname.replace(/\/+/g, '/');
 }
 }).call(this,require('_process'))
-},{"_process":211,"invariant":51}],63:[function(require,module,exports){
+},{"_process":214,"invariant":51}],63:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11646,7 +11646,7 @@ var Redirect = (function (_Component) {
 exports['default'] = Redirect;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./PatternUtils":62,"./PropTypes":63,"./RouteUtils":67,"_process":211,"invariant":51,"react":207}],65:[function(require,module,exports){
+},{"./PatternUtils":62,"./PropTypes":63,"./RouteUtils":67,"_process":214,"invariant":51,"react":207}],65:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -11724,7 +11724,7 @@ var Route = (function (_Component) {
 exports['default'] = Route;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./PropTypes":63,"./RouteUtils":67,"_process":211,"invariant":51,"react":207}],66:[function(require,module,exports){
+},{"./PropTypes":63,"./RouteUtils":67,"_process":214,"invariant":51,"react":207}],66:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11880,7 +11880,7 @@ function createRoutes(routes) {
   return routes;
 }
 }).call(this,require('_process'))
-},{"_process":211,"react":207,"warning":209}],68:[function(require,module,exports){
+},{"_process":214,"react":207,"warning":209}],68:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12054,7 +12054,7 @@ var Router = (function (_Component) {
 exports['default'] = Router;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./PropTypes":63,"./RouteUtils":67,"./RoutingContext":69,"./useRoutes":78,"_process":211,"history/lib/createHashHistory":43,"react":207,"warning":209}],69:[function(require,module,exports){
+},{"./PropTypes":63,"./RouteUtils":67,"./RoutingContext":69,"./useRoutes":78,"_process":214,"history/lib/createHashHistory":43,"react":207,"warning":209}],69:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12197,7 +12197,7 @@ var RoutingContext = (function (_Component) {
 exports['default'] = RoutingContext;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./RouteUtils":67,"./getRouteParams":73,"_process":211,"invariant":51,"react":207}],70:[function(require,module,exports){
+},{"./RouteUtils":67,"./getRouteParams":73,"_process":214,"invariant":51,"react":207}],70:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -12681,7 +12681,7 @@ function match(_ref, callback) {
 exports['default'] = match;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./RouteUtils":67,"./useRoutes":78,"_process":211,"history/lib/createMemoryHistory":46,"history/lib/useBasename":49,"invariant":51}],77:[function(require,module,exports){
+},{"./RouteUtils":67,"./useRoutes":78,"_process":214,"history/lib/createMemoryHistory":46,"history/lib/useBasename":49,"invariant":51}],77:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12872,7 +12872,7 @@ function matchRoutes(routes, location, callback) {
 exports['default'] = matchRoutes;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./AsyncUtils":55,"./PatternUtils":62,"./RouteUtils":67,"_process":211,"warning":209}],78:[function(require,module,exports){
+},{"./AsyncUtils":55,"./PatternUtils":62,"./RouteUtils":67,"_process":214,"warning":209}],78:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -13166,7 +13166,7 @@ function useRoutes(createHistory) {
 exports['default'] = useRoutes;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./TransitionUtils":70,"./computeChangedRoutes":71,"./getComponents":72,"./isActive":75,"./matchRoutes":77,"_process":211,"history/lib/Actions":36,"history/lib/useQueries":50,"warning":209}],79:[function(require,module,exports){
+},{"./TransitionUtils":70,"./computeChangedRoutes":71,"./getComponents":72,"./isActive":75,"./matchRoutes":77,"_process":214,"history/lib/Actions":36,"history/lib/useQueries":50,"warning":209}],79:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13927,7 +13927,7 @@ ReactPerf.measureMethods(CSSPropertyOperations, 'CSSPropertyOperations', {
 
 module.exports = CSSPropertyOperations;
 }).call(this,require('_process'))
-},{"./CSSProperty":81,"./ReactPerf":149,"./dangerousStyleValue":183,"_process":211,"fbjs/lib/ExecutionEnvironment":10,"fbjs/lib/camelizeStyleName":12,"fbjs/lib/hyphenateStyleName":23,"fbjs/lib/memoizeStringOnly":30,"fbjs/lib/warning":35}],83:[function(require,module,exports){
+},{"./CSSProperty":81,"./ReactPerf":149,"./dangerousStyleValue":183,"_process":214,"fbjs/lib/ExecutionEnvironment":10,"fbjs/lib/camelizeStyleName":12,"fbjs/lib/hyphenateStyleName":23,"fbjs/lib/memoizeStringOnly":30,"fbjs/lib/warning":35}],83:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14023,7 +14023,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"./PooledClass":101,"_process":211,"fbjs/lib/invariant":24}],84:[function(require,module,exports){
+},{"./Object.assign":100,"./PooledClass":101,"_process":214,"fbjs/lib/invariant":24}],84:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14501,7 +14501,7 @@ ReactPerf.measureMethods(DOMChildrenOperations, 'DOMChildrenOperations', {
 
 module.exports = DOMChildrenOperations;
 }).call(this,require('_process'))
-},{"./Danger":89,"./ReactMultiChildUpdateTypes":145,"./ReactPerf":149,"./setInnerHTML":202,"./setTextContent":203,"_process":211,"fbjs/lib/invariant":24}],87:[function(require,module,exports){
+},{"./Danger":89,"./ReactMultiChildUpdateTypes":145,"./ReactPerf":149,"./setInnerHTML":202,"./setTextContent":203,"_process":214,"fbjs/lib/invariant":24}],87:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14738,7 +14738,7 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 }).call(this,require('_process'))
-},{"_process":211,"fbjs/lib/invariant":24}],88:[function(require,module,exports){
+},{"_process":214,"fbjs/lib/invariant":24}],88:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14966,7 +14966,7 @@ ReactPerf.measureMethods(DOMPropertyOperations, 'DOMPropertyOperations', {
 
 module.exports = DOMPropertyOperations;
 }).call(this,require('_process'))
-},{"./DOMProperty":87,"./ReactPerf":149,"./quoteAttributeValueForBrowser":200,"_process":211,"fbjs/lib/warning":35}],89:[function(require,module,exports){
+},{"./DOMProperty":87,"./ReactPerf":149,"./quoteAttributeValueForBrowser":200,"_process":214,"fbjs/lib/warning":35}],89:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15114,7 +15114,7 @@ var Danger = {
 
 module.exports = Danger;
 }).call(this,require('_process'))
-},{"_process":211,"fbjs/lib/ExecutionEnvironment":10,"fbjs/lib/createNodesFromMarkup":15,"fbjs/lib/emptyFunction":16,"fbjs/lib/getMarkupWrap":20,"fbjs/lib/invariant":24}],90:[function(require,module,exports){
+},{"_process":214,"fbjs/lib/ExecutionEnvironment":10,"fbjs/lib/createNodesFromMarkup":15,"fbjs/lib/emptyFunction":16,"fbjs/lib/getMarkupWrap":20,"fbjs/lib/invariant":24}],90:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15642,7 +15642,7 @@ var EventPluginHub = {
 
 module.exports = EventPluginHub;
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":94,"./EventPluginUtils":95,"./ReactErrorUtils":134,"./accumulateInto":180,"./forEachAccumulated":188,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],94:[function(require,module,exports){
+},{"./EventPluginRegistry":94,"./EventPluginUtils":95,"./ReactErrorUtils":134,"./accumulateInto":180,"./forEachAccumulated":188,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],94:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15865,7 +15865,7 @@ var EventPluginRegistry = {
 
 module.exports = EventPluginRegistry;
 }).call(this,require('_process'))
-},{"_process":211,"fbjs/lib/invariant":24}],95:[function(require,module,exports){
+},{"_process":214,"fbjs/lib/invariant":24}],95:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -16070,7 +16070,7 @@ var EventPluginUtils = {
 
 module.exports = EventPluginUtils;
 }).call(this,require('_process'))
-},{"./EventConstants":92,"./ReactErrorUtils":134,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],96:[function(require,module,exports){
+},{"./EventConstants":92,"./ReactErrorUtils":134,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],96:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -16208,7 +16208,7 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 }).call(this,require('_process'))
-},{"./EventConstants":92,"./EventPluginHub":93,"./accumulateInto":180,"./forEachAccumulated":188,"_process":211,"fbjs/lib/warning":35}],97:[function(require,module,exports){
+},{"./EventConstants":92,"./EventPluginHub":93,"./accumulateInto":180,"./forEachAccumulated":188,"_process":214,"fbjs/lib/warning":35}],97:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16672,7 +16672,7 @@ var LinkedValueUtils = {
 
 module.exports = LinkedValueUtils;
 }).call(this,require('_process'))
-},{"./ReactPropTypeLocations":151,"./ReactPropTypes":152,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],100:[function(require,module,exports){
+},{"./ReactPropTypeLocations":151,"./ReactPropTypes":152,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],100:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -16842,7 +16842,7 @@ var PooledClass = {
 
 module.exports = PooledClass;
 }).call(this,require('_process'))
-},{"_process":211,"fbjs/lib/invariant":24}],102:[function(require,module,exports){
+},{"_process":214,"fbjs/lib/invariant":24}],102:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16922,7 +16922,7 @@ var ReactBrowserComponentMixin = {
 
 module.exports = ReactBrowserComponentMixin;
 }).call(this,require('_process'))
-},{"./ReactInstanceMap":140,"./findDOMNode":186,"_process":211,"fbjs/lib/warning":35}],104:[function(require,module,exports){
+},{"./ReactInstanceMap":140,"./findDOMNode":186,"_process":214,"fbjs/lib/warning":35}],104:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17372,7 +17372,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 }).call(this,require('_process'))
-},{"./ReactReconciler":154,"./instantiateReactComponent":196,"./shouldUpdateReactComponent":204,"./traverseAllChildren":205,"_process":211,"fbjs/lib/warning":35}],106:[function(require,module,exports){
+},{"./ReactReconciler":154,"./instantiateReactComponent":196,"./shouldUpdateReactComponent":204,"./traverseAllChildren":205,"_process":214,"fbjs/lib/warning":35}],106:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18329,7 +18329,7 @@ var ReactClass = {
 
 module.exports = ReactClass;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"./ReactComponent":108,"./ReactElement":130,"./ReactNoopUpdateQueue":147,"./ReactPropTypeLocationNames":150,"./ReactPropTypeLocations":151,"_process":211,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24,"fbjs/lib/keyMirror":27,"fbjs/lib/keyOf":28,"fbjs/lib/warning":35}],108:[function(require,module,exports){
+},{"./Object.assign":100,"./ReactComponent":108,"./ReactElement":130,"./ReactNoopUpdateQueue":147,"./ReactPropTypeLocationNames":150,"./ReactPropTypeLocations":151,"_process":214,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24,"fbjs/lib/keyMirror":27,"fbjs/lib/keyOf":28,"fbjs/lib/warning":35}],108:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18454,7 +18454,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactComponent;
 }).call(this,require('_process'))
-},{"./ReactNoopUpdateQueue":147,"./canDefineProperty":182,"_process":211,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],109:[function(require,module,exports){
+},{"./ReactNoopUpdateQueue":147,"./canDefineProperty":182,"_process":214,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],109:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18550,7 +18550,7 @@ var ReactComponentEnvironment = {
 
 module.exports = ReactComponentEnvironment;
 }).call(this,require('_process'))
-},{"_process":211,"fbjs/lib/invariant":24}],111:[function(require,module,exports){
+},{"_process":214,"fbjs/lib/invariant":24}],111:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19247,7 +19247,7 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"./ReactComponentEnvironment":110,"./ReactCurrentOwner":112,"./ReactElement":130,"./ReactInstanceMap":140,"./ReactPerf":149,"./ReactPropTypeLocationNames":150,"./ReactPropTypeLocations":151,"./ReactReconciler":154,"./ReactUpdateQueue":160,"./shouldUpdateReactComponent":204,"_process":211,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],112:[function(require,module,exports){
+},{"./Object.assign":100,"./ReactComponentEnvironment":110,"./ReactCurrentOwner":112,"./ReactElement":130,"./ReactInstanceMap":140,"./ReactPerf":149,"./ReactPropTypeLocationNames":150,"./ReactPropTypeLocations":151,"./ReactReconciler":154,"./ReactUpdateQueue":160,"./shouldUpdateReactComponent":204,"_process":214,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],112:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19373,7 +19373,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":112,"./ReactDOMTextComponent":124,"./ReactDefaultInjection":127,"./ReactInstanceHandles":139,"./ReactMount":143,"./ReactPerf":149,"./ReactReconciler":154,"./ReactUpdates":161,"./ReactVersion":162,"./findDOMNode":186,"./renderSubtreeIntoContainer":201,"_process":211,"fbjs/lib/ExecutionEnvironment":10,"fbjs/lib/warning":35}],114:[function(require,module,exports){
+},{"./ReactCurrentOwner":112,"./ReactDOMTextComponent":124,"./ReactDefaultInjection":127,"./ReactInstanceHandles":139,"./ReactMount":143,"./ReactPerf":149,"./ReactReconciler":154,"./ReactUpdates":161,"./ReactVersion":162,"./findDOMNode":186,"./renderSubtreeIntoContainer":201,"_process":214,"fbjs/lib/ExecutionEnvironment":10,"fbjs/lib/warning":35}],114:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20389,7 +20389,7 @@ assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mix
 
 module.exports = ReactDOMComponent;
 }).call(this,require('_process'))
-},{"./AutoFocusUtils":79,"./CSSPropertyOperations":82,"./DOMProperty":87,"./DOMPropertyOperations":88,"./EventConstants":92,"./Object.assign":100,"./ReactBrowserEventEmitter":104,"./ReactComponentBrowserEnvironment":109,"./ReactDOMButton":114,"./ReactDOMInput":119,"./ReactDOMOption":120,"./ReactDOMSelect":121,"./ReactDOMTextarea":125,"./ReactMount":143,"./ReactMultiChild":144,"./ReactPerf":149,"./ReactUpdateQueue":160,"./canDefineProperty":182,"./escapeTextContentForBrowser":185,"./isEventSupported":197,"./setInnerHTML":202,"./setTextContent":203,"./validateDOMNesting":206,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/keyOf":28,"fbjs/lib/shallowEqual":33,"fbjs/lib/warning":35}],116:[function(require,module,exports){
+},{"./AutoFocusUtils":79,"./CSSPropertyOperations":82,"./DOMProperty":87,"./DOMPropertyOperations":88,"./EventConstants":92,"./Object.assign":100,"./ReactBrowserEventEmitter":104,"./ReactComponentBrowserEnvironment":109,"./ReactDOMButton":114,"./ReactDOMInput":119,"./ReactDOMOption":120,"./ReactDOMSelect":121,"./ReactDOMTextarea":125,"./ReactMount":143,"./ReactMultiChild":144,"./ReactPerf":149,"./ReactUpdateQueue":160,"./canDefineProperty":182,"./escapeTextContentForBrowser":185,"./isEventSupported":197,"./setInnerHTML":202,"./setTextContent":203,"./validateDOMNesting":206,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/keyOf":28,"fbjs/lib/shallowEqual":33,"fbjs/lib/warning":35}],116:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20569,7 +20569,7 @@ var ReactDOMFactories = mapObject({
 
 module.exports = ReactDOMFactories;
 }).call(this,require('_process'))
-},{"./ReactElement":130,"./ReactElementValidator":131,"_process":211,"fbjs/lib/mapObject":29}],117:[function(require,module,exports){
+},{"./ReactElement":130,"./ReactElementValidator":131,"_process":214,"fbjs/lib/mapObject":29}],117:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20685,7 +20685,7 @@ ReactPerf.measureMethods(ReactDOMIDOperations, 'ReactDOMIDOperations', {
 
 module.exports = ReactDOMIDOperations;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":86,"./DOMPropertyOperations":88,"./ReactMount":143,"./ReactPerf":149,"_process":211,"fbjs/lib/invariant":24}],119:[function(require,module,exports){
+},{"./DOMChildrenOperations":86,"./DOMPropertyOperations":88,"./ReactMount":143,"./ReactPerf":149,"_process":214,"fbjs/lib/invariant":24}],119:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20841,7 +20841,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMInput;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":99,"./Object.assign":100,"./ReactDOMIDOperations":118,"./ReactMount":143,"./ReactUpdates":161,"_process":211,"fbjs/lib/invariant":24}],120:[function(require,module,exports){
+},{"./LinkedValueUtils":99,"./Object.assign":100,"./ReactDOMIDOperations":118,"./ReactMount":143,"./ReactUpdates":161,"_process":214,"fbjs/lib/invariant":24}],120:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20933,7 +20933,7 @@ var ReactDOMOption = {
 
 module.exports = ReactDOMOption;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"./ReactChildren":106,"./ReactDOMSelect":121,"_process":211,"fbjs/lib/warning":35}],121:[function(require,module,exports){
+},{"./Object.assign":100,"./ReactChildren":106,"./ReactDOMSelect":121,"_process":214,"fbjs/lib/warning":35}],121:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21124,7 +21124,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMSelect;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":99,"./Object.assign":100,"./ReactMount":143,"./ReactUpdates":161,"_process":211,"fbjs/lib/warning":35}],122:[function(require,module,exports){
+},{"./LinkedValueUtils":99,"./Object.assign":100,"./ReactMount":143,"./ReactUpdates":161,"_process":214,"fbjs/lib/warning":35}],122:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21494,7 +21494,7 @@ assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":86,"./DOMPropertyOperations":88,"./Object.assign":100,"./ReactComponentBrowserEnvironment":109,"./ReactMount":143,"./escapeTextContentForBrowser":185,"./setTextContent":203,"./validateDOMNesting":206,"_process":211}],125:[function(require,module,exports){
+},{"./DOMChildrenOperations":86,"./DOMPropertyOperations":88,"./Object.assign":100,"./ReactComponentBrowserEnvironment":109,"./ReactMount":143,"./escapeTextContentForBrowser":185,"./setTextContent":203,"./validateDOMNesting":206,"_process":214}],125:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21610,7 +21610,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMTextarea;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":99,"./Object.assign":100,"./ReactDOMIDOperations":118,"./ReactUpdates":161,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],126:[function(require,module,exports){
+},{"./LinkedValueUtils":99,"./Object.assign":100,"./ReactDOMIDOperations":118,"./ReactUpdates":161,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],126:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21778,7 +21778,7 @@ module.exports = {
   inject: inject
 };
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":80,"./ChangeEventPlugin":84,"./ClientReactRootIndex":85,"./DefaultEventPluginOrder":90,"./EnterLeaveEventPlugin":91,"./HTMLDOMPropertyConfig":98,"./ReactBrowserComponentMixin":103,"./ReactComponentBrowserEnvironment":109,"./ReactDOMComponent":115,"./ReactDOMTextComponent":124,"./ReactDefaultBatchingStrategy":126,"./ReactDefaultPerf":128,"./ReactEventListener":136,"./ReactInjection":137,"./ReactInstanceHandles":139,"./ReactMount":143,"./ReactReconcileTransaction":153,"./SVGDOMPropertyConfig":163,"./SelectEventPlugin":164,"./ServerReactRootIndex":165,"./SimpleEventPlugin":166,"_process":211,"fbjs/lib/ExecutionEnvironment":10}],128:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":80,"./ChangeEventPlugin":84,"./ClientReactRootIndex":85,"./DefaultEventPluginOrder":90,"./EnterLeaveEventPlugin":91,"./HTMLDOMPropertyConfig":98,"./ReactBrowserComponentMixin":103,"./ReactComponentBrowserEnvironment":109,"./ReactDOMComponent":115,"./ReactDOMTextComponent":124,"./ReactDefaultBatchingStrategy":126,"./ReactDefaultPerf":128,"./ReactEventListener":136,"./ReactInjection":137,"./ReactInstanceHandles":139,"./ReactMount":143,"./ReactReconcileTransaction":153,"./SVGDOMPropertyConfig":163,"./SelectEventPlugin":164,"./ServerReactRootIndex":165,"./SimpleEventPlugin":166,"_process":214,"fbjs/lib/ExecutionEnvironment":10}],128:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22468,7 +22468,7 @@ ReactElement.isValidElement = function (object) {
 
 module.exports = ReactElement;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"./ReactCurrentOwner":112,"./canDefineProperty":182,"_process":211}],131:[function(require,module,exports){
+},{"./Object.assign":100,"./ReactCurrentOwner":112,"./canDefineProperty":182,"_process":214}],131:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -22752,7 +22752,7 @@ var ReactElementValidator = {
 
 module.exports = ReactElementValidator;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":112,"./ReactElement":130,"./ReactPropTypeLocationNames":150,"./ReactPropTypeLocations":151,"./canDefineProperty":182,"./getIteratorFn":193,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],132:[function(require,module,exports){
+},{"./ReactCurrentOwner":112,"./ReactElement":130,"./ReactPropTypeLocationNames":150,"./ReactPropTypeLocations":151,"./canDefineProperty":182,"./getIteratorFn":193,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],132:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -22933,7 +22933,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactErrorUtils;
 }).call(this,require('_process'))
-},{"_process":211}],135:[function(require,module,exports){
+},{"_process":214}],135:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23653,7 +23653,7 @@ var ReactInstanceHandles = {
 
 module.exports = ReactInstanceHandles;
 }).call(this,require('_process'))
-},{"./ReactRootIndex":156,"_process":211,"fbjs/lib/invariant":24}],140:[function(require,module,exports){
+},{"./ReactRootIndex":156,"_process":214,"fbjs/lib/invariant":24}],140:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23778,7 +23778,7 @@ var React = {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"./ReactChildren":106,"./ReactClass":107,"./ReactComponent":108,"./ReactDOMFactories":116,"./ReactElement":130,"./ReactElementValidator":131,"./ReactPropTypes":152,"./ReactVersion":162,"./onlyChild":199,"_process":211}],142:[function(require,module,exports){
+},{"./Object.assign":100,"./ReactChildren":106,"./ReactClass":107,"./ReactComponent":108,"./ReactDOMFactories":116,"./ReactElement":130,"./ReactElementValidator":131,"./ReactPropTypes":152,"./ReactVersion":162,"./onlyChild":199,"_process":214}],142:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24677,7 +24677,7 @@ ReactPerf.measureMethods(ReactMount, 'ReactMount', {
 
 module.exports = ReactMount;
 }).call(this,require('_process'))
-},{"./DOMProperty":87,"./Object.assign":100,"./ReactBrowserEventEmitter":104,"./ReactCurrentOwner":112,"./ReactDOMFeatureFlags":117,"./ReactElement":130,"./ReactEmptyComponentRegistry":133,"./ReactInstanceHandles":139,"./ReactInstanceMap":140,"./ReactMarkupChecksum":142,"./ReactPerf":149,"./ReactReconciler":154,"./ReactUpdateQueue":160,"./ReactUpdates":161,"./instantiateReactComponent":196,"./setInnerHTML":202,"./shouldUpdateReactComponent":204,"./validateDOMNesting":206,"_process":211,"fbjs/lib/containsNode":13,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],144:[function(require,module,exports){
+},{"./DOMProperty":87,"./Object.assign":100,"./ReactBrowserEventEmitter":104,"./ReactCurrentOwner":112,"./ReactDOMFeatureFlags":117,"./ReactElement":130,"./ReactEmptyComponentRegistry":133,"./ReactInstanceHandles":139,"./ReactInstanceMap":140,"./ReactMarkupChecksum":142,"./ReactPerf":149,"./ReactReconciler":154,"./ReactUpdateQueue":160,"./ReactUpdates":161,"./instantiateReactComponent":196,"./setInnerHTML":202,"./shouldUpdateReactComponent":204,"./validateDOMNesting":206,"_process":214,"fbjs/lib/containsNode":13,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],144:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25176,7 +25176,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 }).call(this,require('_process'))
-},{"./ReactChildReconciler":105,"./ReactComponentEnvironment":110,"./ReactCurrentOwner":112,"./ReactMultiChildUpdateTypes":145,"./ReactReconciler":154,"./flattenChildren":187,"_process":211}],145:[function(require,module,exports){
+},{"./ReactChildReconciler":105,"./ReactComponentEnvironment":110,"./ReactCurrentOwner":112,"./ReactMultiChildUpdateTypes":145,"./ReactReconciler":154,"./flattenChildren":187,"_process":214}],145:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25306,7 +25306,7 @@ var ReactNativeComponent = {
 
 module.exports = ReactNativeComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"_process":211,"fbjs/lib/invariant":24}],147:[function(require,module,exports){
+},{"./Object.assign":100,"_process":214,"fbjs/lib/invariant":24}],147:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -25427,7 +25427,7 @@ var ReactNoopUpdateQueue = {
 
 module.exports = ReactNoopUpdateQueue;
 }).call(this,require('_process'))
-},{"_process":211,"fbjs/lib/warning":35}],148:[function(require,module,exports){
+},{"_process":214,"fbjs/lib/warning":35}],148:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25521,7 +25521,7 @@ var ReactOwner = {
 
 module.exports = ReactOwner;
 }).call(this,require('_process'))
-},{"_process":211,"fbjs/lib/invariant":24}],149:[function(require,module,exports){
+},{"_process":214,"fbjs/lib/invariant":24}],149:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25620,7 +25620,7 @@ function _noMeasure(objName, fnName, func) {
 
 module.exports = ReactPerf;
 }).call(this,require('_process'))
-},{"_process":211}],150:[function(require,module,exports){
+},{"_process":214}],150:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25647,7 +25647,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactPropTypeLocationNames;
 }).call(this,require('_process'))
-},{"_process":211}],151:[function(require,module,exports){
+},{"_process":214}],151:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26506,7 +26506,7 @@ module.exports = {
   renderToStaticMarkup: renderToStaticMarkup
 };
 }).call(this,require('_process'))
-},{"./ReactDefaultBatchingStrategy":126,"./ReactElement":130,"./ReactInstanceHandles":139,"./ReactMarkupChecksum":142,"./ReactServerBatchingStrategy":157,"./ReactServerRenderingTransaction":159,"./ReactUpdates":161,"./instantiateReactComponent":196,"_process":211,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24}],159:[function(require,module,exports){
+},{"./ReactDefaultBatchingStrategy":126,"./ReactElement":130,"./ReactInstanceHandles":139,"./ReactMarkupChecksum":142,"./ReactServerBatchingStrategy":157,"./ReactServerRenderingTransaction":159,"./ReactUpdates":161,"./instantiateReactComponent":196,"_process":214,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":24}],159:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -26854,7 +26854,7 @@ var ReactUpdateQueue = {
 
 module.exports = ReactUpdateQueue;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"./ReactCurrentOwner":112,"./ReactElement":130,"./ReactInstanceMap":140,"./ReactUpdates":161,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],161:[function(require,module,exports){
+},{"./Object.assign":100,"./ReactCurrentOwner":112,"./ReactElement":130,"./ReactInstanceMap":140,"./ReactUpdates":161,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],161:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -27080,7 +27080,7 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 }).call(this,require('_process'))
-},{"./CallbackQueue":83,"./Object.assign":100,"./PooledClass":101,"./ReactPerf":149,"./ReactReconciler":154,"./Transaction":178,"_process":211,"fbjs/lib/invariant":24}],162:[function(require,module,exports){
+},{"./CallbackQueue":83,"./Object.assign":100,"./PooledClass":101,"./ReactPerf":149,"./ReactReconciler":154,"./Transaction":178,"_process":214,"fbjs/lib/invariant":24}],162:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28045,7 +28045,7 @@ var SimpleEventPlugin = {
 
 module.exports = SimpleEventPlugin;
 }).call(this,require('_process'))
-},{"./EventConstants":92,"./EventPropagators":96,"./ReactMount":143,"./SyntheticClipboardEvent":167,"./SyntheticDragEvent":169,"./SyntheticEvent":170,"./SyntheticFocusEvent":171,"./SyntheticKeyboardEvent":173,"./SyntheticMouseEvent":174,"./SyntheticTouchEvent":175,"./SyntheticUIEvent":176,"./SyntheticWheelEvent":177,"./getEventCharCode":189,"_process":211,"fbjs/lib/EventListener":9,"fbjs/lib/emptyFunction":16,"fbjs/lib/invariant":24,"fbjs/lib/keyOf":28}],167:[function(require,module,exports){
+},{"./EventConstants":92,"./EventPropagators":96,"./ReactMount":143,"./SyntheticClipboardEvent":167,"./SyntheticDragEvent":169,"./SyntheticEvent":170,"./SyntheticFocusEvent":171,"./SyntheticKeyboardEvent":173,"./SyntheticMouseEvent":174,"./SyntheticTouchEvent":175,"./SyntheticUIEvent":176,"./SyntheticWheelEvent":177,"./getEventCharCode":189,"_process":214,"fbjs/lib/EventListener":9,"fbjs/lib/emptyFunction":16,"fbjs/lib/invariant":24,"fbjs/lib/keyOf":28}],167:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28344,7 +28344,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
 
 module.exports = SyntheticEvent;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"./PooledClass":101,"_process":211,"fbjs/lib/emptyFunction":16,"fbjs/lib/warning":35}],171:[function(require,module,exports){
+},{"./Object.assign":100,"./PooledClass":101,"_process":214,"fbjs/lib/emptyFunction":16,"fbjs/lib/warning":35}],171:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28979,7 +28979,7 @@ var Transaction = {
 
 module.exports = Transaction;
 }).call(this,require('_process'))
-},{"_process":211,"fbjs/lib/invariant":24}],179:[function(require,module,exports){
+},{"_process":214,"fbjs/lib/invariant":24}],179:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -29069,7 +29069,7 @@ function accumulateInto(current, next) {
 
 module.exports = accumulateInto;
 }).call(this,require('_process'))
-},{"_process":211,"fbjs/lib/invariant":24}],181:[function(require,module,exports){
+},{"_process":214,"fbjs/lib/invariant":24}],181:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -29139,7 +29139,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = canDefineProperty;
 }).call(this,require('_process'))
-},{"_process":211}],183:[function(require,module,exports){
+},{"_process":214}],183:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -29246,7 +29246,7 @@ function deprecated(fnName, newModule, newPackage, ctx, fn) {
 
 module.exports = deprecated;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"_process":211,"fbjs/lib/warning":35}],185:[function(require,module,exports){
+},{"./Object.assign":100,"_process":214,"fbjs/lib/warning":35}],185:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -29337,7 +29337,7 @@ function findDOMNode(componentOrElement) {
 
 module.exports = findDOMNode;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":112,"./ReactInstanceMap":140,"./ReactMount":143,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],187:[function(require,module,exports){
+},{"./ReactCurrentOwner":112,"./ReactInstanceMap":140,"./ReactMount":143,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],187:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -29388,7 +29388,7 @@ function flattenChildren(children) {
 
 module.exports = flattenChildren;
 }).call(this,require('_process'))
-},{"./traverseAllChildren":205,"_process":211,"fbjs/lib/warning":35}],188:[function(require,module,exports){
+},{"./traverseAllChildren":205,"_process":214,"fbjs/lib/warning":35}],188:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -29912,7 +29912,7 @@ function instantiateReactComponent(node) {
 
 module.exports = instantiateReactComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"./ReactCompositeComponent":111,"./ReactEmptyComponent":132,"./ReactNativeComponent":146,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],197:[function(require,module,exports){
+},{"./Object.assign":100,"./ReactCompositeComponent":111,"./ReactEmptyComponent":132,"./ReactNativeComponent":146,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],197:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -30050,7 +30050,7 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 }).call(this,require('_process'))
-},{"./ReactElement":130,"_process":211,"fbjs/lib/invariant":24}],200:[function(require,module,exports){
+},{"./ReactElement":130,"_process":214,"fbjs/lib/invariant":24}],200:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -30462,7 +30462,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":112,"./ReactElement":130,"./ReactInstanceHandles":139,"./getIteratorFn":193,"_process":211,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],206:[function(require,module,exports){
+},{"./ReactCurrentOwner":112,"./ReactElement":130,"./ReactInstanceHandles":139,"./getIteratorFn":193,"_process":214,"fbjs/lib/invariant":24,"fbjs/lib/warning":35}],206:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -30828,7 +30828,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = validateDOMNesting;
 }).call(this,require('_process'))
-},{"./Object.assign":100,"_process":211,"fbjs/lib/emptyFunction":16,"fbjs/lib/warning":35}],207:[function(require,module,exports){
+},{"./Object.assign":100,"_process":214,"fbjs/lib/emptyFunction":16,"fbjs/lib/warning":35}],207:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/React');
@@ -30905,20 +30905,412 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":211}],210:[function(require,module,exports){
+},{"_process":214}],210:[function(require,module,exports){
 ReactDOM = require('react-dom');
 var React = require('react');
-var jobs=require('../data/JobData.js').jobs;
-var customers=require('../data/CustomerData.js').customers;
-var products=require('../data/ProductData.js').products;
-var parts=require('../data/PartData.js').parts;
-var manufacturers=require('../data/ManData.js').manufacturers;
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
 var _=require('lodash');
 var IndexRoute = ReactRouter.IndexRoute;
+var jobs=require('../data/JobData.js').jobs;
+var customers=require('../data/CustomerData.js').customers;
+var products=require('../data/ProductData.js').products;
+var parts=require('../data/PartData.js').parts;
+
+var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
+    render:function()
+    {
+        return(
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-2 side-pane"}, 
+                    React.createElement(CustomerSideBar, {activeId: this.props.activeId, customers: this.props.customers})
+
+                ), 
+                React.createElement("div", {className: "col-md-10 main-pane"}, 
+                    React.createElement(CustomerMainPane, {activeId: this.props.activeId, customers: this.props.customers})
+                )
+
+            )
+        );
+    }
+});
+
+var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
+    render:function(){
+        return(
+            React.createElement("div", null, 
+
+                React.createElement("div", {className: "row search-box-div"}, 
+                    React.createElement(CustomerSearchbox, null)
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("p", null, React.createElement(Link, {to: "customer/new"}, "New Customer +")), 
+                    React.createElement(CustomerList, {activeId: this.props.activeId, customers: this.props.customers})
+                )
+            )
+
+        );
+    }
+});
+
+var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
+    render:function(){
+        var customers=this.props.customers;
+        var customer=customers[this.props.activeId];
+        var productOptions=products.map(function(product,index){
+            return React.createElement(ProductOption, {product: product})
+        });
+        var customerProducts=customer.customerProducts.map(function(sp,index)
+            {
+                return(React.createElement(SingleCustomerProduct, {sp: sp}));
+            }
+
+        );
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "col-md-3"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "Customer Details")), 
+                    React.createElement("p", null, 
+                        customer.name, React.createElement("br", null), 
+                        customer.street, React.createElement("br", null), 
+                         customer.town, React.createElement("br", null), 
+                        customer.county, React.createElement("br", null), 
+                        customer.phone, React.createElement("br", null), 
+                        customer.email, React.createElement("br", null)
+                    )
+
+                ), 
+                React.createElement("div", {className: "col-md-6"}, 
+                    "Previous Jobs Here", 
+
+                    React.createElement("h3", null, React.createElement("strong", null, "Customer's Products")), 
+                    React.createElement("p", null, "The customer has no registered products"), 
+                    React.createElement("table", {className: "table table-striped"}, 
+                        React.createElement("thead", null, 
+
+                        React.createElement("tr", null, React.createElement("th", null, "Manufacturer"), React.createElement("th", null, "Model Number"), React.createElement("th", null, "Serial Number"), " ", React.createElement("th", null, "Description"))
+
+                        ), 
+
+                        React.createElement("tbody", null, 
+                        customerProducts
+
+
+                        )
+                    ), 
+                    React.createElement(JobForm, {customer: customer, customerProduct: customer.customerProducts[0]}), 
+                    React.createElement("h3", null, React.createElement("strong", null, "Register product for this customer")), 
+                    React.createElement("form", null, 
+                        React.createElement("label", {for: "productNumber"}, "Product"), 
+                        React.createElement("div", {className: "form-group"}, 
+
+                            React.createElement("select", null, 
+                                productOptions
+                            )
+                        ), 
+                        React.createElement("label", null, "Serial Number"), 
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("input", {name: "serialNumber", type: "text"})
+
+                        ), 
+                        React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
+                    )
+                ), 
+                React.createElement("div", {className: "col-md-3"}
+
+                )
+
+            )
+
+        );
+    }
+});
+
+
+var ProductOption=React.createClass({displayName: "ProductOption",
+    render:function(){
+
+        var product=this.props.product;
+        return(React.createElement("option", {value: product.id}, product.manufacturer.name, " ", product.product_number, " ", product.description.split(",")[0])
+
+        );
+    }
+
+});
+
+var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct",
+
+        render:function()
+        {
+            var sp=this.props.sp;
+            return(
+                React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, sp.product.product_number), 
+                    React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description), React.createElement("td", null, 
+                        React.createElement("button", {className: "btn btn-sm btn-primary"}, " Create Job")))
+
+            );
+        }
+
+    }
+);
+
+
+var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
+    render: function(){
+
+
+
+        return(
+
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("input", {type: "text", placeholder: "Search"})
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("select", {id: "sort"}, 
+                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
+                        React.createElement("option", {value: "name"}, "Date"), 
+                        React.createElement("option", {value: "customer"}, "Customer")
+                    )
+                )
+
+            )
+        );
+
+    }
+});
+
+var CustomerList=React.createClass(
+    {displayName: "CustomerList",
+
+        render:function()
+        {
+
+
+            var customersToDisplay = this.props.customers.map(function(customer,index) {
+                return React.createElement(SingleCustomer, {activeId: this.props.activeId, customer: customer, key: index})
+            }.bind(this));
+
+
+
+            return(
+
+                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
+                    customersToDisplay
+
+                )
+
+            );
+        }
+
+    }
+
+
+);
+
+var SingleCustomer=React.createClass({displayName: "SingleCustomer",
+
+
+
+
+
+    render: function () {
+        var customer=this.props.customer;
+
+        return (
+
+            React.createElement("li", {className: (this.props.activeId === ""+customer.id) ? "active" : "", role: "presentation"}, 
+
+
+                React.createElement(Link, {to: "/customers/"+customer.id}, React.createElement("h3", null, customer.name), 
+                    React.createElement("p", null, customer.street, React.createElement("br", null), 
+                        customer.county, "  ", React.createElement("br", null), 
+                        customer.town, React.createElement("br", null), 
+                        customer.county, React.createElement("br", null)))
+
+
+
+
+
+            ));
+    }
+});
+
+var CustomerForm=React.createClass(
+    {displayName: "CustomerForm",
+        render:function()
+        {
+
+
+            return(
+                React.createElement("div", {className: "container-fluid"}, 
+
+                    React.createElement(Navbar, {activeTab: "jobs"}), 
+                    React.createElement("div", {className: "row"}, 
+                        React.createElement("div", {className: "col-md-2 side-pane"}
+                        ), 
+                        React.createElement("div", {className: "col-md-10 main-pane"}, 
+                            React.createElement("div", {className: "row"}, 
+                                React.createElement("div", {className: "col-md-3"}
+                                ), 
+                                React.createElement("div", {className: "col-md-6"}, 
+                                    React.createElement("form", null, 
+
+
+                                        React.createElement("label", null, "Name"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "name"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Street"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "street"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Town"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "town"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "County"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "county"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Phone Number"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "phone"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "email"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {type: "text", name: "email"}
+
+                                            )
+                                        ), 
+
+                                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
+
+                                    )
+                                ), 
+                                React.createElement("div", {className: "col-md-3"}
+                                )
+                            )
+                        )
+
+
+                    )
+                )
+
+
+            );
+
+        }
+
+    }
+);
+
+
+var JobForm=React.createClass(
+    {displayName: "JobForm",
+
+
+        render:function(){
+            var customerProduct=this.props.customerProduct;
+            var customer=this.props.customer;
+            var product=customerProduct.product;
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+            if(dd<10){
+                dd='0'+dd
+            }
+            if(mm<10){
+                mm='0'+mm
+            }
+            var today = dd+'/'+mm+'/'+yyyy;
+
+            return(
+                React.createElement("div", null, 
+                    React.createElement("h3", null, " Create New Job"), 
+                    React.createElement("form", null, 
+                        React.createElement("label", null, "Customer Product"), 
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("input", {type: "text", name: "customerProduct", disabled: true, 
+
+                                   value: product.manufacturer.name+" "+product.product_number+product.description.split(",")[0]}
+                            )
+                        ), 
+                        React.createElement("label", null, "Customer"), 
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("input", {type: "text", name: "customer", disabled: true, 
+                                   value: customer.name+", "+customer.town}
+
+                            )
+                        ), 
+
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("input", {type: "text", name: "date", hidden: true, 
+                                   value: today}
+
+                            )
+                        ), 
+                        React.createElement("label", null, "Reported Fault"), 
+                        React.createElement("div", {className: "form-group"}, 
+
+                            React.createElement("input", {type: "text", name: "reported fault"}
+
+                            )
+                        ), 
+
+                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
+
+                    )
+                )
+
+
+            );
+        }
+
+    });
+
+exports.customerPageContent=CustomerPageContent;
+exports.customerForm=CustomerForm;
+
+},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/PartData.js":4,"../data/ProductData.js":5,"lodash":52,"react":207,"react-dom":54,"react-router":74}],211:[function(require,module,exports){
+ReactDOM = require('react-dom');
+var React = require('react');
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Link = ReactRouter.Link;
+var _=require('lodash');
+var IndexRoute = ReactRouter.IndexRoute;
+var jobs=require('../data/JobData.js').jobs;
+var customers=require('../data/CustomerData.js').customers;
+var products=require('../data/ProductData.js').products;
+var parts=require('../data/PartData.js').parts;
+var manufacturers=require('../data/ManData.js').manufacturers;
+var CustomerPageContent=require('./customers.js').customerPageContent;
+var ProductPageContent=require('./products.js').productPageContent;
+var PartPageContent=require('./parts.js').partPageContent;
+var CustomerForm=require('./customers.js').customerForm;
+var ProductForm=require('./products.js').productForm;
+
 $(document).ready(function() {
 
     var side = $('.side-pane');
@@ -31065,10 +31457,10 @@ var Navbar=React.createClass({displayName: "Navbar",
                         ), 
                     React.createElement("div", {className: "col-md-10 top-nav-div"}, 
                         React.createElement("ul", {className: "nav  nav-tabs"}, 
-                            React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs/0", params: {id: 1}}, "Jobs")), 
-                            React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers/0"}, "Customers")), 
-                            React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products/0"}, "Products")), 
-                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts/0"}, "Stock Control")), 
+                            React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs"}, "Jobs")), 
+                            React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers"}, "Customers")), 
+                            React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products"}, "Products")), 
+                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts"}, "Stock Control")), 
                             React.createElement("li", {role: "presentation", className: "dropdown"}, 
                                 React.createElement("a", {className: "dropdown-toggle", "data-toggle": "dropdown", href: "#", role: "button", "aria-haspopup": "true", "aria-expanded": "false"}, 
                                     "John Hodmon", React.createElement("span", {className: "caret"})
@@ -31135,60 +31527,11 @@ getInitialState:function()
 });
 
 
-var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
-    render:function()
-    {
-        return(
-            React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(CustomerSideBar, {activeId: this.props.activeId, customers: this.props.customers})
-
-                ), 
-                React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(CustomerMainPane, {activeId: this.props.activeId, customers: this.props.customers})
-                )
-
-            )
-        );
-    }
-});
 
 
-var ProductPageContent=React.createClass({displayName: "ProductPageContent",
-    render:function()
-    {
-        return(
-            React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(ProductSideBar, {activeId: this.props.activeId, products: this.props.products})
 
-                ), 
-                React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(ProductMainPane, {activeId: this.props.activeId, products: this.props.products})
-                )
 
-            )
-        );
-    }
-});
 
-var PartPageContent=React.createClass({displayName: "PartPageContent",
-    render:function()
-    {
-        return(
-            React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "col-md-2 side-pane"}, 
-                    React.createElement(PartSideBar, {activeId: this.props.activeId, parts: this.props.parts})
-
-                ), 
-                React.createElement("div", {className: "col-md-10 main-pane"}, 
-                    React.createElement(PartMainPane, {activeId: this.props.activeId, parts: this.props.parts})
-                )
-
-            )
-        );
-    }
-});
 
 
 
@@ -31246,56 +31589,11 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
 });
 
 
-var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
-    render:function(){
-        return(
-            React.createElement("div", null, 
 
-                React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(CustomerSearchbox, null)
-                ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("p", null, React.createElement(Link, {to: "customer/new"}, "New Customer +")), 
-                    React.createElement(CustomerList, {activeId: this.props.activeId, customers: this.props.customers})
-                )
-            )
 
-        );
-    }
-});
 
-var ProductSideBar=React.createClass({displayName: "ProductSideBar",
-    render:function(){
-        return(
-            React.createElement("div", null, 
-                React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(ProductSearchbox, null)
-                ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("p", null, React.createElement(Link, {to: "product/new"}, "New Product +")), 
-                    React.createElement(ProductList, {activeId: this.props.activeId, products: this.props.products})
-                )
-            )
 
-        );
-    }
-});
 
-var PartSideBar=React.createClass({displayName: "PartSideBar",
-    render:function(){
-        return(
-            React.createElement("div", null, 
-                React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(PartSearchbox, null)
-                ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement(PartList, {activeId: this.props.activeId, parts: this.props.parts})
-                )
-            )
-
-        );
-    }
-});
 
 
 
@@ -31479,71 +31777,235 @@ var SingleJobPart=React.createClass(
     }
 );
 
-var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
-    render:function(){
-        var customers=this.props.customers;
-        var customer=customers[this.props.activeId];
-        var productOptions=products.map(function(product,index){
-            return React.createElement(ProductOption, {product: product})
-        });
-        var customerProducts=customer.customerProducts.map(function(sp,index)
+
+
+
+
+
+
+
+
+
+var JobSearchbox=React.createClass({displayName: "JobSearchbox",
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+        console.log("value: "+e.target.value);
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSortBy:function(e)
+    {
+        e.preventDefault();
+        console.log("sort: "+e.target.value);
+        this.props.setSortBy(e.target.value);
+    },
+    render: function(){
+
+
+
+        return(
+
+                React.createElement("div", null, 
+                    React.createElement("div", {className: "row"}, 
+                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
+                     ), 
+                    React.createElement("div", {className: "row"}, 
+                    React.createElement("select", {onChange: this.setSortBy, id: "sort"}, 
+                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
+                        React.createElement("option", {value: "date"}, "Date"), 
+                        React.createElement("option", {value: "customer.name"}, "Customer")
+
+                    )
+                        )
+
+            )
+        );
+
+    }
+});
+
+
+
+
+
+
+var JobList=React.createClass(
+    {displayName: "JobList",
+
+        setPartsUsedVisibility:function(job)
         {
-            return(React.createElement(SingleCustomerProduct, {sp: sp}));
+
+            this.props.setPartsUsedVisibility(job);
+        },
+        render:function()
+        {
+
+            var jobsToDisplay = this.props.jobs.map(function(job,index) {
+                return React.createElement(SingleJob, {setPartsUsedVisibility: this.setPartsUsedVisibility, activeId: this.props.activeId, job: job, key: index})
+            }.bind(this));
+
+
+
+            return(
+
+                    React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
+                        jobsToDisplay
+
+                    )
+
+            );
         }
 
+    }
+
+
+);
+
+
+
+
+
+
+var SingleJob=React.createClass({displayName: "SingleJob",
+
+
+    setPartsUsedVisibility:function()
+    {
+        var job=this.props.job;
+        this.props.setPartsUsedVisibility(job);
+    },
+
+
+    render: function () {
+        var job=this.props.job;
+
+        return (
+
+            React.createElement("li", {onClick: this.setPartsUsedVisibility, className: (this.props.activeId === ""+job.id) ? "active" : "", role: "presentation"}, 
+
+
+                 React.createElement(Link, {to: "/jobs/"+job.id}, React.createElement("h3", null, job.date), 
+                    React.createElement("p", null, job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0], React.createElement("br", null), 
+                    job.customer.name, "  ", React.createElement("br", null), 
+                    job.customer.town, React.createElement("br", null), 
+                        job.status, React.createElement("br", null)))
+
+
+
+
+
+            ));
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+ReactDOM.render( (
+        React.createElement(Router, null, 
+            React.createElement(Route, {path: "/", component: App}, 
+                React.createElement(IndexRoute, {component: JobPage}), 
+                React.createElement(Route, {path: "jobs", component: JobPage}), 
+                React.createElement(Route, {path: "customers/new", component: CustomerForm}), 
+                React.createElement(Route, {path: "products/new", component: ProductForm}), 
+                React.createElement(Route, {path: "customers", component: CustomerPage}), 
+                React.createElement(Route, {path: "products", component: ProductPage}), 
+                React.createElement(Route, {path: "Parts", component: PartPage})
+            )
+        )
+    ),
+    document.getElementById('mount-point')
+);
+
+},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/ManData.js":3,"../data/PartData.js":4,"../data/ProductData.js":5,"./customers.js":210,"./parts.js":212,"./products.js":213,"lodash":52,"react":207,"react-dom":54,"react-router":74}],212:[function(require,module,exports){
+ReactDOM = require('react-dom');
+var React = require('react');
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Link = ReactRouter.Link;
+var _=require('lodash');
+var IndexRoute = ReactRouter.IndexRoute;
+var jobs=require('../data/JobData.js').jobs;
+var customers=require('../data/CustomerData.js').customers;
+var products=require('../data/ProductData.js').products;
+var parts=require('../data/PartData.js').parts;
+
+var PartPageContent=React.createClass({displayName: "PartPageContent",
+    render:function()
+    {
+        return(
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-2 side-pane"}, 
+                    React.createElement(PartSideBar, {activeId: this.props.activeId, parts: this.props.parts})
+
+                ), 
+                React.createElement("div", {className: "col-md-10 main-pane"}, 
+                    React.createElement(PartMainPane, {activeId: this.props.activeId, parts: this.props.parts})
+                )
+
+            )
         );
+    }
+});
+
+var PartSideBar=React.createClass({displayName: "PartSideBar",
+    render:function(){
         return(
             React.createElement("div", null, 
-                React.createElement("div", {className: "col-md-3"}, 
-                    React.createElement("h3", null, React.createElement("strong", null, "Customer Details")), 
-                    React.createElement("p", null, 
-                        customer.name, React.createElement("br", null), 
-                        customer.street, React.createElement("br", null), 
-                         customer.town, React.createElement("br", null), 
-                        customer.county, React.createElement("br", null), 
-                        customer.phone, React.createElement("br", null), 
-                        customer.email, React.createElement("br", null)
-                    )
+                React.createElement("div", {className: "row search-box-div"}, 
+                    React.createElement(PartSearchbox, null)
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement(PartList, {activeId: this.props.activeId, parts: this.props.parts})
+                )
+            )
 
+        );
+    }
+});
+
+
+
+var PartMainPane=React.createClass({displayName: "PartMainPane",
+    render:function(){
+        var parts=this.props.parts;
+        var part=parts[this.props.activeId]
+        return(
+
+            React.createElement("div", null, 
+                React.createElement("div", {className: "col-md-3"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "Part Details")), 
+                    React.createElement("p", null, 
+                        part.part_number, React.createElement("br", null), 
+                        part.part_number, React.createElement("br", null), 
+                        part.cost, React.createElement("br", null), 
+                        part.quantity_in_stock, React.createElement("br", null)
+
+                    )
                 ), 
                 React.createElement("div", {className: "col-md-6"}, 
-                    "Previous Jobs Here", 
-
-                    React.createElement("h3", null, React.createElement("strong", null, "Customer's Products")), 
-                    React.createElement("p", null, "The customer has no registered products"), 
+                    React.createElement("h3", null, React.createElement("strong", null, "Products Where Used")), 
                     React.createElement("table", {className: "table table-striped"}, 
                         React.createElement("thead", null, 
-
-                        React.createElement("tr", null, React.createElement("th", null, "Manufacturer"), React.createElement("th", null, "Model Number"), React.createElement("th", null, "Serial Number"), " ", React.createElement("th", null, "Description"))
-
+                        React.createElement("tr", null, React.createElement("th", null, "Product Name"), React.createElement("th", null, "Description"), React.createElement("th", null, "quantity"))
                         ), 
-
-                        React.createElement("tbody", null, 
-                        customerProducts
-
-
-                        )
-                    ), 
-                    React.createElement(JobForm, {customer: customer, customerProduct: customer.customerProducts[0]}), 
-                    React.createElement("h3", null, React.createElement("strong", null, "Register product for this customer")), 
-                    React.createElement("form", null, 
-                        React.createElement("label", {for: "productNumber"}, "Product"), 
-                        React.createElement("div", {className: "form-group"}, 
-
-                            React.createElement("select", null, 
-                                productOptions
-                            )
-                        ), 
-                        React.createElement("label", null, "Serial Number"), 
-                        React.createElement("div", {className: "form-group"}, 
-                           React.createElement("input", {name: "serialNumber", type: "text"})
-
-                        ), 
-                        React.createElement("input", {type: "button", className: "btn btn-sm btn-primary", action: "submit", value: "Add"})
+                        React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", null, "Data"), React.createElement("td", null, "data"), React.createElement("td", null, "data")))
                     )
                 ), 
-                React.createElement("div", {className: "col-md-3"}
-
+                React.createElement("div", {className: "col-md-3"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "History"))
                 )
 
             )
@@ -31552,32 +32014,130 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
     }
 });
 
-var ProductOption=React.createClass({displayName: "ProductOption",
-    render:function(){
 
-        var product=this.props.product;
-        return(React.createElement("option", {value: product.id}, product.manufacturer.name, " ", product.product_number, " ", product.description.split(",")[0])
+var PartSearchbox=React.createClass({displayName: "PartSearchbox",
+    render: function(){
+
+
+
+        return(
+
+
+            React.createElement("div", {className: "row"}, 
+                React.createElement("input", {type: "text", placeholder: "Search"})
+            )
+
+
 
         );
-    }
 
+    }
 });
 
-var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct",
 
+var PartList=React.createClass(
+    {displayName: "PartList",
+
+        render:function()
+        {
+
+
+            var partsToDisplay = this.props.parts.map(function(part,index) {
+                return React.createElement(SinglePart, {activeId: this.props.activeId, part: part, key: index})
+            }.bind(this));
+
+
+
+            return(
+
+                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
+                    partsToDisplay
+
+                )
+
+            );
+        }
+
+    }
+
+
+);
+
+
+var SinglePart=React.createClass({displayName: "SinglePart",
+
+
+
+
+
+    render: function () {
+        var part=this.props.part;
+
+        return (
+
+            React.createElement("li", {className: (this.props.activeId === ""+part.id) ? "active" : "", role: "presentation"}, 
+
+
+                React.createElement(Link, {to: "/parts/"+part.id}, React.createElement("h3", null, part.description), 
+                    React.createElement("p", null, "Part Number: "+part.part_number))
+
+
+
+
+
+            ));
+    }
+});
+exports.partPageContent=PartPageContent;
+
+},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/PartData.js":4,"../data/ProductData.js":5,"lodash":52,"react":207,"react-dom":54,"react-router":74}],213:[function(require,module,exports){
+ReactDOM = require('react-dom');
+var React = require('react');
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Link = ReactRouter.Link;
+var _=require('lodash');
+var IndexRoute = ReactRouter.IndexRoute;
+var jobs=require('../data/JobData.js').jobs;
+var customers=require('../data/CustomerData.js').customers;
+var products=require('../data/ProductData.js').products;
+var parts=require('../data/PartData.js').parts;
+
+var ProductPageContent=React.createClass({displayName: "ProductPageContent",
     render:function()
     {
-        var sp=this.props.sp;
         return(
-            React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, sp.product.product_number), 
-                React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description), React.createElement("td", null, 
-                   React.createElement("button", {className: "btn btn-sm btn-primary"}, " Create Job")))
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-2 side-pane"}, 
+                    React.createElement(ProductSideBar, {activeId: this.props.activeId, products: this.props.products})
+
+                ), 
+                React.createElement("div", {className: "col-md-10 main-pane"}, 
+                    React.createElement(ProductMainPane, {activeId: this.props.activeId, products: this.props.products})
+                )
+
+            )
+        );
+    }
+});
+
+var ProductSideBar=React.createClass({displayName: "ProductSideBar",
+    render:function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row search-box-div"}, 
+                    React.createElement(ProductSearchbox, null)
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("p", null, React.createElement(Link, {to: "product/new"}, "New Product +")), 
+                    React.createElement(ProductList, {activeId: this.props.activeId, products: this.props.products})
+                )
+            )
 
         );
     }
-
-}
-);
+});
 
 var ProductMainPane=React.createClass({displayName: "ProductMainPane",
     render:function(){
@@ -31655,7 +32215,7 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
                 ), 
 
                 React.createElement("div", {className: "col-md-4"}, 
-                React.createElement("h3", null, "Product Details"), 
+                    React.createElement("h3", null, "Product Details"), 
                     React.createElement("p", null, 
                         manufacturer.name, " ", product.product_number, React.createElement("br", null), 
                         product.description, React.createElement("br", null)
@@ -31671,6 +32231,7 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
         );
     }
 });
+
 var PartOption=React.createClass(
     {displayName: "PartOption",
 
@@ -31682,6 +32243,8 @@ var PartOption=React.createClass(
             );
         }
     });
+
+
 
 var SingleBomItem=React.createClass(
     {displayName: "SingleBomItem",
@@ -31698,129 +32261,7 @@ var SingleBomItem=React.createClass(
 );
 
 
-
-var PartMainPane=React.createClass({displayName: "PartMainPane",
-    render:function(){
-        var parts=this.props.parts;
-        var part=parts[this.props.activeId]
-        return(
-
-            React.createElement("div", null, 
-                React.createElement("div", {className: "col-md-3"}, 
-                    React.createElement("h3", null, React.createElement("strong", null, "Part Details")), 
-                    React.createElement("p", null, 
-                        part.part_number, React.createElement("br", null), 
-                        part.part_number, React.createElement("br", null), 
-                        part.cost, React.createElement("br", null), 
-                        part.quantity_in_stock, React.createElement("br", null)
-
-                    )
-                ), 
-                React.createElement("div", {className: "col-md-6"}, 
-                    React.createElement("h3", null, React.createElement("strong", null, "Products Where Used")), 
-                    React.createElement("table", {className: "table table-striped"}, 
-                        React.createElement("thead", null, 
-                        React.createElement("tr", null, React.createElement("th", null, "Product Name"), React.createElement("th", null, "Description"), React.createElement("th", null, "quantity"))
-                        ), 
-                        React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", null, "Data"), React.createElement("td", null, "data"), React.createElement("td", null, "data")))
-                        )
-                ), 
-                React.createElement("div", {className: "col-md-3"}, 
-                    React.createElement("h3", null, React.createElement("strong", null, "History"))
-                )
-
-            )
-
-        );
-    }
-});
-
-
-var JobSearchbox=React.createClass({displayName: "JobSearchbox",
-
-    setSearchText:function(e)
-    {
-        e.preventDefault();
-        console.log("value: "+e.target.value);
-        this.props.setSearchText(e.target.value);
-    },
-
-    setSortBy:function(e)
-    {
-        e.preventDefault();
-        console.log("sort: "+e.target.value);
-        this.props.setSortBy(e.target.value);
-    },
-    render: function(){
-
-
-
-        return(
-
-                React.createElement("div", null, 
-                    React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
-                     ), 
-                    React.createElement("div", {className: "row"}, 
-                    React.createElement("select", {onChange: this.setSortBy, id: "sort"}, 
-                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
-                        React.createElement("option", {value: "date"}, "Date"), 
-                        React.createElement("option", {value: "customer.name"}, "Customer")
-
-                    )
-                        )
-
-            )
-        );
-
-    }
-});
-
-var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
-    render: function(){
-
-
-
-        return(
-
-            React.createElement("div", null, 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {type: "text", placeholder: "Search"})
-                ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("select", {id: "sort"}, 
-                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
-                        React.createElement("option", {value: "name"}, "Date"), 
-                        React.createElement("option", {value: "customer"}, "Customer")
-                    )
-                )
-
-            )
-        );
-
-    }
-});
-
 var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
-    render: function(){
-
-
-
-        return(
-
-
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {type: "text", placeholder: "Search"})
-                )
-
-
-
-        );
-
-    }
-});
-
-var PartSearchbox=React.createClass({displayName: "PartSearchbox",
     render: function(){
 
 
@@ -31838,66 +32279,6 @@ var PartSearchbox=React.createClass({displayName: "PartSearchbox",
 
     }
 });
-
-var JobList=React.createClass(
-    {displayName: "JobList",
-
-        setPartsUsedVisibility:function(job)
-        {
-
-            this.props.setPartsUsedVisibility(job);
-        },
-        render:function()
-        {
-
-            var jobsToDisplay = this.props.jobs.map(function(job,index) {
-                return React.createElement(SingleJob, {setPartsUsedVisibility: this.setPartsUsedVisibility, activeId: this.props.activeId, job: job, key: index})
-            }.bind(this));
-
-
-
-            return(
-
-                    React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
-                        jobsToDisplay
-
-                    )
-
-            );
-        }
-
-    }
-
-
-);
-
-var CustomerList=React.createClass(
-    {displayName: "CustomerList",
-
-        render:function()
-        {
-
-
-            var customersToDisplay = this.props.customers.map(function(customer,index) {
-                return React.createElement(SingleCustomer, {activeId: this.props.activeId, customer: customer, key: index})
-            }.bind(this));
-
-
-
-            return(
-
-                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
-                    customersToDisplay
-
-                )
-
-            );
-        }
-
-    }
-
-
-);
 
 
 var ProductList=React.createClass(
@@ -31928,95 +32309,6 @@ var ProductList=React.createClass(
 
 );
 
-
-var PartList=React.createClass(
-    {displayName: "PartList",
-
-        render:function()
-        {
-
-
-            var partsToDisplay = this.props.parts.map(function(part,index) {
-                return React.createElement(SinglePart, {activeId: this.props.activeId, part: part, key: index})
-            }.bind(this));
-
-
-
-            return(
-
-                React.createElement("ul", {className: "nav nav-pills nav-stacked side-nav"}, 
-                    partsToDisplay
-
-                )
-
-            );
-        }
-
-    }
-
-
-);
-
-var SingleJob=React.createClass({displayName: "SingleJob",
-
-
-    setPartsUsedVisibility:function()
-    {
-        var job=this.props.job;
-        this.props.setPartsUsedVisibility(job);
-    },
-
-
-    render: function () {
-        var job=this.props.job;
-
-        return (
-
-            React.createElement("li", {onClick: this.setPartsUsedVisibility, className: (this.props.activeId === ""+job.id) ? "active" : "", role: "presentation"}, 
-
-
-                 React.createElement(Link, {to: "/jobs/"+job.id}, React.createElement("h3", null, job.date), 
-                    React.createElement("p", null, job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0], React.createElement("br", null), 
-                    job.customer.name, "  ", React.createElement("br", null), 
-                    job.customer.town, React.createElement("br", null), 
-                        job.status, React.createElement("br", null)))
-
-
-
-
-
-            ));
-    }
-});
-
-var SingleCustomer=React.createClass({displayName: "SingleCustomer",
-
-
-
-
-
-    render: function () {
-        var customer=this.props.customer;
-
-        return (
-
-            React.createElement("li", {className: (this.props.activeId === ""+customer.id) ? "active" : "", role: "presentation"}, 
-
-
-                React.createElement(Link, {to: "/customers/"+customer.id}, React.createElement("h3", null, customer.name), 
-                    React.createElement("p", null, customer.street, React.createElement("br", null), 
-                        customer.county, "  ", React.createElement("br", null), 
-                        customer.town, React.createElement("br", null), 
-                        customer.county, React.createElement("br", null)))
-
-
-
-
-
-            ));
-    }
-});
-
 var SingleProduct=React.createClass({displayName: "SingleProduct",
 
 
@@ -32044,182 +32336,8 @@ var SingleProduct=React.createClass({displayName: "SingleProduct",
     }
 });
 
-var SinglePart=React.createClass({displayName: "SinglePart",
 
 
-
-
-
-    render: function () {
-        var part=this.props.part;
-
-        return (
-
-            React.createElement("li", {className: (this.props.activeId === ""+part.id) ? "active" : "", role: "presentation"}, 
-
-
-                React.createElement(Link, {to: "/parts/"+part.id}, React.createElement("h3", null, part.description), 
-                    React.createElement("p", null, "Part Number: "+part.part_number))
-
-
-
-
-
-            ));
-    }
-});
-
-
-
-var JobForm=React.createClass(
-    {displayName: "JobForm",
-
-
-    render:function(){
-        var customerProduct=this.props.customerProduct;
-        var customer=this.props.customer;
-        var product=customerProduct.product;
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1;
-        var yyyy = today.getFullYear();
-        if(dd<10){
-            dd='0'+dd
-        }
-        if(mm<10){
-            mm='0'+mm
-        }
-        var today = dd+'/'+mm+'/'+yyyy;
-
-        return(
-            React.createElement("div", null, 
-                React.createElement("h3", null, " Create New Job"), 
-            React.createElement("form", null, 
-                React.createElement("label", null, "Customer Product"), 
-                React.createElement("div", {className: "form-group"}, 
-                React.createElement("input", {type: "text", name: "customerProduct", disabled: true, 
-
-                    value: product.manufacturer.name+" "+product.product_number+product.description.split(",")[0]}
-                )
-                ), 
-                React.createElement("label", null, "Customer"), 
-                    React.createElement("div", {className: "form-group"}, 
-                React.createElement("input", {type: "text", name: "customer", disabled: true, 
-                      value: customer.name+", "+customer.town}
-
-                )
-                        ), 
-
-                        React.createElement("div", {className: "form-group"}, 
-                React.createElement("input", {type: "text", name: "date", hidden: true, 
-                     value: today}
-
-                )
-                            ), 
-                React.createElement("label", null, "Reported Fault"), 
-                            React.createElement("div", {className: "form-group"}, 
-
-                React.createElement("input", {type: "text", name: "reported fault"}
-
-                )
-                            ), 
-
-                React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
-
-            )
-            )
-
-
-      );
-    }
-
-    });
-
-
-var CustomerForm=React.createClass(
-    {displayName: "CustomerForm",
-        render:function()
-        {
-
-
-            return(
-                React.createElement("div", {className: "container-fluid"}, 
-
-                    React.createElement(Navbar, {activeTab: "jobs"}), 
-                    React.createElement("div", {className: "row"}, 
-                        React.createElement("div", {className: "col-md-2 side-pane"}
-                            ), 
-                        React.createElement("div", {className: "col-md-10 main-pane"}, 
-                            React.createElement("div", {className: "row"}, 
-                                React.createElement("div", {className: "col-md-3"}
-                                    ), 
-                                React.createElement("div", {className: "col-md-6"}, 
-                                    React.createElement("form", null, 
-
-
-                                        React.createElement("label", null, "Name"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "name"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "Street"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "street"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "Town"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "town"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "County"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "county"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "Phone Number"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "phone"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "email"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "email"}
-
-                                            )
-                                        ), 
-
-                                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
-
-                                    )
-                                ), 
-                                React.createElement("div", {className: "col-md-3"}
-                                )
-                            )
-                        )
-
-
-                )
-                    )
-
-
-            );
-
-        }
-
-    }
-);
 
 var ProductForm=React.createClass(
     {displayName: "ProductForm",
@@ -32300,24 +32418,10 @@ var ManOption=React.createClass(
         }
     });
 
+exports.productPageContent=ProductPageContent;
+exports.productForm=ProductForm;
 
-ReactDOM.render( (
-        React.createElement(Router, null, 
-            React.createElement(Route, {path: "/", component: App}, 
-                React.createElement(IndexRoute, {component: JobPage}), 
-                React.createElement(Route, {path: "jobs/:id", component: JobPage}), 
-                React.createElement(Route, {path: "customer/new", component: CustomerForm}), 
-                React.createElement(Route, {path: "product/new", component: ProductForm}), 
-                React.createElement(Route, {path: "customers/:id", component: CustomerPage}), 
-                React.createElement(Route, {path: "products/:id", component: ProductPage}), 
-                React.createElement(Route, {path: "Parts/:id", component: PartPage})
-            )
-        )
-    ),
-    document.getElementById('mount-point')
-);
-
-},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/ManData.js":3,"../data/PartData.js":4,"../data/ProductData.js":5,"lodash":52,"react":207,"react-dom":54,"react-router":74}],211:[function(require,module,exports){
+},{"../data/CustomerData.js":1,"../data/JobData.js":2,"../data/PartData.js":4,"../data/ProductData.js":5,"lodash":52,"react":207,"react-dom":54,"react-router":74}],214:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -32410,4 +32514,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[210]);
+},{}]},{},[211]);
