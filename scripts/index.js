@@ -47,13 +47,13 @@ var JobPage=React.createClass(
     {
         render:function()
             {
-
+                console.log("all jobs size"+stubApi.getAllJobs().length)
                 return(
                    <div className="container-fluid">
 
                    <Navbar activeTab="jobs" />
 
-                   <JobPageContent id={this.props.params.id}  jobs={stubApi.getAllJobs}   />
+                   <JobPageContent id={this.props.params.id}  jobs={stubApi.getAllJobs()}   />
                    </div>
 
 
@@ -73,7 +73,7 @@ var CustomerPage=React.createClass(
 
                     <Navbar activeTab="customers" />
 
-                    <CustomerPageContent id={this.props.params.id}  customers={stubApi.getAllCustomers}  />
+                    <CustomerPageContent id={this.props.params.id}  customers={stubApi.getAllCustomers()}  />
                 </div>
 
 
@@ -94,7 +94,7 @@ var ProductPage=React.createClass(
 
                     <Navbar activeTab="products" />
 
-                    <ProductPageContent id={this.props.params.id}   products={products}  />
+                    <ProductPageContent id={this.props.params.id}   products={stubApi.getAllProducts()}  />
                 </div>
 
 
@@ -115,7 +115,7 @@ var PartPage=React.createClass(
 
                     <Navbar activeTab="parts" />
 
-                    <PartPageContent id={this.props.params.id}  parts={parts}  />
+                    <PartPageContent id={this.props.params.id}  parts={stubApi.getAllParts()}  />
                 </div>
 
 

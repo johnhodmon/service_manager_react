@@ -23,6 +23,8 @@ var JobPageContent=React.createClass({
             id=this.props.id;
         }
 
+        console.log("id: "+ id);
+
         return ({
 
             jobDisplayed:stubApi.getJob(id)
@@ -79,7 +81,7 @@ var JobSideBar=React.createClass({
         return(
         {
             searchBoxContent: "",
-            sortBy:""
+            searchParameter:""
         }
         );
     },
@@ -89,9 +91,9 @@ var JobSideBar=React.createClass({
         this.setState({ searchBoxContent:value})
     },
 
-    setSortBy:function(value)
+    setSearchParameter:function(value)
     {
-        this.setState({ sortBy:value})
+        this.setState({ searchParameter:value})
     },
 
 
@@ -99,18 +101,29 @@ var JobSideBar=React.createClass({
 
     render:function(){
         var jobs=this.props.jobs;
+        var list=[];
+        if(this.state.searchParameter=="customerName") {
+            list = jobs.filter(function (job) {
+                return stubApi.getCustomerNameForJob(job.id).toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
 
-        var list=jobs.filter(function(job){
-            return job.customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase())!=-1;
-        }.bind(this));
+        else if (this.state.searchParameter=="date")
+        {
+            list = jobs.filter(function (job) {
+                return job.date.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this))
+        }
 
-        var sortedList=_.sortBy(list,this.state.sortBy);
+
+
+
 
 
         return(
             <div>
                 <div className="row search-box-div">
-                    <JobSearchbox setSortBy={this.setSortBy} setSearchText={this.setSearchText}/>
+                    <JobSearchbox setSearchParameter={this.setSearchParameter} setSearchText={this.setSearchText}/>
                 </div>
                 <div className="row">
 
@@ -133,15 +146,15 @@ var JobSearchbox=React.createClass({
     setSearchText:function(e)
     {
         e.preventDefault();
-        console.log("value: "+e.target.value);
+
         this.props.setSearchText(e.target.value);
     },
 
-    setSortBy:function(e)
+    setSearchParameter:function(e)
     {
         e.preventDefault();
-        console.log("sort: "+e.target.value);
-        this.props.setSortBy(e.target.value);
+
+        this.props.setSearchParameter(e.target.value);
     },
     render: function(){
 
@@ -154,10 +167,10 @@ var JobSearchbox=React.createClass({
                     <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
                 </div>
                 <div className="row">
-                    <select onChange={this.setSortBy} id="sort" >
-                        <option value="" disabled selected>Sort by: </option>
+                    <select onChange={this.setSearchParameter} id="sort" >
+                        <option value="" disabled selected>Search by: </option>
                         <option value="date">Date</option>
-                        <option value="customer.name">Customer</option>
+                        <option value="customerName">Customer Name</option>
 
                     </select>
                 </div>

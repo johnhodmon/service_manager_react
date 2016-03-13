@@ -26,11 +26,19 @@ var stubAPI = {
         return jobs ;
     },
 
+    getCustomerNameForJob:function(jobId)
+    {
+
+        var customerProduct=this.getCustomerProduct(jobId);
+        var customer=this.getCustomer(customerProduct.customerId);
+        return customer.name;
+    },
+
     getJob:function(jobId)
     {
         return _.find(jobs,function(j)
         {
-            return j.id=jobId;
+            return j.id==jobId;
         })
     },
 
@@ -116,7 +124,7 @@ var stubAPI = {
     {
         return _.find(customers,function(c)
         {
-            return c.id=customerId;
+            return c.id==customerId;
         })
     },
 
@@ -163,7 +171,7 @@ var stubAPI = {
     {
         return _.find(products,function(p)
         {
-            return p.id=productId;
+            return p.id==productId;
         })
     },
 
@@ -221,7 +229,7 @@ var stubAPI = {
     {
         return _.find(products,function(p)
         {
-            return p.id=productId;
+            return p.id==productId;
         })
     },
 
@@ -236,7 +244,7 @@ var stubAPI = {
     {
         return _.find(parts,function(p)
         {
-            return p.id=partId;
+            return p.id==partId;
         })
     },
 

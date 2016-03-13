@@ -413,7 +413,7 @@ var SingleCustomerProduct=React.createClass({
             var sp=this.props.sp;
             return(
                 <tr><td>{sp.product.manufacturer.name}</td><td><Link to={"products/"+sp.product.id}> {sp.product.product_number}</Link></td>
-                    <td>{sp.serialNumber}</td><td>{sp.product.description}  <span onClick{this.deleteCustomerProduct} className={ "glyphicon glyphicon-trash "+this.props.createJobButtonVisibility} aria-hidden="true"></span>
+                    <td>{sp.serialNumber}</td><td>{sp.product.description}  <span onClick={this.deleteCustomerProduct} className={ "glyphicon glyphicon-trash "+this.props.createJobButtonVisibility} aria-hidden="true"></span>
                       </td><td className={this.props.createJobButtonVisibility}
                         onClick={this.showCreateJobForm}>Create Job <span className="glyphicon glyphicon-plus" aria-hidden="true"></span></td></tr>
 
