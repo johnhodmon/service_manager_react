@@ -1300,7 +1300,7 @@ var stubAPI = {
     },
 
     getWhereUsed:function(partId){
-      var bomsToReturn=  _.find(boms,function(bi)
+      var bomsToReturn=  _.filter(boms,function(bi)
         {
             return bi.partId==partId;
         })
@@ -32576,7 +32576,7 @@ var PartPageContent=React.createClass({displayName: "PartPageContent",
 
     getInitialState:function()
     {
-        var part=stubApi.getPart(this.props.params.id)
+        var part=stubApi.getPart(this.props.id);
 
 
         return ({
@@ -32732,6 +32732,7 @@ var PartMainPane=React.createClass({displayName: "PartMainPane",
 
         if(stubApi.getJobHistory(partDisplayed.id)!=null)
         {
+            console.log(" history"+stubApi.getJobHistory(partDisplayed.id))
             whereUsed=stubApi.getJobHistory(partDisplayed.id).map(function(jobPart,index)
             {
                 return React.createElement(SingleJob, {jobPart: jobPart, index: index})

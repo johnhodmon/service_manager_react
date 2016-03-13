@@ -252,7 +252,7 @@ var stubAPI = {
     },
 
     getWhereUsed:function(partId){
-      var bomsToReturn=  _.find(boms,function(bi)
+      var bomsToReturn=  _.filter(boms,function(bi)
         {
             return bi.partId==partId;
         })

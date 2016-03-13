@@ -9,7 +9,7 @@ var PartPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var part=stubApi.getPart(this.props.params.id)
+        var part=stubApi.getPart(this.props.id);
 
 
         return ({
@@ -165,6 +165,7 @@ var PartMainPane=React.createClass({
 
         if(stubApi.getJobHistory(partDisplayed.id)!=null)
         {
+            console.log(" history"+stubApi.getJobHistory(partDisplayed.id))
             whereUsed=stubApi.getJobHistory(partDisplayed.id).map(function(jobPart,index)
             {
                 return <SingleJob jobPart={jobPart} index={index}   />
