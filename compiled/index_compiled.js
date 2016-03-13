@@ -2469,14 +2469,14 @@ function saveState(key, state) {
     if (error.name === SecurityError) {
       // Blocking cookies in Chrome/Firefox/Safari throws SecurityError on any
       // attempt to access window.sessionStorage.
-      process.env.NODE_ENV !== 'production' ? _warning2['default'](false, '[history] Unable to save state; sessionStorage is not available due to security settings') : undefined;
+      process.env.NODE_ENV !== 'production' ? _warning2['default'](false, '[history] Unable to saveCustomerProduct state; sessionStorage is not available due to security settings') : undefined;
 
       return;
     }
 
     if (QuotaExceededErrors.indexOf(error.name) >= 0 && window.sessionStorage.length === 0) {
       // Safari "private mode" throws QuotaExceededError.
-      process.env.NODE_ENV !== 'production' ? _warning2['default'](false, '[history] Unable to save state; sessionStorage is not available in Safari private mode') : undefined;
+      process.env.NODE_ENV !== 'production' ? _warning2['default'](false, '[history] Unable to saveCustomerProduct state; sessionStorage is not available in Safari private mode') : undefined;
 
       return;
     }
@@ -3214,7 +3214,7 @@ function createHistory() {
     createHref: createHref,
     createLocation: createLocation,
 
-    setState: _deprecate2['default'](setState, 'setState is deprecated; use location.key to save state instead'),
+    setState: _deprecate2['default'](setState, 'setState is deprecated; use location.key to saveCustomerProduct state instead'),
     registerTransitionHook: _deprecate2['default'](registerTransitionHook, 'registerTransitionHook is deprecated; use listenBefore instead'),
     unregisterTransitionHook: _deprecate2['default'](unregisterTransitionHook, 'unregisterTransitionHook is deprecated; use the callback returned from listenBefore instead'),
     pushState: _deprecate2['default'](pushState, 'pushState is deprecated; use push instead'),
@@ -21581,7 +21581,7 @@ var ReactDOMTextarea = {
     var value = LinkedValueUtils.getValue(props);
 
     inst._wrapperState = {
-      // We save the initial value so that `ReactDOMComponent` doesn't update
+      // We saveCustomerProduct the initial value so that `ReactDOMComponent` doesn't update
       // `textContent` (unnecessary since we update value).
       // The initial value can be a boolean or object so that's why it's
       // forced to be a string.
@@ -22032,7 +22032,7 @@ module.exports = ReactDefaultPerf;
 
 var assign = require('./Object.assign');
 
-// Don't try to save users less than 1.2ms (a number I made up)
+// Don't try to saveCustomerProduct users less than 1.2ms (a number I made up)
 var DONT_CARE_THRESHOLD = 1.2;
 var DOM_OPERATION_TYPES = {
   '_mountImageIntoNode': 'set innerHTML',
@@ -30963,7 +30963,7 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
     },
 
 
-    addCustomerProductInVisible:function()
+    hideCustomerProductForm:function()
     {
         this.setState( {
             addCpVisibility:"invisible",
@@ -30975,7 +30975,7 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
         }  )
     },
 
-    addCustomerProductVisible:function()
+    showCustomerProductForm:function()
     {
         this.setState( {
             addCpVisibility:"",
@@ -31003,7 +31003,7 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
             createJobButtonVisibility:"",});
     },
 
-    createJob:function(customer,customerProduct)
+    showCreateJobForm:function(customer, customerProduct)
     {
         this.setState( {
             createJobFormVisibility:"",
@@ -31160,19 +31160,19 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
     makeVisible:function()
     {
 
-        this.props.addCustomerProductVisible();
+        this.props.showCustomerProductForm();
     },
 
 
 
     undo:function(e)
     {
-        this.props.addCustomerProductInVisible();
+        this.props.hideCustomerProductForm();
     },
 
-    save:function(e)
+    saveCustomerProduct:function(e)
     {
-        this.props.addCustomerProductInVisible();
+        this.props.hideCustomerProductForm();
     },
 
 
@@ -31189,9 +31189,9 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
             customerProducts = customerDisplayed.customerProducts.map(function (sp, index) {
                     return (React.createElement(SingleCustomerProduct, {
                         customerDisplayed: customerDisplayed, 
-                        createJob: this.props.createJob, 
+                        showCreateJobForm: this.props.showCreateJobForm,
                         createJobButtonVisibility: this.props.createJobButtonVisibility, 
-                        makeVisible: this.props.addCustomerProductVisible, 
+                        makeVisible: this.props.showCustomerProductForm,
                         sp: sp}
 
                     ));
@@ -31235,7 +31235,7 @@ var CustomerMainPane=React.createClass({displayName: "CustomerMainPane",
                             React.createElement("td", null, 
 
                                 React.createElement("span", {onClick: this.undo, className: "glyphicon glyphicon-ok", "aria-hidden": "true"}), 
-                                "Cancel ", React.createElement("span", {onClick: this.save, className: "glyphicon glyphicon-chevron-up", "aria-hidden": "true"})
+                                "Cancel ", React.createElement("span", {onClick: this.saveCustomerProduct, className: "glyphicon glyphicon-chevron-up", "aria-hidden": "true"})
                             ))
 
                         )
@@ -31272,11 +31272,11 @@ var ProductOption=React.createClass({displayName: "ProductOption",
 
 var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct",
 
-    createJob:function()
+    showCreateJobForm:function()
     {
         var sp=this.props.sp;
         var  customerDisplayed=this.props.customerDisplayed;
-        this.props.createJob(customerDisplayed,sp)
+        this.props.showCreateJobForm(customerDisplayed,sp)
     },
         render:function()
         {
@@ -31285,7 +31285,7 @@ var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct
                 React.createElement("tr", null, React.createElement("td", null, sp.product.manufacturer.name), React.createElement("td", null, React.createElement(Link, {to: "products/"+sp.product.id}, " ", sp.product.product_number)), 
                     React.createElement("td", null, sp.serialNumber), React.createElement("td", null, sp.product.description, "  ", React.createElement("span", {className:  "glyphicon glyphicon-trash "+this.props.createJobButtonVisibility, "aria-hidden": "true"})
                       ), React.createElement("td", {className: this.props.createJobButtonVisibility, 
-                        onClick: this.createJob}, "Create Job ", React.createElement("span", {className: "glyphicon glyphicon-plus", "aria-hidden": "true"})))
+                        onClick: this.showCreateJobForm}, "Create Job ", React.createElement("span", {className: "glyphicon glyphicon-plus", "aria-hidden": "true"})))
 
             );
         }
@@ -31961,7 +31961,7 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
         this.props.hideAddPartForm();
     },
 
-    save:function(e)
+    saveCustomerProduct:function(e)
     {
         this.props.hideAddPartForm();
     },
@@ -32534,7 +32534,7 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
         this.props.hideAddPartForm();
     },
 
-    save:function(e)
+    saveCustomerProduct:function(e)
     {
         this.props.hideAddPartForm();
     },
