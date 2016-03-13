@@ -4,6 +4,8 @@ var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 var _=require('lodash');
 var jobs=require('../data/JobData.js').jobs;
+var stubApi=require('../data/stubApi.js').stubApi;
+
 
 
 
@@ -87,7 +89,9 @@ var JobPageContent=React.createClass({
                                  addButtonVisibility={this.state.addButtonVisibility}
                                  jobDisplayed={this.state.jobDisplayed}
                                  jobs={this.props.jobs}
-                                 parts={this.props.parts}/>
+                                 customerProduct={stubApi.getCustomerProduct(this.state.jobDisplayed.id)}
+                                 jobParts={stubApi.getJobPartsForJob(this.state.jobDisplayed.id)}
+                                 parts={this.props.part}/>
                 </div>
 
             </div>
@@ -323,24 +327,24 @@ var JobMainPane=React.createClass({
 
     render:function(){
         var jobs=this.props.jobs;
-
         var jobDisplayed=this.props.jobDisplayed;
-        var customer=jobDisplayed.customer;
-        var customerProduct=jobDisplayed.customerProduct;
-        var product=jobDisplayed.customerProduct.product;
-        var jobParts=[];
+        var customerProduct=this.props.customerProduct;
+        var product=stubApi.getProduct(customerProduct.productId);
+        var jobPartsToDisplay=[];
         var parts=this.props.parts;
+        var boms=stubApi.getBomForProduct(customerProduct.productId)
+        var customer=stubApi.getCustomer(customerProduct.customerId)
 
 
-        if(jobDisplayed.jobParts!=null)
+        if(this.props.jobParts!=null)
         {
-            jobParts=jobDisplayed.jobParts.map(function(jp,index)
+            jobPartsToDisplay=this.props.jobParts.map(function(jp,index)
             {
                 return <SingleJobPart addButtonVisibility={this.props.addButtonVisibility} jobPart={jp} index={index} makeVisible={this.makeVisible}  />
             }.bind(this));
         }
 
-        var selectOptions=product.bom.map(function(bomItem,index){
+        var selectOptions=boms.map(function(bomItem,index){
             return <SelectOption bomItem={bomItem} />
         });
 
@@ -384,7 +388,7 @@ var JobMainPane=React.createClass({
 
                             <tbody>
                             <tr className={this.props.partsUsedVisibility}><td></td><td>There were no parts used on this job</td><td></td></tr>
-                            {jobParts}
+                            {jobPartsToDisplay}
                             <tr className={this.props.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                             <tr className={this.props.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumber}>{selectOptions}</select></td>
                                 <td>
@@ -440,9 +444,10 @@ var SelectOption=React.createClass(
         render: function()
         {
             var bomItem=this.props.bomItem;
+            var part=stubApi.getPart(bomItem.partId)
 
             return(
-                <option value={bomItem.part.part_number}>{bomItem.part.description} </option>
+                <option value={part.part_number}>{part.description} </option>
             );
         }
     });
@@ -452,7 +457,7 @@ var SingleJobPart=React.createClass(
 
         render:function(){
             var jobPart=this.props.jobPart;
-            var part = jobPart.part;
+            var part = stubApi.getPart(jobPart.partId)
             var makeVisible=this.props.makeVisible;
             return(
                 <tr><td><Link to={"parts/"+part.id}>{part.part_number}</Link></td><td>{part.description}</td>

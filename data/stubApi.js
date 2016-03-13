@@ -15,7 +15,7 @@ var stubAPI = {
         jobs.push({
             id:jobs.length,
             date: date,
-            reportedFault : reportedFault,
+            reported_fault : reportedFault,
             customerProductId:customerProductId
 
 
@@ -74,6 +74,13 @@ var stubAPI = {
         }
     },
 
+    getCustomerProduct:function(jobId)
+    {
+        return _.find(customerProducts,function(cp){
+            return cp.jobId==jobId;
+        });
+    },
+
 
 //customers##########################################
 
@@ -97,7 +104,13 @@ var stubAPI = {
         return customers ;
     },
 
-
+    getCustomer:function(customerId)
+    {
+        return _.find(customers,function(c)
+        {
+            return c.id=customerId;
+        })
+    },
 
 
     addCustomerProduct : function(customerId,productId,serialNumber) {
@@ -188,11 +201,27 @@ var stubAPI = {
         return manufacturers[mId];
     },
 
+    getProduct:function(productId)
+    {
+        return _.find(products,function(p)
+        {
+            return p.id=productId;
+        })
+    },
+
     //#################### Parts################
 
 
     getAllParts : function() {
         return parts ;
+    },
+
+    getPart:function(partId)
+    {
+        return _.find(parts,function(p)
+        {
+            return p.id=partId;
+        })
     },
 
     getWhereUsed:function(partId){
@@ -219,4 +248,4 @@ var stubAPI = {
 
 
 }
-exports.api = stubAPI ;
+exports.stubApi = stubAPI ;

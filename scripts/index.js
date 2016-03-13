@@ -6,16 +6,13 @@ var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
 var _=require('lodash');
 var IndexRoute = ReactRouter.IndexRoute;
-var jobs=require('../data/JobData.js').jobs;
-var customers=require('../data/CustomerData.js').customers;
-var products=require('../data/ProductData.js').products;
-var parts=require('../data/PartData.js').parts;
 var JobPageContent=require('./jobs.js').jobPageContent;
 var CustomerPageContent=require('./customers.js').customerPageContent;
 var ProductPageContent=require('./products.js').productPageContent;
 var PartPageContent=require('./parts.js').partPageContent;
 var CustomerForm=require('./customers.js').customerForm;
 var ProductForm=require('./products.js').productForm;
+var stubApi=require('../data/stubApi.js').stubApi;
 
 $(document).ready(function() {
 
@@ -56,7 +53,7 @@ var JobPage=React.createClass(
 
                    <Navbar activeTab="jobs" />
 
-                   <JobPageContent id={this.props.params.id}  jobs={jobs} parts={parts}  />
+                   <JobPageContent id={this.props.params.id}  jobs={stubApi.getAllJobs}   />
                    </div>
 
 
