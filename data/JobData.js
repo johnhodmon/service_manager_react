@@ -1,5 +1,4 @@
-var customers=require('./CustomerData.js').customers;
-var parts=require('./PartData.js').parts;
+
 
 
 var jobs=

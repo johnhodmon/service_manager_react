@@ -2,9 +2,10 @@ var jobs=require('./JobData.js').jobs;
 var customers=require('./CustomerData.js').customers;
 var products=require('./ProductData.js').products;
 var parts=require('./PartData.js').parts;
-var customerProducts=('./data/CustomerProductData.js').customerProducts;
+var customerProducts=require('./CustomerProductData.js').customerProducts;
 var jobParts=('./JobPartData.js').jobParts;
-var boms=('./BomData.js').boms;
+var boms=require('./BomData.js').boms;
+var manufacturers=require('./ManData.js').manufacturers;
 var _ = require('lodash');
 
 
@@ -28,8 +29,8 @@ var stubAPI = {
 
     getCustomerNameForJob:function(jobId)
     {
-
-        var customerProduct=this.getCustomerProduct(jobId);
+        var job=this.getJob(jobId);
+        var customerProduct=this.getCustomerProduct(job.customerProductId);
         var customer=this.getCustomer(customerProduct.customerId);
         return customer.name;
     },
@@ -90,10 +91,11 @@ var stubAPI = {
         }
     },
 
-    getCustomerProduct:function(jobId)
+    getCustomerProduct:function(id)
     {
+        console.log("cp size"+customerProducts.length);
         return _.find(customerProducts,function(cp){
-            return cp.jobId==jobId;
+            return cp.id==id;
         });
     },
 
@@ -144,7 +146,7 @@ var stubAPI = {
             return cp.customerId==customerId;
         })
 
-        return jobPartsToReturn;
+        return customerProductsToReturn;
     },
 
     deleteCustomerProduct : function(id) {
@@ -222,7 +224,7 @@ var stubAPI = {
 
     getManufacturer(manId)
     {
-        return manufacturers[mId];
+        return manufacturers[manId];
     },
 
     getProduct:function(productId)

@@ -44,6 +44,7 @@ var JobPageContent=React.createClass({
 
     render:function()
     {
+        console.log("cp"+stubApi.getCustomerProduct(0));
 
         return(
             <div className="row">
@@ -55,7 +56,7 @@ var JobPageContent=React.createClass({
                     <JobMainPane
                                  jobDisplayed={this.state.jobDisplayed}
                                  jobs={this.props.jobs}
-                                 customerProduct={stubApi.getCustomerProduct(this.state.jobDisplayed.id)}
+                                 customerProduct={stubApi.getCustomerProduct(this.state.jobDisplayed.customerProductId)}
                                  jobParts={stubApi.getJobPartsForJob(this.state.jobDisplayed.id)}
                                  parts={this.props.part}/>
                 </div>
@@ -127,7 +128,7 @@ var JobSideBar=React.createClass({
                 </div>
                 <div className="row">
 
-                    <JobList selectNewJob={this.props.selectNewJob} jobDisplayed={this.props.jobDisplayed}  jobs={sortedList}/>
+                    <JobList selectNewJob={this.props.selectNewJob} jobDisplayed={this.props.jobDisplayed}  jobs={list}/>
                 </div>
             </div>
 
@@ -226,6 +227,10 @@ var SingleJob=React.createClass({
     selectNewJob:function()
     {
         var job=this.props.job;
+        var customerProduct=stubApi.getCustomerProduct(job.id);
+        var product=stubApi.getProduct(customerProduct.productId);
+        var manufacturer=stubApi.getManufacturer(product.manufacturerId);
+        var customer =stubApi.getCustomer(customerProduct.customerId);
         this.props.selectNewJob(job);
     },
 
@@ -233,6 +238,11 @@ var SingleJob=React.createClass({
     render: function () {
         var job=this.props.job;
         var jobDisplayed=this.props.jobDisplayed;
+        var job=this.props.job;
+        var customerProduct=stubApi.getCustomerProduct(job.id);
+        var product=stubApi.getProduct(customerProduct.productId);
+        var manufacturer=stubApi.getManufacturer(product.manufacturerId);
+        var customer =stubApi.getCustomer(customerProduct.customerId);
 
         return (
 
@@ -240,10 +250,10 @@ var SingleJob=React.createClass({
 
 
                 <Link  to={"/jobs/"+job.id} ><h3>{job.date}</h3>
-                    <p>{job.customerProduct.product.manufacturer.name+" "+job.customerProduct.product.description.split(",")[0]}<br/>
-                        {job.customer.name}  <br/>
-                        {job.customer.town}<br/>
-                        {job.status}<br/></p></Link>
+                    <p>{manufacturer.name+" "+product.description.split(",")[0]}<br/>
+                        {customer.name}  <br/>
+                        {customer.town}<br/>
+                        <br/></p></Link>
 
 
 
@@ -337,6 +347,7 @@ var JobMainPane=React.createClass({
         var jobDisplayed=this.props.jobDisplayed;
         var customerProduct=this.props.customerProduct;
         var product=stubApi.getProduct(customerProduct.productId);
+        var manufacturer=stubApi.getManufacturer(product.manufacturerId);
         var jobPartsToDisplay=[];
         var parts=this.props.parts;
         var boms=stubApi.getBomForProduct(customerProduct.productId)
@@ -397,7 +408,7 @@ var JobMainPane=React.createClass({
                             <tr className={this.state.partsUsedVisibility}><td></td><td>There were no parts used on this job</td><td></td></tr>
                             {jobPartsToDisplay}
                             <tr className={this.props.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
-                            <tr className={this.state.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumber}>{selectOptions}</select></td>
+                            <tr className={this.state.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumberAndId}>{selectOptions}</select></td>
                                 <td>
                                     <select onChange={this.setQuantityOfNewJobPart}>
                                         <option value="1">1</option>
@@ -412,7 +423,7 @@ var JobMainPane=React.createClass({
                                         <option value="10">10</option>
                                     </select>
                                     <span onClick={this.save} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                    Cancel <span onClick={this.hideAddPartForm()} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                    Cancel <span onClick={this.hideAddPartForm} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
                                 </td></tr>
 
                             </tbody>
@@ -425,7 +436,7 @@ var JobMainPane=React.createClass({
                         <h3><strong>Product Details</strong></h3>
                         <p>
                             <Link to={"products/"+product.id}>
-                            {product.manufacturer.name} {product.product_number}<br/>
+                            {manufacturer.name} {product.product_number}<br/>
                             {product.description}<br/>
                             Serial Number: {customerProduct.serialNumber}
                                 </Link>

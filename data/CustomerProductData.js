@@ -65,4 +65,4 @@ var customerProducts= [
 
 ]
 
-exports.customerProducts=customerProducts
+exports.customerProducts=customerProducts;

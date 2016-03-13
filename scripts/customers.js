@@ -10,7 +10,7 @@ var CustomerPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var customer=stubApi.getCustomer(this.props.params.id);
+        var customer=stubApi.getCustomer(this.props.id);
 
 
         return ({
@@ -281,7 +281,25 @@ setSerialNumber:function(e)
     this.setState({serialNumber:e.target.value})
 },
 
+renderJobForm:function()
+{
+    var jobForm=null;
+    if(this.state.customerProductForForm!="")
+    {
+        return(   <JobForm
+            customerProductForForm={this.state.customerProductForForm}
 
+            setReportedFaultFromForm={this.setReportedFaultFromForm}
+            saveJob={this.saveJob}
+            cancelJobSave={this.cancelJobSave}
+        />);
+    }
+
+    else
+    {
+        return(<div></div>);
+    }
+},
 
     saveCustomerProduct:function(e)
     {
@@ -305,7 +323,8 @@ setSerialNumber:function(e)
             return <ProductOption product={product} />
         });
 
-        if(stubApi.getCustomerProductsForCustomer(customerDisplayed.id)) {
+
+        if(stubApi.getCustomerProductsForCustomer(customerDisplayed.id)!=null) {
             customerProducts = stubApi.getCustomerProductsForCustomer(customerDisplayed.id).map(function (sp, index) {
                     return (<SingleCustomerProduct
                         customerDisplayed={customerDisplayed}
@@ -362,14 +381,8 @@ setSerialNumber:function(e)
                         </tbody>
                     </table>
                     <div className={this.props.createJobFormVisibility}>
-                    <JobForm
-                               customerProductForForm={this.state.customerProductForForm}
-                                jobFormCustomer={this.state.jobFormCustomer}
-                             jobFormCustomerProduct={this.state.jobFormCustomerProduct}
-                               setReportedFaultFromForm={this.setReportedFaultFromForm}
-                             saveJob={this.saveJob}
-                             cancelJobSave={this.cancelJobSave}
-                    />
+                        {this.renderJobForm}
+
                     </div>
                 </div>
                 <div className="col-md-3">
@@ -387,7 +400,8 @@ var ProductOption=React.createClass({
     render:function(){
 
         var product=this.props.product;
-        return(<option value={product.id}>{product.manufacturer.name} {product.product_number} {product.description.split(",")[0]}</option>
+        var manufacturer=stubApi.getManufacturer(product.manufacturerId)
+        return(<option value={product.id}>{manufacturer.name} {product.product_number} {product.description.split(",")[0]}</option>
 
         );
     }
@@ -411,9 +425,11 @@ var SingleCustomerProduct=React.createClass({
         render:function()
         {
             var sp=this.props.sp;
+            var product=stubApi.getProduct(sp.productId);
+            var manufacturer=stubApi.getManufacturer(product.manufacturerId)
             return(
-                <tr><td>{sp.product.manufacturer.name}</td><td><Link to={"products/"+sp.product.id}> {sp.product.product_number}</Link></td>
-                    <td>{sp.serialNumber}</td><td>{sp.product.description}  <span onClick={this.deleteCustomerProduct} className={ "glyphicon glyphicon-trash "+this.props.createJobButtonVisibility} aria-hidden="true"></span>
+                <tr><td>{manufacturer.name}</td><td><Link to={"products/"+product.id}> {product.product_number}</Link></td>
+                    <td>{sp.serialNumber}</td><td>{product.description}  <span onClick={this.deleteCustomerProduct} className={ "glyphicon glyphicon-trash "+this.props.createJobButtonVisibility} aria-hidden="true"></span>
                       </td><td className={this.props.createJobButtonVisibility}
                         onClick={this.showCreateJobForm}>Create Job <span className="glyphicon glyphicon-plus" aria-hidden="true"></span></td></tr>
 
@@ -519,9 +535,11 @@ var JobForm=React.createClass(
 
         render:function(){
             var customerProduct=this.props.customerProductForForm;
-            var customer=stubApi.getCustomer(customerProduct.customerId);
-            var product=stubApi.getProduct(customerProduct.productId);
-            var manufacturer=stubApi.getManufacturer(product.manufacturerId)
+
+                var customer = stubApi.getCustomer(customerProduct.customerId);
+                var product = stubApi.getProduct(customerProduct.productId);
+                var manufacturer = stubApi.getManufacturer(product.manufacturerId);
+
 
 
 
