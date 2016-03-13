@@ -3,19 +3,19 @@ var customers=require('./CustomerData.js').customers;
 var products=require('./ProductData.js').products;
 var parts=require('./PartData.js').parts;
 var customerProducts=('./data/CustomerProductData.js').customerProducts;
-var JobParts=('./JobPartData.js').jobParts;
-var Boms=('./BomData.js').boms;
+var jobParts=('./JobPartData.js').jobParts;
+var boms=('./BomData.js').boms;
 var _ = require('lodash');
 
 
 var stubAPI = {
 
-
-    addJob : function(date,reportedFault,customerId,customerProductId) {
+//jobs
+    addJob : function(date,reportedFault,customerProductId) {
         jobs.push({
+            id:jobs.length,
             date: date,
             reportedFault : reportedFault,
-            customerId:customerId
             customerProductId:customerProductId
 
 
@@ -29,41 +29,194 @@ var stubAPI = {
     deleteJob : function(id) {
         var elements = _.remove(jobs,
             function(job) {
-                return job.id == job;
+                return job.id == id;
             });
     },
 
 
-    addJobPart : function(date,reportedFault,customerId,customerProductId) {
-        jobs.push({
-            date: date,
-            reportedFault : reportedFault,
-            customerId:customerId
-            customerProductId:customerProductId
+    addJobPart : function(jobId,partId,quantity) {
+        jobParts.push({
+            id:jobParts.length,
+            partId:partId,
+            quantity:quantity
+
+        }) ;
+    },
+
+    getJobPartsForJob : function(jobId) {
+        var jobPartsToReturn=_.filter(jobParts,function(jp)
+        {
+            return jp.jobId==jobId;
+        })
+
+        return jobPartsToReturn;
+    },
+
+    deleteJobPart : function(id) {
+        var elements = _.remove(jobParts,
+            function(jobPart) {
+                return jobPart.id == id;
+            });
+    },
+
+
+    updateJobPartQuanity : function(jobPartId,quantity) {
+        var jobPartToUpdate=_.find(jobParts,function(jp){
+            return jp.id==id;
+        })
+        if (jobPartToUpdate) {
+            jobParts.splice(jobPartId, 1,
+                {
+                    jobId:jobPartToUpdate.jobId,
+                    partId: jobPartToUpdate.partId,
+                   quantity:quantity
+                });
+        }
+    },
+
+
+//customers##########################################
+
+    addCustomer : function(name,street,town,county,phone,email)
+    {
+        customers.push
+        ({
+            id:customers.length,
+            name:name,
+            street:street,
+            town:town,
+            county:county,
+            phone:phone,
+            email:email
 
 
         }) ;
     },
 
-    getJobParts : function(job) {
-        return jobs ;
+    getAllCustomers : function() {
+        return customers ;
     },
 
-    deleteJob : function(id) {
-        var elements = _.remove(jobs,
-            function(job) {
-                return job.id == job;
+
+
+
+    addCustomerProduct : function(customerId,productId,serialNumber) {
+        customerProducts.push({
+            id:customerProducts.length,
+            customerId:customerId,
+            productId:productId,
+            serialNumber:serialNumber
+        }) ;
+    },
+
+    getCustomerProductsForCustomer : function(customerId) {
+        var customerProductsToReturn=_.filter(customerProducts,function(cp)
+        {
+            return cp.customerId==customerId;
+        })
+
+        return jobPartsToReturn;
+    },
+
+    deleteCustomerProduct : function(id) {
+        var elements = _.remove(customerProducts,
+            function(cp) {
+                return cp.id == id;
+            });
+    },
+
+//products#################################################
+
+    addProduct : function(manufacturerId,product_number,description) {
+        products.push({
+
+            id:products.length,
+            manufacturerId:manufacturerId,
+            product_number:product_number,
+            description:description
+
+        }) ;
+    },
+
+    getAllProducts : function() {
+        return products ;
+    },
+
+
+    addBomItem : function(productId,partId,quantity) {
+        boms.push({
+            id:boms.length,
+            partId:partId,
+            quantity:quantity
+
+        }) ;
+    },
+
+    getBomForProduct : function(productId) {
+        var bomsToReturn=_.filter(boms,function(bi)
+        {
+            return bi.productId==productId;
+        })
+
+        return bomsToReturn;
+    },
+
+    deleteBomItem : function(id) {
+        var elements = _.remove(boms,
+            function(bi) {
+                return bi.id == id;
             });
     },
 
 
-    update : function(key,n,a,p) {
-        var index = _.findIndex(contacts, function(contact) {
-            return contact.phone_number == key;
-        } );
-        if (index != -1) {
-            contacts.splice(index, 1, {name: n, address: a, phone_number: p});
+    updateBomQuanity : function(id,quantity) {
+        var bomToUpdate=_.find(boms,function(bi){
+            return bi.id==id;
+        })
+        if (bomToUpdate) {
+            boms.splice(id, 1,
+                {
+                    productId:bomToUpdate.productId,
+                    partId: bomToUpdate.partId,
+                    quantity:quantity
+                });
         }
-    }
+    },
+
+    getManufacturer(manId)
+    {
+        return manufacturers[mId];
+    },
+
+    //#################### Parts################
+
+
+    getAllParts : function() {
+        return parts ;
+    },
+
+    getWhereUsed:function(partId){
+      var bomsToReturn=  _.find(boms,function(bi)
+        {
+            return bi.partId==partId;
+        })
+        return bomsToReturn;
+
+    },
+
+    getJobHistory:function(partId){
+        var jobPartsToReturn=  _.find(jobParts,function(jp)
+        {
+            return jp.partId==partId;
+        })
+        return jobPartsToReturn;
+
+    },
+
+
+
+
+
+
 }
 exports.api = stubAPI ;
