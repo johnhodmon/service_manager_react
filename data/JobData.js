@@ -11,7 +11,7 @@ var jobs=
         reported_fault:"Oven not working",
         status:'allocated',
         date:'1st Feb 2016',
-        customer:customers[0],
+        customerId:0,
         customerProduct:customers[0].customerProducts[0],
 
         jobParts:
