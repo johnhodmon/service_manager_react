@@ -208,19 +208,19 @@ var ProductMainPane=React.createClass({
     makeVisible:function()
     {
 
-        this.props.addPartVisible();
+        this.props.showAddPartForm();
     },
 
 
 
     undo:function(e)
     {
-        this.props.addPartInVisible();
+        this.props.hideAddPartForm();
     },
 
     save:function(e)
     {
-        this.props.addPartInVisible();
+        this.props.hideAddPartForm();
     },
 
 

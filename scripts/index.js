@@ -73,7 +73,7 @@ var CustomerPage=React.createClass(
 
                     <Navbar activeTab="customers" />
 
-                    <CustomerPageContent id={this.props.params.id}  customers={customers}  />
+                    <CustomerPageContent id={this.props.params.id}  customers={stubApi.getAllCustomers}  />
                 </div>
 
 

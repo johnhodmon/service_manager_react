@@ -31697,7 +31697,7 @@ var JobPageContent=React.createClass({displayName: "JobPageContent",
 
     },
 
-    addPartVisible:function()
+    showAddPartForm:function()
     {
         console.log("make visible");
         this.setState ({
@@ -31708,7 +31708,7 @@ var JobPageContent=React.createClass({displayName: "JobPageContent",
 
     },
 
-    addPartInVisible:function()
+    hideAddPartForm:function()
     {
         this.setState ({
 
@@ -31951,19 +31951,19 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
     makeVisible:function()
     {
 
-        this.props.addPartVisible();
+        this.props.showAddPartForm();
     },
 
 
 
     undo:function(e)
     {
-        this.props.addPartInVisible();
+        this.props.hideAddPartForm();
     },
 
     save:function(e)
     {
-        this.props.addPartInVisible();
+        this.props.hideAddPartForm();
     },
 
 
@@ -32364,7 +32364,7 @@ var ProductPageContent=React.createClass({displayName: "ProductPageContent",
 
     },
 
-    addPartVisible:function()
+    showAddPartForm:function()
     {
         console.log("make visible");
         this.setState ({
@@ -32375,7 +32375,7 @@ var ProductPageContent=React.createClass({displayName: "ProductPageContent",
 
     },
 
-    addPartInVisible:function()
+    hideAddPartForm:function()
     {
         this.setState ({
 
@@ -32524,19 +32524,19 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
     makeVisible:function()
     {
 
-        this.props.addPartVisible();
+        this.props.showAddPartForm();
     },
 
 
 
     undo:function(e)
     {
-        this.props.addPartInVisible();
+        this.props.hideAddPartForm();
     },
 
     save:function(e)
     {
-        this.props.addPartInVisible();
+        this.props.hideAddPartForm();
     },
 
 

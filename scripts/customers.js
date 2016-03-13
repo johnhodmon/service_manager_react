@@ -10,14 +10,15 @@ var jobs=require('../data/JobData.js').jobs;
 var customers=require('../data/CustomerData.js').customers;
 var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
+var stubApi=require('../data/stubApi.js').stubApi;
 
 var CustomerPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var customer=customers[this.props.id];
+        var customer=stubApi.getCustomer(this.props.params.id);
         var cpv=""
-        if(customer.customerProducts!=null) {
+        if(stubApi.getCustomerProductsForCustomer(customer.id)!=null) {
             cpv="invisible";
         }
 
@@ -39,7 +40,7 @@ var CustomerPageContent=React.createClass({
     selectNewCustomer:function(customer)
     {
         var cpv=""
-        if(customer.customerProducts!=null) {
+        if(stubApi.getCustomerProductsForCustomer(customer.id)!=null) {
             cpv="invisible";
         }
 
@@ -248,7 +249,11 @@ selectNewCustomer:function()
 });
 var CustomerMainPane=React.createClass({
 
-
+getInitialState:function()
+{
+    return({serialNumber:"",
+        productId:""})
+},
     makeVisible:function()
     {
 
@@ -256,6 +261,17 @@ var CustomerMainPane=React.createClass({
     },
 
 
+    setProductId:function(e)
+    {
+        e.preventDefault();
+        this.setState({productId:e.target.value})
+    },
+
+setSerialNumber:function(e)
+{
+    e.preventDefault();
+    this.setState({serialNumber:e.target.value})
+},
 
     undo:function(e)
     {
@@ -264,6 +280,9 @@ var CustomerMainPane=React.createClass({
 
     save:function(e)
     {
+        e.preventDefault
+        var customerDisplayed=this.props.customerDisplayed;
+        stubApi.addCustomerProduct(customerDisplayed.id,this.state.productId,this.state.serialNumber);
         this.props.addCustomerProductInVisible();
     },
 
@@ -277,8 +296,8 @@ var CustomerMainPane=React.createClass({
             return <ProductOption product={product} />
         });
 
-        if(customerDisplayed.customerProducts!=null) {
-            customerProducts = customerDisplayed.customerProducts.map(function (sp, index) {
+        if(stubApi.getCustomerProductsForCustomer(customerDisplayed.id)) {
+            customerProducts = getCustomerProductsForCustomer(customerDisplayed.id).map(function (sp, index) {
                     return (<SingleCustomerProduct
                         customerDisplayed={customerDisplayed}
                         createJob={this.props.createJob}
@@ -323,12 +342,12 @@ var CustomerMainPane=React.createClass({
                         <tr className={this.props.cpVisibility}><td></td><td>This customer has no registered products</td><td> Add Product  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                         {customerProducts}
                         <tr className={this.props.addButtonVisibility}><td></td><td></td><td></td><td>  Add Product  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
-                        <tr className={this.props.addCpVisibility}>  <td></td><td><select  >{productOptions}</select></td>
+                        <tr className={this.props.addCpVisibility}>  <td></td><td><select onChange={this.setProductId}  >{productOptions}</select></td>
                             <td>
 
-                                <span onClick={this.undo} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                Cancel <span onClick={this.save} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                            </td></tr>
+
+                            </td><input onChange={this.setSerialNumber} placeholder="serial number" type="text"></input><td>  <span onClick={this.undo} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                Cancel <span onClick={this.save} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></td></tr>
 
                         </tbody>
                     </table>
@@ -478,6 +497,7 @@ var JobForm=React.createClass(
     {
 
 
+
         render:function(){
 
 
@@ -502,7 +522,7 @@ var JobForm=React.createClass(
                         <div className="form-group">
                             <input type="text" name="customerProduct" disabled
 
-                                   value={  this.props.jobFormCustomerProduct      }>
+                                   value={  this.props.jobFormCustomerProduct}>
                             </input>
                         </div>
                         <label>Customer</label>
@@ -522,7 +542,7 @@ var JobForm=React.createClass(
                         <label>Reported Fault</label>
                         <div className="form-group">
 
-                            <input type="text" name="reported fault">
+                            <input value="reported_fault" type="text" name="reported fault">
 
                             </input>
                         </div>

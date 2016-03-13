@@ -26,6 +26,14 @@ var stubAPI = {
         return jobs ;
     },
 
+    getJob:function(jobId)
+    {
+        return _.find(jobs,function(j)
+        {
+            return j.id=jobId;
+        })
+    },
+
     deleteJob : function(id) {
         var elements = _.remove(jobs,
             function(job) {
