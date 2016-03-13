@@ -159,6 +159,14 @@ var stubAPI = {
         }) ;
     },
 
+    getProduct:function(productId)
+    {
+        return _.find(products,function(p)
+        {
+            return p.id=productId;
+        })
+    },
+
     getAllProducts : function() {
         return products ;
     },

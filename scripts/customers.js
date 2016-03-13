@@ -1,15 +1,9 @@
 ReactDOM = require('react-dom');
 var React = require('react');
 var ReactRouter = require('react-router');
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
 var _=require('lodash');
-var IndexRoute = ReactRouter.IndexRoute;
-var jobs=require('../data/JobData.js').jobs;
-var customers=require('../data/CustomerData.js').customers;
 var products=require('../data/ProductData.js').products;
-var parts=require('../data/PartData.js').parts;
 var stubApi=require('../data/stubApi.js').stubApi;
 
 var CustomerPageContent=React.createClass({

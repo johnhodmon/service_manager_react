@@ -1,21 +1,16 @@
 ReactDOM = require('react-dom');
 var React = require('react');
 var ReactRouter = require('react-router');
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
 var _=require('lodash');
-var IndexRoute = ReactRouter.IndexRoute;
-var jobs=require('../data/JobData.js').jobs;
-var customers=require('../data/CustomerData.js').customers;
-var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
+var stubApi=require('../data/stubApi.js').stubApi;
 
 var PartPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var part=parts[this.props.id];
+        var part=stubApi.getPart(this.props.params.id)
 
 
         return ({
@@ -158,6 +153,27 @@ var PartMainPane=React.createClass({
     render:function(){
         var parts=this.props.parts;
         var partDisplayed=this.props.partDisplayed;
+        var whereUsed=[];
+        var history=[];
+
+        if(stubApi.getWhereUsed(partDisplayed.id)!=null)
+        {
+            whereUsed=stubApi.getWhereUsed(partDisplayed.id).map(function(bom,index)
+            {
+                return <SingleProduct bom={bom} index={index}   />
+            });
+        }
+
+        if(stubApi.getJobHistory(partDisplayed.id)!=null)
+        {
+            whereUsed=stubApi.getJobHistory(partDisplayed.id).map(function(jobPart,index)
+            {
+                return <SingleJob jobPart={jobPart} index={index}   />
+            });
+        }
+
+
+
         return(
 
             <div>
@@ -167,7 +183,7 @@ var PartMainPane=React.createClass({
                        Part Number: {partDisplayed.part_number}<br/>
                         {partDisplayed.description}<br/>
                         Cost: &#8364;{partDisplayed.cost}<br/>
-                        Qauntity in Stock: {partDisplayed.quantity_in_stock}<br/>
+                        Quantity in Stock: {partDisplayed.quantity_in_stock}<br/>
 
                     </p>
                 </div>
@@ -177,11 +193,17 @@ var PartMainPane=React.createClass({
                         <thead>
                         <tr><th>Product Name</th><th>Description</th><th>quantity</th></tr>
                         </thead>
-                        <tbody><tr><td>Data</td><td>data</td><td>data</td></tr></tbody>
+                        <tbody>{whereUsed}</tbody>
                     </table>
                 </div>
                 <div className="col-md-3">
                     <h3><strong>History</strong></h3>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr><th>Date</th><th>Fault</th><th>quantity</th></tr>
+                        </thead>
+                        <tbody>{history}</tbody>
+                    </table>
                 </div>
 
             </div>
@@ -190,6 +212,43 @@ var PartMainPane=React.createClass({
     }
 });
 
+var SingleProduct=React.createClass({
+    render:function() {
+
+        var bom = this.props.bom;
+        var product=stubApi.getProduct(bom.productId);
+        var manufacturer=stubApi.getManufacturer(product.manufacturerId)
+
+        return(
+
+        <tr>
+            <td>{manufacturer.name+" "+product.product_number}</td><td>{product.description}</td><td>{bom.quantity}</td>
+        </tr>
+    );
+
+    }
+
+
+});
+
+var SingleJob=React.createClass({
+    render:function() {
+
+        var jobPart = this.props.jobPart;
+        var job=stubApi.getJob(jobPart.jobId);
+
+
+        return(
+
+            <tr>
+                <td>{job.date}</td><td><Link to={"jobs/"+job.id}>{job.reported_fault}</Link></td><td>{jobPart.quantity}</td>
+            </tr>
+        );
+
+    }
+
+
+});
 
 
 exports.partPageContent=PartPageContent;
