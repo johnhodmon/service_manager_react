@@ -296,14 +296,28 @@ var JobMainPane=React.createClass({
 
     getInitialState:function()
     {
-        return({partNumber:""});
+        return({
+            partNumber:"",
+            partId:"",
+            quantity:""});
     },
 
 
-    setPartNumber:function(e)
+    setPartNumberAndId:function(e)
     {
         e.preventDefault();
-        this.setState({partNumber:e.target.value})
+        var part=stubApi.getPart(e.target.value)
+        var partNumber=part.part_number;
+        this.setState({partNumber:partNumber,
+                        partId:e.target.value});
+    },
+
+    setQuantity:function(e)
+    {
+        e.preventDefault();
+        this.setState({
+            quantity:e.target.value
+        })
     },
 
     makeVisible:function()
@@ -317,10 +331,15 @@ var JobMainPane=React.createClass({
     undo:function(e)
     {
         this.props.addPartInVisible();
+
     },
 
     save:function(e)
     {
+        var jobDisplayed=this.props.jobDisplayed;
+
+        var part
+        stubApi.addJobPart(jobDisplayed.id,this.state.partId,this.state.quantity)
         this.props.addPartInVisible();
     },
 
@@ -392,7 +411,7 @@ var JobMainPane=React.createClass({
                             <tr className={this.props.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                             <tr className={this.props.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumber}>{selectOptions}</select></td>
                                 <td>
-                                    <select>
+                                    <select onChange={this.setQuantity}>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -447,7 +466,7 @@ var SelectOption=React.createClass(
             var part=stubApi.getPart(bomItem.partId)
 
             return(
-                <option value={part.part_number}>{part.description} </option>
+                <option value={part.id}>{part.description} </option>
             );
         }
     });
