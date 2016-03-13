@@ -8,20 +8,7 @@ var customers= [
         town: "New Ross",
         county: "Wexford",
         phone: "0519242233",
-        customerProducts:[
-            {
-               product: products[0],
-                serialNumber:"12345678"
 
-            },
-            {
-                product: products[4],
-                serialNumber:"12345679"
-
-            }
-
-
-        ]
     },
 
     {
@@ -34,13 +21,6 @@ var customers= [
         county: "Wexford",
         phone: "0539124528",
 
-        customerProducts:[
-            {
-                product:products[3],
-                serialNumber:"12345680"
-            }
-
-        ]
     },
     {
         id:2,
@@ -52,20 +32,6 @@ var customers= [
         county: "Wexford",
         phone: "0539255687",
 
-        customerProducts:[
-            {
-                product: products[2],
-                serialNumber:"12345681"
-
-            },
-            {
-                product: products[6],
-                serialNumber:"12345682"
-
-            }
-
-
-        ]
     },
     {
         id:3,
@@ -76,16 +42,7 @@ var customers= [
         town: "New Ross",
         county: "Wexford",
         phone: "0513892305",
-        customerProducts:[
-            {
-                product: products[7],
-                serialNumber:"12345683"
 
-            },
-
-
-
-        ]
     },
     {
         id:4,
@@ -96,16 +53,7 @@ var customers= [
         town: "Wexford",
         county: "Wexford",
         phone: "0539155876",
-        customerProducts:[
-            {
-                product: products[1],
-                serialNumber:"12345684"
 
-            },
-
-
-
-        ]
 
     },
     {
@@ -115,19 +63,7 @@ var customers= [
         street: "Beach View",
         town: "Duncannon",
         county: "Wexford",
-        phone: "0515587657",
-        lat_lng: "52.220624,-6.9413368",
-        customerProducts: [
-            {
-                product: products[5],
-                serialNumber: "12345685"
-
-            },
-
-
-        ]
-
-    }
+        phone: "0515587657"}
 
 
 

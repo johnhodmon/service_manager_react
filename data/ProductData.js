@@ -8,33 +8,6 @@ var products=[
         product_number:'HCK1489',
         description:'Cooker, free standing, 60 CM, Electric',
         image_url:"/img/beko_cooker.jpg",
-        bom:[
-            {
-                part:parts[27],
-                quantity:"2"
-            },
-            {
-                part:parts[31],
-                quantity:"2"
-            },
-            {
-                part:parts[35],
-                quantity:"1"
-            },
-            {
-                part:parts[39],
-                quantity:"1"
-            },
-            {
-                part:parts[43],
-                quantity:"1"
-            },
-            {
-                part:parts[47],
-                quantity:"1"
-            }
-
-        ]
     },
 
     {
@@ -43,33 +16,7 @@ var products=[
         product_number:'ECK6461',
         description:'Cooker, free standing, 60 CM, Electric',
         image_url:"/img/electrolux_cooker.png",
-        bom:[
-            {
-                part:parts[25],
-                quantity:"2"
-            },
-            {
-                part:parts[29],
-                quantity:"2"
-            },
-            {
-                part:parts[33],
-                quantity:"1"
-            },
-            {
-                part:parts[37],
-                quantity:"1"
-            },
-            {
-                part:parts[41],
-                quantity:"1"
-            },
-            {
-                part:parts[45],
-                quantity:"1"
-            }
 
-        ]
     },
     {
         id:2,
@@ -77,33 +24,8 @@ var products=[
         product_number:'FSE60DOBLK',
         description:'Cooker, double oven, electric',
         image_url:"/img/belling_cooker.png",
-        bom:[
-            {
-                part:parts[26],
-                quantity:"2"
-            },
-            {
-                part:parts[30],
-                quantity:"2"
-            },
-            {
-                part:parts[34],
-                quantity:"1"
-            },
-            {
-                part:parts[38],
-                quantity:"1"
-            },
-            {
-                part:parts[42],
-                quantity:"1"
-            },
-            {
-                part:parts[46],
-                quantity:"1"
-            }
 
-        ]
+
     },
     {
         id:3,
@@ -111,33 +33,7 @@ var products=[
         product_number:'BSVC563AK',
         description:'Cooker, double oven, electric',
         image_url:"/img/hotpoint_cooker.png",
-        bom:[
-            {
-                part:parts[28],
-                quantity:"2"
-            },
-            {
-                part:parts[32],
-                quantity:"2"
-            },
-            {
-                part:parts[36],
-                quantity:"1"
-            },
-            {
-                part:parts[40],
-                quantity:"1"
-            },
-            {
-                part:parts[44],
-                quantity:"1"
-            },
-            {
-                part:parts[48],
-                quantity:"1"
-            }
 
-        ]
     },
 
     {
@@ -146,33 +42,7 @@ var products=[
         product_number:'IWSD61251',
         description:'Washing machine, 6KG, A+',
         image_url:"/img/hotpoint_machine.png",
-        bom:[
-            {
-                part:parts[2],
-                quantity:"1"
-            },
-            {
-                part:parts[6],
-                quantity:"1"
-            },
-            {
-                part:parts[10],
-                quantity:"1"
-            },
-            {
-                part:parts[14],
-                quantity:"1"
-            },
-            {
-                part:parts[18],
-                quantity:"1"
-            },
-            {
-                part:parts[22],
-                quantity:"1"
-            }
 
-        ]
     },
     {
         id:5,
@@ -180,33 +50,7 @@ var products=[
         product_number:'WAT24460GB',
         description:'Washing machine, 8KG',
         image_url:"/img/bosch_machine.png",
-        bom:[
-            {
-                part:parts[1],
-                quantity:"1"
-            },
-            {
-                part:parts[5],
-                quantity:"1"
-            },
-            {
-                part:parts[9],
-                quantity:"1"
-            },
-            {
-                part:parts[13],
-                quantity:"1"
-            },
-            {
-                part:parts[17],
-                quantity:"1"
-            },
-            {
-                part:parts[21],
-                quantity:"1"
-            }
 
-        ]
     },
     {
         id:6,
@@ -214,33 +58,7 @@ var products=[
         product_number:'WMBF944G',
         description:'Washing machine, 9KG, A+++, 1400 Spin',
         image_url:"/img/indesit_machine.png",
-        bom:[
-            {
-                part:parts[0],
-                quantity:"1"
-            },
-            {
-                part:parts[4],
-                quantity:"1"
-            },
-            {
-                part:parts[8],
-                quantity:"1"
-            },
-            {
-                part:parts[12],
-                quantity:"1"
-            },
-            {
-                part:parts[16],
-                quantity:"1"
-            },
-            {
-                part:parts[20],
-                quantity:"1"
-            }
 
-        ]
     },
 
     {
@@ -249,33 +67,7 @@ var products=[
         product_number:'WMG 11464',
         description:'Washing Machine, 11KG, 1400 Spin',
         image_url:"/img/beko_machine.png",
-        bom:[
-            {
-                part:parts[3],
-                quantity:"1"
-            },
-            {
-                part:parts[7],
-                quantity:"1"
-            },
-            {
-                part:parts[11],
-                quantity:"1"
-            },
-            {
-                part:parts[15],
-                quantity:"1"
-            },
-            {
-                part:parts[19],
-                quantity:"1"
-            },
-            {
-                part:parts[23],
-                quantity:"1"
-            }
 
-        ]
     },
 ]
 
