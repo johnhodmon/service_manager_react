@@ -31942,7 +31942,7 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
     },
 
 
-    setPartNumber:function(e)
+    setPartToBeAdded:function(e)
     {
         e.preventDefault();
         this.setState({partNumber:e.target.value})
@@ -32024,14 +32024,14 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
                         React.createElement("table", {className: "table table-striped"}, 
                             React.createElement("thead", null, 
 
-                            React.createElement("tr", null, React.createElement("th", null, "Part Number"), React.createElement("th", null, "Description"), React.createElement("th", null, "Quantity"), " ")
+                            React.createElement("tr", null, React.createElement("th", null, "savePart Number"), React.createElement("th", null, "Description"), React.createElement("th", null, "Quantity"), " ")
 
                             ), 
 
                             React.createElement("tbody", null, 
                             React.createElement("tr", {className: this.props.partsUsedVisibility}, React.createElement("td", null), React.createElement("td", null, "There were no parts used on this job"), React.createElement("td", null)), 
                             jobParts, 
-                            React.createElement("tr", {className: this.props.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
+                            React.createElement("tr", {className: this.props.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "Add savePart  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))),
                             React.createElement("tr", {className: this.props.addPartVisibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartNumber}, selectOptions)), 
                                 React.createElement("td", null, 
                                     React.createElement("select", null, 
@@ -32261,7 +32261,7 @@ var SinglePart=React.createClass({displayName: "SinglePart",
 
 
                 React.createElement(Link, {to: "/parts/"+part.id}, React.createElement("h3", null, part.description), 
-                    React.createElement("p", null, "Part Number: "+part.part_number))
+                    React.createElement("p", null, "savePart Number: "+part.part_number))
 
 
 
@@ -32281,9 +32281,9 @@ var PartMainPane=React.createClass({displayName: "PartMainPane",
 
             React.createElement("div", null, 
                 React.createElement("div", {className: "col-md-3"}, 
-                    React.createElement("h3", null, React.createElement("strong", null, "Part Details")), 
+                    React.createElement("h3", null, React.createElement("strong", null, "savePart Details")),
                     React.createElement("p", null, 
-                       "Part Number: ", partDisplayed.part_number, React.createElement("br", null), 
+                       "savePart Number: ", partDisplayed.part_number, React.createElement("br", null),
                         partDisplayed.description, React.createElement("br", null), 
                         "Cost: €", partDisplayed.cost, React.createElement("br", null), 
                         "Qauntity in Stock: ", partDisplayed.quantity_in_stock, React.createElement("br", null)
@@ -32515,7 +32515,7 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
     },
 
 
-    setPartNumber:function(e)
+    setPartToBeAdded:function(e)
     {
         e.preventDefault();
         this.setState({partNumber:e.target.value})
@@ -32576,15 +32576,15 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
                     React.createElement("table", {className: "table table-striped"}, 
                         React.createElement("thead", null, 
 
-                        React.createElement("tr", null, React.createElement("th", null, "Part Number"), React.createElement("th", null, "Description"), React.createElement("th", null, "Quantity"), " ")
+                        React.createElement("tr", null, React.createElement("th", null, "savePart Number"), React.createElement("th", null, "Description"), React.createElement("th", null, "Quantity"), " ")
 
                         ), 
 
                         React.createElement("tbody", null, 
 
                         bom, 
-                        React.createElement("tr", {className: this.props.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
-                        React.createElement("tr", {className: this.props.addPartVisibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartNumber}, partOptions)), 
+                        React.createElement("tr", {className: this.props.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "Add savePart  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))),
+                        React.createElement("tr", {className: this.props.addPartVisibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartToBeAdded}, partOptions)),
                             React.createElement("td", null, 
                                 React.createElement("select", null, 
                                     React.createElement("option", {value: "1"}, "1"), 
@@ -32599,7 +32599,7 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
                                     React.createElement("option", {value: "10"}, "10")
                                 ), 
                                 React.createElement("span", {onClick: this.undo, className: "glyphicon glyphicon-ok", "aria-hidden": "true"}), 
-                                "Cancel ", React.createElement("span", {onClick: this.save, className: "glyphicon glyphicon-chevron-up", "aria-hidden": "true"})
+                                "Cancel ", React.createElement("span", {onClick: this.savePart, className: "glyphicon glyphicon-chevron-up", "aria-hidden": "true"})
                             ))
 
                         )

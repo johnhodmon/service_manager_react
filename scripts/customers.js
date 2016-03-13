@@ -25,9 +25,7 @@ var CustomerPageContent=React.createClass({
     selectNewCustomer:function(customer)
     {
 
-        if(stubApi.getCustomerProductsForCustomer(customer.id)!=null) {
-            cpv="invisible";
-        }
+
 
         this.setState ({
 

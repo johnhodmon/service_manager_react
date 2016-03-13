@@ -3,7 +3,6 @@ var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 var _=require('lodash');
-var parts=require('../data/PartData.js').parts;
 var stubApi=require('../data/stubApi.js').stubApi;
 
 var PartPageContent=React.createClass({

@@ -1,30 +1,21 @@
 ReactDOM = require('react-dom');
 var React = require('react');
 var ReactRouter = require('react-router');
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
 var _=require('lodash');
-var IndexRoute = ReactRouter.IndexRoute;
-var jobs=require('../data/JobData.js').jobs;
-var customers=require('../data/CustomerData.js').customers;
 var products=require('../data/ProductData.js').products;
 var parts=require('../data/PartData.js').parts;
+var stubApi=require('../data/stubApi.js').stubApi;
 
 var ProductPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var product=products[this.props.id];
-        var noParts=""
-        if(product.bom!=null) {
-            noParts="invisible";
-        }
+        var product=products[stubApi.getProduct(this.props.params.id)];
+
 
         return ({
-            partsUsedVisibility:noParts,
-            addPartVisibility:"invisible",
-            addButtonVisibility:"",
+
             productDisplayed:product
         });
 
@@ -33,39 +24,13 @@ var ProductPageContent=React.createClass({
     selectNewProduct:function(product)
     {
 
+        this.setState ({
 
-        var noParts=""
-        if(product.bom!=null) {
-            noParts="invisible";
-        }
-
-        return ({
-            noPartsVisibility:noParts,
-            addPartVisibility:"invisible",
-            addButtonVisibility:"",
             productDisplayed:product
         });
 
     },
 
-    addPartVisible:function()
-    {
-        console.log("make visible");
-        this.setState ({
-
-            addPartVisibility:"",
-            addButtonVisibility:"invisible"
-        })
-
-    },
-
-    addPartInVisible:function()
-    {
-        this.setState ({
-
-            addPartVisibility:"invisible",
-            addButtonVisibility:""})
-    },
 
 
     render:function()
@@ -82,8 +47,8 @@ var ProductPageContent=React.createClass({
                         productDisplayed={this.state.productDisplayed}
                         products={this.props.products}
                         addPartVisibility={this.state.addPartVisibility}
-                        addPartVisible={this.addPartVisible}
-                        addPartInVisible={this.addPartInVisible}
+                        addPartVisible={this.showAddPartForm}
+                        addPartInVisible={this.hideAddPartForm}
                         noPartsVisibility={this.state.noPartsVisibility}
                         addButtonVisibility={this.state.addButtonVisibility}/>
                 </div>
@@ -193,48 +158,88 @@ var SingleProduct=React.createClass({
 
 var ProductMainPane=React.createClass({
 
+
+
     getInitialState:function()
     {
-        return({partNumber:""});
+
+        var noParts=""
+        if(stubApi.getBomForProduct(this.props.productDisplayed.id)!=null) {
+            noParts="invisible";
+        }
+
+        return ({
+            partsUsedVisibility:noParts,
+            addPartVisibility:"invisible",
+            addButtonVisibility:"",
+            partIdToBeAdded:"",
+            quantityToBeAdded:"",
+        });
+
+    },
+
+    showAddPartForm:function()
+    {
+        console.log("make visible");
+        this.setState ({
+
+            addPartVisibility:"",
+            addButtonVisibility:"invisible"
+        })
+
+    },
+
+    hideAddPartForm:function()
+    {
+        this.setState ({
+
+            addPartVisibility:"invisible",
+            addButtonVisibility:""})
     },
 
 
-    setPartNumber:function(e)
+
+    setPartIdToBeAdded:function(e)
     {
         e.preventDefault();
-        this.setState({partNumber:e.target.value})
+        this.setState({partIdToBeAdded:e.target.value});
     },
 
-    makeVisible:function()
+    setQuantityToBeAdded:function(e)
     {
-
-        this.props.showAddPartForm();
+        e.preventDefault();
+        this.setState({quantityToBeAdded:e.target.value});
     },
 
 
-
-    undo:function(e)
-    {
-        this.props.hideAddPartForm();
-    },
-
-    save:function(e)
+    savePart:function(e)
     {
         this.props.hideAddPartForm();
+        var partId=this.state.partIdToBeAdded;
+        var productId=this.props.productDisplayed.id;
+        var qty=this.state.quantityToBeAdded;
+        stubApi.addBomItem(productId,partId,qty);
+    },
+
+    deleteBomItem:function(id)
+    {
+
+        stubApi.deleteBomItem(id);
+        this.setState({});
     },
 
 
     render:function(){
         var products=this.props.products;
         var productDisplayed=this.props.productDisplayed;
-        var manufacturer=productDisplayed.manufacturer;
+        var manufacturer=stubApi.getManufacturer(productDisplayed.manufacturerId);
 
         var partOptions=parts.map(function(part,index){
-            return <PartOption part={part} />
+            return <PartOption  index={index} part={part} />
         });
-        var bom=productDisplayed.bom.map(function(bi,index)
+        var bom=stubApi.getBomForProduct(productDisplayed.id).map(function(bi,index)
             {
-                return(<SingleBomItem addButtonVisibility={this.props.addButtonVisibility} bi={bi} />);
+                return(<SingleBomItem addButtonVisibility={this.props.addButtonVisibility} deleteBomItem={this.deleteBomItem} bi={bi} />);
             }.bind(this)
 
         );
@@ -268,9 +273,9 @@ var ProductMainPane=React.createClass({
 
                         {bom}
                         <tr className={this.props.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
-                        <tr className={this.props.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumber}>{partOptions}</select></td>
+                        <tr className={this.props.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartIdToBeAdded}>{partOptions}</select></td>
                             <td>
-                                <select>
+                                <select onChange={this.setQuantityToBeAdded}>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -282,8 +287,8 @@ var ProductMainPane=React.createClass({
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
-                                <span onClick={this.undo} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                Cancel <span onClick={this.save} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                <span onClick={this.hideAddPartForm} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                Cancel <span onClick={this.savePart} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
                             </td></tr>
 
                         </tbody>
@@ -325,15 +330,21 @@ var PartOption=React.createClass(
 var SingleBomItem=React.createClass(
     {
 
+        deleteBomItem:function()
+        {
+            var bi=this.props.bi;
+
+            this.props.deleteBomItem(bi.id);
+        },
         render:function(){
             var bi=this.props.bi;
-            var part = bi.part;
+            var part = stubApi.getPart(bi.partId);
 
             return(
                 <tr><td><Link to={"parts/"+part.id}>{part.part_number}</Link></td><td>{part.description}</td>
                     <td>{bi.quantity}
                         <span className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
-                        <span className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
+                        <span onClick={this.deleteBomItem} className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
 
                     </td>
 
