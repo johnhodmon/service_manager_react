@@ -1219,6 +1219,7 @@ var stubAPI = {
 
     getProduct:function(productId)
     {
+       console.log("products length"+products.length);
         return _.find(products,function(p)
         {
             return p.id==productId;
@@ -32832,7 +32833,7 @@ var ProductPageContent=React.createClass({displayName: "ProductPageContent",
 
     getInitialState:function()
     {
-        var product=products[stubApi.getProduct(this.props.params.id)];
+        var product=stubApi.getProduct(this.props.id);
 
 
         return ({
@@ -32958,13 +32959,14 @@ var SingleProduct=React.createClass({displayName: "SingleProduct",
 
     render: function () {
         var product=this.props.product;
+        var manufacturer=stubApi.getManufacturer(product.manufacturerId);
 
         return (
 
             React.createElement("li", {onClick: this.selectNewProduct, className: (this.props.productDisplayed.id === product.id) ? "active" : "", role: "presentation"}, 
 
 
-                React.createElement(Link, {to: "/products/"+product.id}, React.createElement("h3", null, product.manufacturer.name+" "+product.product_number), 
+                React.createElement(Link, {to: "/products/"+product.id}, React.createElement("h3", null, manufacturer.name+" "+product.product_number), 
                     React.createElement("p", null, 
 
                         product.number))

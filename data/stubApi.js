@@ -171,6 +171,7 @@ var stubAPI = {
 
     getProduct:function(productId)
     {
+       console.log("products length"+products.length);
         return _.find(products,function(p)
         {
             return p.id==productId;

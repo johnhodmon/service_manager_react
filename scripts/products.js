@@ -11,7 +11,7 @@ var ProductPageContent=React.createClass({
 
     getInitialState:function()
     {
-        var product=products[stubApi.getProduct(this.props.params.id)];
+        var product=stubApi.getProduct(this.props.id);
 
 
         return ({
@@ -137,13 +137,14 @@ var SingleProduct=React.createClass({
 
     render: function () {
         var product=this.props.product;
+        var manufacturer=stubApi.getManufacturer(product.manufacturerId);
 
         return (
 
             <li onClick={this.selectNewProduct} className={(this.props.productDisplayed.id === product.id) ? "active" : ""} role="presentation" >
 
 
-                <Link  to={"/products/"+product.id} ><h3>{product.manufacturer.name+" "+product.product_number}</h3>
+                <Link  to={"/products/"+product.id} ><h3>{manufacturer.name+" "+product.product_number}</h3>
                     <p>
 
                         {product.number}</p></Link>
