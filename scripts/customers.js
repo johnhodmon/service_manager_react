@@ -65,16 +65,59 @@ var CustomerPageContent=React.createClass({
 });
 
 var CustomerSideBar=React.createClass({
+
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+            searchParameter:"customerName"
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+    setSearchParameter:function(value)
+    {
+
+        this.setState({ searchParameter:value})
+
+    },
+
+
     render:function(){
+
+        var customers=this.props.customers;
+        var list=customers;
+        var customer=this.props.customerDisplayed;
+        if(this.state.searchParameter=="customerName") {
+
+            list = customers.filter(function (customer) {
+
+                return customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
+
+        else if (this.state.searchParameter=="email")
+        {
+            list = customers.filter(function (customer) {
+
+                return customer.email.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
         return(
             <div>
 
                 <div className="row search-box-div">
-                    <CustomerSearchbox/>
+                    <CustomerSearchbox setSearchParameter={this.setSearchParameter} setSearchText={this.setSearchText}/>
                 </div>
                 <div className="row">
                     <p><Link to="customer/new">New Customer +</Link></p>
-                    <CustomerList selectNewCustomer={this.props.selectNewCustomer} customerDisplayed={this.props.customerDisplayed} customers={this.props.customers}/>
+                    <CustomerList selectNewCustomer={this.props.selectNewCustomer} customerDisplayed={this.props.customerDisplayed} customers={list}/>
                 </div>
             </div>
 
@@ -83,6 +126,20 @@ var CustomerSideBar=React.createClass({
 });
 
 var CustomerSearchbox=React.createClass({
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSearchParameter:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchParameter(e.target.value);
+    },
     render: function(){
 
 
@@ -91,13 +148,14 @@ var CustomerSearchbox=React.createClass({
 
             <div>
                 <div className="row">
-                    <input type="text"  placeholder="Search"/>
+                    <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
                 </div>
                 <div className="row">
-                    <select id="sort" >
-                        <option value="" disabled selected>Sort by: </option>
-                        <option value="name">Date</option>
-                        <option value="customer">Customer</option>
+                    <p className="search_by" >Search by..</p>
+                    <select  onChange={this.setSearchParameter} id="sort" >
+                        <option value="email">Customer email </option>
+                        <option value="customerName">Customer Name</option>
+
                     </select>
                 </div>
 

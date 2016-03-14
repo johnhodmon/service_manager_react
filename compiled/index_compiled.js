@@ -31402,16 +31402,59 @@ var CustomerPageContent=React.createClass({displayName: "CustomerPageContent",
 });
 
 var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
+
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+            searchParameter:"customerName"
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+    setSearchParameter:function(value)
+    {
+
+        this.setState({ searchParameter:value})
+
+    },
+
+
     render:function(){
+
+        var customers=this.props.customers;
+        var list=customers;
+        var customer=this.props.customerDisplayed;
+        if(this.state.searchParameter=="customerName") {
+
+            list = customers.filter(function (customer) {
+
+                return customer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
+
+        else if (this.state.searchParameter=="email")
+        {
+            list = customers.filter(function (customer) {
+
+                return customer.email.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
         return(
             React.createElement("div", null, 
 
                 React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(CustomerSearchbox, null)
+                    React.createElement(CustomerSearchbox, {setSearchParameter: this.setSearchParameter, setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
                     React.createElement("p", null, React.createElement(Link, {to: "customer/new"}, "New Customer +")), 
-                    React.createElement(CustomerList, {selectNewCustomer: this.props.selectNewCustomer, customerDisplayed: this.props.customerDisplayed, customers: this.props.customers})
+                    React.createElement(CustomerList, {selectNewCustomer: this.props.selectNewCustomer, customerDisplayed: this.props.customerDisplayed, customers: list})
                 )
             )
 
@@ -31420,6 +31463,20 @@ var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
 });
 
 var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSearchParameter:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchParameter(e.target.value);
+    },
     render: function(){
 
 
@@ -31428,13 +31485,14 @@ var CustomerSearchbox=React.createClass({displayName: "CustomerSearchbox",
 
             React.createElement("div", null, 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("input", {type: "text", placeholder: "Search"})
+                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("select", {id: "sort"}, 
-                        React.createElement("option", {value: "", disabled: true, selected: true}, "Sort by: "), 
-                        React.createElement("option", {value: "name"}, "Date"), 
-                        React.createElement("option", {value: "customer"}, "Customer")
+                    React.createElement("p", {className: "search_by"}, "Search by.."), 
+                    React.createElement("select", {onChange: this.setSearchParameter, id: "sort"}, 
+                        React.createElement("option", {value: "email"}, "Customer "), 
+                        React.createElement("option", {value: "customerName"}, "Customer Name")
+
                     )
                 )
 
