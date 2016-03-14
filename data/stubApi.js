@@ -98,11 +98,19 @@ var stubAPI = {
 
     updateJobPartQuanity : function(jobPartId,quantity) {
         var jobPartToUpdate=_.find(jobParts,function(jp){
-            return jp.id==id;
-        })
+            return jp.id==jobPartId;
+        });
+
+        console.log("updated jobpart"+
+
+                "id: "+jobPartId+
+                "jobId: "+jobPartToUpdate.jobId+
+                "partId: " +jobPartToUpdate.partId+
+                "quantity: "+quantity);
         if (jobPartToUpdate) {
             jobParts.splice(jobPartId, 1,
                 {
+                    id:jobPartId,
                     jobId:jobPartToUpdate.jobId,
                     partId: jobPartToUpdate.partId,
                    quantity:quantity

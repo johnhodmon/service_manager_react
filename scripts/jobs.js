@@ -283,12 +283,40 @@ var JobMainPane=React.createClass({
             partNumber:"",
             partId:boms[0].partId,
             quantityOfNewJobPart:"1",
+            editedQuantity:"1",
+            qtyVisibility:"",
             partsUsedVisibility:puv,
             addPartVisibility:"invisible",
+            editPartVisibility:"invisible",
             addButtonVisibility:""});
     },
 
+    showEditPartForm:function()
+    {
+        this.setState ({
 
+
+            addButtonVisibility:"invisible",
+            editPartVisibility:"",
+            qtyVisibility:"invisible",
+
+
+
+        })
+    },
+
+    hideEditPartForm:function()
+    {
+        this.setState ({
+
+
+            addButtonVisibility:"",
+            editPartVisibility:"invisible",
+            qtyVisibility:"",
+
+
+        })
+    },
 
     showAddPartForm:function()
     {
@@ -328,6 +356,15 @@ var JobMainPane=React.createClass({
         })
     },
 
+    setQuantityOfEditedPart:function(e)
+    {
+        e.preventDefault();
+        console.log("qty: "+e.target.value);
+        this.setState({
+            editedQuantity:e.target.value
+        })
+    },
+
 
     save:function(e)
     {
@@ -351,6 +388,14 @@ var JobMainPane=React.createClass({
 
     },
 
+    editJobPart:function(jpId)
+    {
+        stubApi.updateJobPartQuanity(jpId,this.state.editedQuantity)
+        this.hideEditPartForm();
+
+
+    },
+
 
     render:function(){
         var jobs=this.props.jobs;
@@ -370,7 +415,17 @@ var JobMainPane=React.createClass({
 
             jobPartsToDisplay=jobParts.map(function(jp,index)
             {
-                return <SingleJobPart deleteJobPart={this.deleteJobPart} addButtonVisibility={this.state.addButtonVisibility} jobPart={jp} index={index}  />
+                return <SingleJobPart
+                    editPartVisibility={this.state.editPartVisibility}
+                    setQuantityOfEditedPart={this.setQuantityOfEditedPart}
+                    deleteJobPart={this.deleteJobPart}
+                    qtyVisibility={this.state.qtyVisibility}
+                    editJobPart={this.editJobPart}
+                    hideEditPartForm={this.hideEditPartForm}
+                    showEditPartForm={this.showEditPartForm}
+                    addButtonVisibility={this.state.addButtonVisibility}
+                    jobPart={jp}
+                    index={index}  />
             }.bind(this));
         }
 
@@ -489,15 +544,35 @@ var SingleJobPart=React.createClass(
             var jobPart=this.props.jobPart;
             this.props.deleteJobPart(jobPart.id)
         },
+
+        editJobPartQuantity:function()
+        {
+            this.props.editJobPart(this.props.jobPart.id);
+        },
+
+
+
+
+
+
         render:function(){
             var jobPart=this.props.jobPart;
             var part = stubApi.getPart(jobPart.partId)
-            var makeVisible=this.props.makeVisible;
+
             return(
                 <tr><td><Link to={"parts/"+part.id}>{part.part_number}</Link></td><td>{part.description}</td>
-                    <td>{jobPart.quantity}
-                        <span className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
+                    <td  className={this.props.qtyVisibility}>{jobPart.quantity}
+                        <span onClick={this.props.showEditPartForm} className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
                         <span onClick={this.deleteJobPart} className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
+
+                    </td>
+                    <td className={this.props.editPartVisibility}>
+                        <input placeholder= {jobPart.quantity} type="number" onChange={this.props.setQuantityOfEditedPart}>
+
+                            </input>
+
+                        <span onClick={this.props.hideEditPartForm} className={"glyphicon glyphicon-remove "} aria-hidden="true"></span>
+                        <span onClick={this.editJobPartQuantity} className={"glyphicon glyphicon-ok "} aria-hidden="true"></span>
 
                     </td>
 

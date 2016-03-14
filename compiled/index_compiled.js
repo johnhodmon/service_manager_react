@@ -1189,11 +1189,19 @@ var stubAPI = {
 
     updateJobPartQuanity : function(jobPartId,quantity) {
         var jobPartToUpdate=_.find(jobParts,function(jp){
-            return jp.id==id;
-        })
+            return jp.id==jobPartId;
+        });
+
+        console.log("updated jobpart"+
+
+                "id: "+jobPartId+
+                "jobId: "+jobPartToUpdate.jobId+
+                "partId: " +jobPartToUpdate.partId+
+                "quantity: "+quantity);
         if (jobPartToUpdate) {
             jobParts.splice(jobPartId, 1,
                 {
+                    id:jobPartId,
                     jobId:jobPartToUpdate.jobId,
                     partId: jobPartToUpdate.partId,
                    quantity:quantity
@@ -32516,12 +32524,40 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
             partNumber:"",
             partId:boms[0].partId,
             quantityOfNewJobPart:"1",
+            editedQuantity:"1",
+            qtyVisibility:"",
             partsUsedVisibility:puv,
             addPartVisibility:"invisible",
+            editPartVisibility:"invisible",
             addButtonVisibility:""});
     },
 
+    showEditPartForm:function()
+    {
+        this.setState ({
 
+
+            addButtonVisibility:"invisible",
+            editPartVisibility:"",
+            qtyVisibility:"invisible",
+
+
+
+        })
+    },
+
+    hideEditPartForm:function()
+    {
+        this.setState ({
+
+
+            addButtonVisibility:"",
+            editPartVisibility:"invisible",
+            qtyVisibility:"",
+
+
+        })
+    },
 
     showAddPartForm:function()
     {
@@ -32561,6 +32597,15 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
         })
     },
 
+    setQuantityOfEditedPart:function(e)
+    {
+        e.preventDefault();
+        console.log("qty: "+e.target.value);
+        this.setState({
+            editedQuantity:e.target.value
+        })
+    },
+
 
     save:function(e)
     {
@@ -32584,6 +32629,14 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
 
     },
 
+    editJobPart:function(jpId)
+    {
+        stubApi.updateJobPartQuanity(jpId,this.state.editedQuantity)
+        this.hideEditPartForm();
+
+
+    },
+
 
     render:function(){
         var jobs=this.props.jobs;
@@ -32603,7 +32656,17 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
 
             jobPartsToDisplay=jobParts.map(function(jp,index)
             {
-                return React.createElement(SingleJobPart, {deleteJobPart: this.deleteJobPart, addButtonVisibility: this.state.addButtonVisibility, jobPart: jp, index: index})
+                return React.createElement(SingleJobPart, {
+                    editPartVisibility: this.state.editPartVisibility, 
+                    setQuantityOfEditedPart: this.setQuantityOfEditedPart, 
+                    deleteJobPart: this.deleteJobPart, 
+                    qtyVisibility: this.state.qtyVisibility, 
+                    editJobPart: this.editJobPart, 
+                    hideEditPartForm: this.hideEditPartForm, 
+                    showEditPartForm: this.showEditPartForm, 
+                    addButtonVisibility: this.state.addButtonVisibility, 
+                    jobPart: jp, 
+                    index: index})
             }.bind(this));
         }
 
@@ -32722,15 +32785,35 @@ var SingleJobPart=React.createClass(
             var jobPart=this.props.jobPart;
             this.props.deleteJobPart(jobPart.id)
         },
+
+        editJobPartQuantity:function()
+        {
+            this.props.editJobPart(this.props.jobPart.id);
+        },
+
+
+
+
+
+
         render:function(){
             var jobPart=this.props.jobPart;
             var part = stubApi.getPart(jobPart.partId)
-            var makeVisible=this.props.makeVisible;
+
             return(
                 React.createElement("tr", null, React.createElement("td", null, React.createElement(Link, {to: "parts/"+part.id}, part.part_number)), React.createElement("td", null, part.description), 
-                    React.createElement("td", null, jobPart.quantity, 
-                        React.createElement("span", {className: "glyphicon glyphicon-pencil "+this.props.addButtonVisibility, "aria-hidden": "true"}), 
+                    React.createElement("td", {className: this.props.qtyVisibility}, jobPart.quantity, 
+                        React.createElement("span", {onClick: this.props.showEditPartForm, className: "glyphicon glyphicon-pencil "+this.props.addButtonVisibility, "aria-hidden": "true"}), 
                         React.createElement("span", {onClick: this.deleteJobPart, className: "glyphicon glyphicon-trash "+this.props.addButtonVisibility, "aria-hidden": "true"})
+
+                    ), 
+                    React.createElement("td", {className: this.props.editPartVisibility}, 
+                        React.createElement("input", {placeholder: jobPart.quantity, type: "number", onChange: this.props.setQuantityOfEditedPart}
+
+                            ), 
+
+                        React.createElement("span", {onClick: this.props.hideEditPartForm, className: "glyphicon glyphicon-remove ", "aria-hidden": "true"}), 
+                        React.createElement("span", {onClick: this.editJobPartQuantity, className: "glyphicon glyphicon-ok ", "aria-hidden": "true"})
 
                     )
 
