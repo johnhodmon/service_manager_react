@@ -33061,15 +33061,59 @@ var ProductPageContent=React.createClass({displayName: "ProductPageContent",
 
 
 var ProductSideBar=React.createClass({displayName: "ProductSideBar",
+
+
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+            searchParameter:"manufacturer"
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+    setSearchParameter:function(value)
+    {
+
+        this.setState({ searchParameter:value})
+
+    },
+
     render:function(){
+        var products=this.props.products;
+        var list=products;
+        var product=this.props.productDisplayed;
+
+        console.log("search text"+this.state.searchBoxContent);
+        if(this.state.searchParameter=="manufacturer") {
+
+            list = products.filter(function (prod) {
+                var manufacturer=stubApi.getManufacturer(prod.manufacturerId);
+                return manufacturer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
+
+        else if (this.state.searchParameter=="description")
+        {
+            list = products.filter(function (prod) {
+                 console.log("prod desc"+prod.description)
+                return prod.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(ProductSearchbox, null)
+                    React.createElement(ProductSearchbox, {setSearchParameter: this.setSearchParameter, setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
                     React.createElement("p", null, React.createElement(Link, {to: "product/new"}, "New Product +")), 
-                    React.createElement(ProductList, {selectNewProduct: this.props.selectNewProduct, products: this.props.products, productDisplayed: this.props.productDisplayed})
+                    React.createElement(ProductList, {selectNewProduct: this.props.selectNewProduct, products: list, productDisplayed: this.props.productDisplayed})
                 )
             )
 
@@ -33077,26 +33121,45 @@ var ProductSideBar=React.createClass({displayName: "ProductSideBar",
     }
 });
 
-
 var ProductSearchbox=React.createClass({displayName: "ProductSearchbox",
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSearchParameter:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchParameter(e.target.value);
+    },
     render: function(){
 
 
 
         return(
 
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("p", {className: "search_by"}, "Search by.."), 
+                    React.createElement("select", {onChange: this.setSearchParameter, id: "sort"}, 
+                        React.createElement("option", {value: "manufacturer"}, "Product Manufacturer "), 
+                        React.createElement("option", {value: "description"}, "Product Description")
 
-            React.createElement("div", {className: "row"}, 
-                React.createElement("input", {type: "text", placeholder: "Search"})
+                    )
+                )
+
             )
-
-
-
         );
 
     }
 });
-
 
 var ProductList=React.createClass(
     {displayName: "ProductList",

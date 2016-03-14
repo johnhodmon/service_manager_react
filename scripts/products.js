@@ -60,15 +60,59 @@ var ProductPageContent=React.createClass({
 
 
 var ProductSideBar=React.createClass({
+
+
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+            searchParameter:"manufacturer"
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+    setSearchParameter:function(value)
+    {
+
+        this.setState({ searchParameter:value})
+
+    },
+
     render:function(){
+        var products=this.props.products;
+        var list=products;
+        var product=this.props.productDisplayed;
+
+        console.log("search text"+this.state.searchBoxContent);
+        if(this.state.searchParameter=="manufacturer") {
+
+            list = products.filter(function (prod) {
+                var manufacturer=stubApi.getManufacturer(prod.manufacturerId);
+                return manufacturer.name.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
+
+        else if (this.state.searchParameter=="description")
+        {
+            list = products.filter(function (prod) {
+                 console.log("prod desc"+prod.description)
+                return prod.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
         return(
             <div>
                 <div className="row search-box-div">
-                    <ProductSearchbox/>
+                    <ProductSearchbox setSearchParameter={this.setSearchParameter} setSearchText={this.setSearchText}  />
                 </div>
                 <div className="row">
                     <p><Link to="product/new">New Product +</Link></p>
-                    <ProductList selectNewProduct={this.props.selectNewProduct}  products={this.props.products} productDisplayed={this.props.productDisplayed}/>
+                    <ProductList selectNewProduct={this.props.selectNewProduct}  products={list} productDisplayed={this.props.productDisplayed}/>
                 </div>
             </div>
 
@@ -76,26 +120,45 @@ var ProductSideBar=React.createClass({
     }
 });
 
-
 var ProductSearchbox=React.createClass({
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSearchParameter:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchParameter(e.target.value);
+    },
     render: function(){
 
 
 
         return(
 
+            <div>
+                <div className="row">
+                    <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
+                </div>
+                <div className="row">
+                    <p className="search_by" >Search by..</p>
+                    <select  onChange={this.setSearchParameter} id="sort" >
+                        <option value="manufacturer">Product Manufacturer </option>
+                        <option value="description">Product Description</option>
 
-            <div className="row">
-                <input type="text"  placeholder="Search"/>
+                    </select>
+                </div>
+
             </div>
-
-
-
         );
 
     }
 });
-
 
 var ProductList=React.createClass(
     {
