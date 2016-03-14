@@ -1,4 +1,4 @@
-ReactDOM = require('react-dom');
+DReactDOM = require('react-dom');
 var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
@@ -23,7 +23,7 @@ var JobPageContent=React.createClass({
             id=this.props.id;
         }
 
-        console.log("id: "+ id);
+
 
         return ({
 
@@ -44,7 +44,7 @@ var JobPageContent=React.createClass({
 
     render:function()
     {
-        console.log("cp"+stubApi.getCustomerProduct(0));
+
 
         return(
             <div className="row">
@@ -57,7 +57,6 @@ var JobPageContent=React.createClass({
                                  jobDisplayed={this.state.jobDisplayed}
                                  jobs={this.props.jobs}
                                  customerProduct={stubApi.getCustomerProduct(this.state.jobDisplayed.customerProductId)}
-                                 jobParts={stubApi.getJobPartsForJob(this.state.jobDisplayed.id)}
                                  parts={this.props.part}/>
                 </div>
 
@@ -82,7 +81,7 @@ var JobSideBar=React.createClass({
         return(
         {
             searchBoxContent: "",
-            searchParameter:""
+            searchParameter:"date"
         }
         );
     },
@@ -106,9 +105,9 @@ var JobSideBar=React.createClass({
         var jobs=this.props.jobs;
         var list=jobs;
           if(this.state.searchParameter=="customerName") {
-            console.log("search text"+this.state.searchBoxContent);
+
             list = jobs.filter(function (job) {
-                console.log("cname"+stubApi.getCustomerNameForJob(job.id));
+
                 return stubApi.getCustomerNameForJob(job.id).toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
             }.bind(this));
         }
@@ -275,23 +274,25 @@ var JobMainPane=React.createClass({
     {
         var puv="";
         var jobDisplayed=this.props.jobDisplayed;
-        if(stubApi.getJobPartsForJob(jobDisplayed.id)!=null) {
+        var boms=stubApi.getBomForProduct(this.props.customerProduct.productId)
+
+        if(stubApi.getJobPartsForJob(jobDisplayed.id).length!=0) {
             puv="invisible";
         }
         return({
             partNumber:"",
-            partId:"",
-            quantityOfNewJobPart:"",
+            partId:boms[0].partId,
+            quantityOfNewJobPart:"1",
             partsUsedVisibility:puv,
             addPartVisibility:"invisible",
-            addButtonVisibility:"",});
+            addButtonVisibility:""});
     },
 
 
 
     showAddPartForm:function()
     {
-        console.log("make visible");
+
         this.setState ({
 
             addPartVisibility:"",
@@ -321,6 +322,7 @@ var JobMainPane=React.createClass({
     setQuantityOfNewJobPart:function(e)
     {
         e.preventDefault();
+        console.log("qty: "+e.target.value);
         this.setState({
             quantityOfNewJobPart:e.target.value
         })
@@ -331,14 +333,21 @@ var JobMainPane=React.createClass({
     {
         var jobDisplayed=this.props.jobDisplayed;
         var part
-        stubApi.addJobPart(jobDisplayed.id,this.state.partId,this.state.quantity)
+        stubApi.addJobPart(jobDisplayed.id,this.state.partId,this.state.quantityOfNewJobPart);
+        this.setState({partsUsedVisibility:"invisible"});
         this.hideAddPartForm();
     },
 
     deleteJobPart:function(jpId)
     {
         stubApi.deleteJobPart(jpId);
-        this.setState({});
+        if (stubApi.getJobPartsForJob(this.props.jobDisplayed.id).length==0)
+        {
+            this.setState({ partsUsedVisibility:""})
+        }
+        else {
+            this.setState({partsUsedVisibility:"invisible"});
+        }
 
     },
 
@@ -353,13 +362,15 @@ var JobMainPane=React.createClass({
         var parts=this.props.parts;
         var boms=stubApi.getBomForProduct(customerProduct.productId)
         var customer=stubApi.getCustomer(customerProduct.customerId)
+        var jobParts=stubApi.getJobPartsForJob(this.props.jobDisplayed.id);
 
 
-        if(this.props.jobParts!=null)
+        if(jobParts!=null)
         {
-            jobPartsToDisplay=this.props.jobParts.map(function(jp,index)
+
+            jobPartsToDisplay=jobParts.map(function(jp,index)
             {
-                return <SingleJobPart deleteJobPart={this.deleteJobPart} addButtonVisibility={this.state.addButtonVisibility} jobPart={jp} index={index} makeVisible={this.makeVisible}  />
+                return <SingleJobPart deleteJobPart={this.deleteJobPart} addButtonVisibility={this.state.addButtonVisibility} jobPart={jp} index={index}  />
             }.bind(this));
         }
 
@@ -408,7 +419,7 @@ var JobMainPane=React.createClass({
                             <tbody>
                             <tr className={this.state.partsUsedVisibility}><td></td><td>There were no parts used on this job</td><td></td></tr>
                             {jobPartsToDisplay}
-                            <tr className={this.props.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
+                            <tr className={this.state.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.showAddPartForm} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
                             <tr className={this.state.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartNumberAndId}>{selectOptions}</select></td>
                                 <td>
                                     <select onChange={this.setQuantityOfNewJobPart}>
@@ -485,8 +496,8 @@ var SingleJobPart=React.createClass(
             return(
                 <tr><td><Link to={"parts/"+part.id}>{part.part_number}</Link></td><td>{part.description}</td>
                     <td>{jobPart.quantity}
-                        <span className={"glyphicon glyphicon-pencil "+this.state.addButtonVisibility} aria-hidden="true"></span>
-                        <span onClick={this.deleteJobPart} className={"glyphicon glyphicon-trash "+this.state.addButtonVisibility } aria-hidden="true"></span>
+                        <span className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
+                        <span onClick={this.deleteJobPart} className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
 
                     </td>
 

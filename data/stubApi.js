@@ -3,7 +3,7 @@ var customers=require('./CustomerData.js').customers;
 var products=require('./ProductData.js').products;
 var parts=require('./PartData.js').parts;
 var customerProducts=require('./CustomerProductData.js').customerProducts;
-var jobParts=('./JobPartData.js').jobParts;
+var jobParts=require('./JobPartData.js').jobParts;
 var boms=require('./BomData.js').boms;
 var manufacturers=require('./ManData.js').manufacturers;
 var _ = require('lodash');
@@ -54,10 +54,18 @@ var stubAPI = {
     addJobPart : function(jobId,partId,quantity) {
         jobParts.push({
             id:jobParts.length,
+            jobId:jobId,
             partId:partId,
             quantity:quantity
 
         }) ;
+
+        console.log ( "id: "+jobParts.length+
+            "jobId: "+jobId+
+            "partId: "+partId+
+            "quantity: "+quantity);
+
+        console.log (jobParts.length);
     },
 
     getJobPartsForJob : function(jobId) {
@@ -65,7 +73,7 @@ var stubAPI = {
         {
             return jp.jobId==jobId;
         })
-
+        console.log("job parts size"+jobPartsToReturn.size);
         return jobPartsToReturn;
     },
 
