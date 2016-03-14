@@ -32796,14 +32796,57 @@ var PartPageContent=React.createClass({displayName: "PartPageContent",
 
 
 var PartSideBar=React.createClass({displayName: "PartSideBar",
+
+
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+            searchParameter:"partNumber"
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+    setSearchParameter:function(value)
+    {
+
+        this.setState({ searchParameter:value})
+
+    },
+
     render:function(){
+        var parts=this.props.parts;
+        var list=parts;
+        var part=this.props.partDisplayed;
+
+        if(this.state.searchParameter=="partNumber") {
+
+            list = parts.filter(function (p) {
+
+                return p.part_number.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
+
+        else if (this.state.searchParameter=="description")
+        {
+            list = parts.filter(function (p) {
+
+                return p.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "row search-box-div"}, 
-                    React.createElement(PartSearchbox, null)
+                    React.createElement(PartSearchbox, {setSearchParameter: this.setSearchParameter, setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement(PartList, {selectNewPart: this.props.selectNewPart, partDisplayed: this.props.partDisplayed, parts: this.props.parts})
+                    React.createElement(PartList, {selectNewPart: this.props.selectNewPart, partDisplayed: this.props.partDisplayed, parts: list})
                 )
             )
 
@@ -32812,19 +32855,40 @@ var PartSideBar=React.createClass({displayName: "PartSideBar",
 });
 
 var PartSearchbox=React.createClass({displayName: "PartSearchbox",
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSearchParameter:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchParameter(e.target.value);
+    },
     render: function(){
 
 
 
         return(
 
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("p", {className: "search_by"}, "Search by.."), 
+                    React.createElement("select", {onChange: this.setSearchParameter, id: "sort"}, 
+                        React.createElement("option", {value: "partNumber"}, "Part Number "), 
+                        React.createElement("option", {value: "description"}, "Part Description")
 
-            React.createElement("div", {className: "row"}, 
-                React.createElement("input", {type: "text", placeholder: "Search"})
+                    )
+                )
+
             )
-
-
-
         );
 
     }

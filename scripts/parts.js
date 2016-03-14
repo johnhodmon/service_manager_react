@@ -51,14 +51,57 @@ var PartPageContent=React.createClass({
 
 
 var PartSideBar=React.createClass({
+
+
+    getInitialState:function()
+    {
+        return(
+        {
+            searchBoxContent: "",
+            searchParameter:"partNumber"
+        }
+        );
+    },
+
+    setSearchText:function(value)
+    {
+        this.setState({ searchBoxContent:value})
+    },
+
+    setSearchParameter:function(value)
+    {
+
+        this.setState({ searchParameter:value})
+
+    },
+
     render:function(){
+        var parts=this.props.parts;
+        var list=parts;
+        var part=this.props.partDisplayed;
+
+        if(this.state.searchParameter=="partNumber") {
+
+            list = parts.filter(function (p) {
+
+                return p.part_number.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
+
+        else if (this.state.searchParameter=="description")
+        {
+            list = parts.filter(function (p) {
+
+                return p.description.toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
+            }.bind(this));
+        }
         return(
             <div>
                 <div className="row search-box-div">
-                    <PartSearchbox/>
+                    <PartSearchbox setSearchParameter={this.setSearchParameter} setSearchText={this.setSearchText} />
                 </div>
                 <div className="row">
-                    <PartList selectNewPart={this.props.selectNewPart} partDisplayed={this.props.partDisplayed}  parts={this.props.parts}/>
+                    <PartList selectNewPart={this.props.selectNewPart} partDisplayed={this.props.partDisplayed}  parts={list}/>
                 </div>
             </div>
 
@@ -67,19 +110,40 @@ var PartSideBar=React.createClass({
 });
 
 var PartSearchbox=React.createClass({
+
+    setSearchText:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchText(e.target.value);
+    },
+
+    setSearchParameter:function(e)
+    {
+        e.preventDefault();
+
+        this.props.setSearchParameter(e.target.value);
+    },
     render: function(){
 
 
 
         return(
 
+            <div>
+                <div className="row">
+                    <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
+                </div>
+                <div className="row">
+                    <p className="search_by" >Search by..</p>
+                    <select  onChange={this.setSearchParameter} id="sort" >
+                        <option value="partNumber">Part Number </option>
+                        <option value="description">Part Description</option>
 
-            <div className="row">
-                <input type="text"  placeholder="Search"/>
+                    </select>
+                </div>
+
             </div>
-
-
-
         );
 
     }
