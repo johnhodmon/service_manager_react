@@ -1134,6 +1134,17 @@ var stubAPI = {
         })
     },
 
+    getJobsForCustomer:function(customerid)
+    {
+
+        var jobsToReturn=_.filter(jobs,function(j)
+        {
+            return (this.getCustomerProduct(j.customerProductId).customerId)==customerid;
+        }.bind(this));
+
+        return jobsToReturn;
+    },
+
     deleteJob : function(id) {
         var elements = _.remove(jobs,
             function(job) {
@@ -1285,10 +1296,22 @@ var stubAPI = {
     addBomItem : function(productId,partId,quantity) {
         boms.push({
             id:boms.length,
+            productId:productId,
             partId:partId,
             quantity:quantity
 
         }) ;
+
+        console.log(
+            "id: "+boms.length+
+            "productId: "+productId+
+            "partId: "+partId+
+            "quantity: "+quantity
+        )
+
+        console.log(
+            boms.length
+        );
     },
 
     getBomForProduct : function(productId) {
@@ -31717,7 +31740,15 @@ setSerialNumber:function(e)
         var productOptions=products.map(function(product,index){
             return React.createElement(ProductOption, {product: product})
         });
+        var jobsForThisCustomer=[];
+        if(stubApi.getJobsForCustomer(customerDisplayed.id).length!=0)
+        {
 
+            jobsForThisCustomer=stubApi.getJobsForCustomer(customerDisplayed.id).map(function(job,index)
+            {
+                return React.createElement(SingleJob, {job: job, index: index})
+            });
+        }
 
         if(stubApi.getCustomerProductsForCustomer(customerDisplayed.id).length!=0) {
             customerProducts = stubApi.getCustomerProductsForCustomer(customerDisplayed.id).map(function (sp, index) {
@@ -31751,7 +31782,8 @@ setSerialNumber:function(e)
 
                 ), 
                 React.createElement("div", {className: "col-md-6"}, 
-                    "Previous Jobs Here", 
+
+
 
                     React.createElement("h3", null, React.createElement("strong", null, "Customer's Products")), 
 
@@ -31783,8 +31815,11 @@ setSerialNumber:function(e)
 
                     )
                 ), 
-                React.createElement("div", {className: "col-md-3"}
-
+                React.createElement("div", {className: "col-md-3"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "Previous Jobs")), 
+                    React.createElement("ul", null, 
+                        jobsForThisCustomer
+                    )
                 )
 
             )
@@ -31804,6 +31839,16 @@ var ProductOption=React.createClass({displayName: "ProductOption",
         );
     }
 
+});
+
+var SingleJob=React.createClass({displayName: "SingleJob",
+
+    render:function(){
+        var job=this.props.job;
+        return(
+            React.createElement("li", null, React.createElement(Link, {to: "jobs/"+job.id}, job.date+" "+job.reported_fault))
+        );
+    }
 });
 
 var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct",
@@ -31949,7 +31994,7 @@ var JobForm=React.createClass(
                 ctown=customer.town;
                 mname=manufacturer.name;
                 pnumber=product.product_number;
-                pdescription=product.description.split[0];
+                pdescription=product.description.split(",")[0];
             }
 
 
@@ -33121,7 +33166,7 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
     {
 
         var noParts=""
-        if(stubApi.getBomForProduct(this.props.productDisplayed.id)!=null) {
+        if(stubApi.getBomForProduct(this.props.productDisplayed.id).length!=0) {
             noParts="invisible";
         }
 
@@ -33129,15 +33174,15 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
             partsUsedVisibility:noParts,
             addPartVisibility:"invisible",
             addButtonVisibility:"",
-            partIdToBeAdded:"",
-            quantityToBeAdded:"",
+            partIdToBeAdded:0,
+            quantityToBeAdded:"1",
         });
 
     },
 
     showAddPartForm:function()
     {
-        console.log("make visible");
+
         this.setState ({
 
             addPartVisibility:"",
@@ -33171,18 +33216,32 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
 
     savePart:function(e)
     {
-        this.props.hideAddPartForm();
         var partId=this.state.partIdToBeAdded;
         var productId=this.props.productDisplayed.id;
         var qty=this.state.quantityToBeAdded;
         stubApi.addBomItem(productId,partId,qty);
+        this.setState({
+
+        addPartVisibility:"invisible",
+            addButtonVisibility:"",
+        partsUsedVisibility:"invisible"});
+
     },
 
     deleteBomItem:function(id)
     {
 
         stubApi.deleteBomItem(id);
-        this.setState({});
+        if(stubApi.getBomForProduct(this.props.productDisplayed.id).length!=0) {
+
+            this.setState ({partsUsedVisibility:"invisible"});
+        }
+
+        else
+        {
+            this.setState ({partsUsedVisibility:""});
+        }
+
     },
 
 
@@ -33194,12 +33253,14 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
         var partOptions=parts.map(function(part,index){
             return React.createElement(PartOption, {index: index, part: part})
         });
-        var bom=stubApi.getBomForProduct(productDisplayed.id).map(function(bi,index)
-            {
-                return(React.createElement(SingleBomItem, {addButtonVisibility: this.props.addButtonVisibility, deleteBomItem: this.deleteBomItem, bi: bi}));
-            }.bind(this)
-
-        );
+        var bom=[];
+        if(stubApi.getBomForProduct(this.props.productDisplayed.id).length!=0) {
+            bom = stubApi.getBomForProduct(productDisplayed.id).map(function (bi, index) {
+                    return (React.createElement(SingleBomItem, {addButtonVisibility: this.props.addButtonVisibility, 
+                                           deleteBomItem: this.deleteBomItem, bi: bi}));
+                }.bind(this)
+            );
+        }
         return(
             React.createElement("div", null, 
                 React.createElement("div", {className: "col-md-8"}, 
@@ -33227,10 +33288,11 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
                         ), 
 
                         React.createElement("tbody", null, 
+                        React.createElement("tr", {className: this.state.partsUsedVisibility}, React.createElement("td", null), React.createElement("td", null, "This product does not yet have a bill of material"), React.createElement("td", null)), 
 
                         bom, 
-                        React.createElement("tr", {className: this.props.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "Add Part  ", React.createElement("span", {onClick: this.makeVisible, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
-                        React.createElement("tr", {className: this.props.addPartVisibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartIdToBeAdded}, partOptions)), 
+                        React.createElement("tr", {className: this.state.addButtonVisibility}, React.createElement("td", null), React.createElement("td", null), React.createElement("td", null, "Add Part  ", React.createElement("span", {onClick: this.showAddPartForm, className: "glyphicon glyphicon-chevron-down", "aria-hidden": "true"}))), 
+                        React.createElement("tr", {className: this.state.addPartVisibility}, "  ", React.createElement("td", null, this.state.partNumber), React.createElement("td", null, React.createElement("select", {onChange: this.setPartIdToBeAdded}, partOptions)), 
                             React.createElement("td", null, 
                                 React.createElement("select", {onChange: this.setQuantityToBeAdded}, 
                                     React.createElement("option", {value: "1"}, "1"), 
@@ -33244,8 +33306,8 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
                                     React.createElement("option", {value: "9"}, "9"), 
                                     React.createElement("option", {value: "10"}, "10")
                                 ), 
-                                React.createElement("span", {onClick: this.hideAddPartForm, className: "glyphicon glyphicon-ok", "aria-hidden": "true"}), 
-                                "Cancel ", React.createElement("span", {onClick: this.savePart, className: "glyphicon glyphicon-chevron-up", "aria-hidden": "true"})
+                                React.createElement("span", {onClick: this.savePart, className: "glyphicon glyphicon-ok", "aria-hidden": "true"}), 
+                                "Cancel ", React.createElement("span", {onClick: this.hideAddPartForm, className: "glyphicon glyphicon-chevron-up", "aria-hidden": "true"})
                             ))
 
                         )

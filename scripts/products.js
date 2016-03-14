@@ -165,7 +165,7 @@ var ProductMainPane=React.createClass({
     {
 
         var noParts=""
-        if(stubApi.getBomForProduct(this.props.productDisplayed.id)!=null) {
+        if(stubApi.getBomForProduct(this.props.productDisplayed.id).length!=0) {
             noParts="invisible";
         }
 
@@ -173,15 +173,15 @@ var ProductMainPane=React.createClass({
             partsUsedVisibility:noParts,
             addPartVisibility:"invisible",
             addButtonVisibility:"",
-            partIdToBeAdded:"",
-            quantityToBeAdded:"",
+            partIdToBeAdded:0,
+            quantityToBeAdded:"1",
         });
 
     },
 
     showAddPartForm:function()
     {
-        console.log("make visible");
+
         this.setState ({
 
             addPartVisibility:"",
@@ -215,18 +215,32 @@ var ProductMainPane=React.createClass({
 
     savePart:function(e)
     {
-        this.props.hideAddPartForm();
         var partId=this.state.partIdToBeAdded;
         var productId=this.props.productDisplayed.id;
         var qty=this.state.quantityToBeAdded;
         stubApi.addBomItem(productId,partId,qty);
+        this.setState({
+
+        addPartVisibility:"invisible",
+            addButtonVisibility:"",
+        partsUsedVisibility:"invisible"});
+
     },
 
     deleteBomItem:function(id)
     {
 
         stubApi.deleteBomItem(id);
-        this.setState({});
+        if(stubApi.getBomForProduct(this.props.productDisplayed.id).length!=0) {
+
+            this.setState ({partsUsedVisibility:"invisible"});
+        }
+
+        else
+        {
+            this.setState ({partsUsedVisibility:""});
+        }
+
     },
 
 
@@ -238,12 +252,14 @@ var ProductMainPane=React.createClass({
         var partOptions=parts.map(function(part,index){
             return <PartOption  index={index} part={part} />
         });
-        var bom=stubApi.getBomForProduct(productDisplayed.id).map(function(bi,index)
-            {
-                return(<SingleBomItem addButtonVisibility={this.props.addButtonVisibility} deleteBomItem={this.deleteBomItem} bi={bi} />);
-            }.bind(this)
-
-        );
+        var bom=[];
+        if(stubApi.getBomForProduct(this.props.productDisplayed.id).length!=0) {
+            bom = stubApi.getBomForProduct(productDisplayed.id).map(function (bi, index) {
+                    return (<SingleBomItem addButtonVisibility={this.props.addButtonVisibility}
+                                           deleteBomItem={this.deleteBomItem} bi={bi}/>);
+                }.bind(this)
+            );
+        }
         return(
             <div>
                 <div className="col-md-8">
@@ -271,10 +287,11 @@ var ProductMainPane=React.createClass({
                         </thead>
 
                         <tbody>
+                        <tr className={this.state.partsUsedVisibility}><td></td><td>This product does not yet have a bill of material</td><td></td></tr>
 
                         {bom}
-                        <tr className={this.props.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
-                        <tr className={this.props.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartIdToBeAdded}>{partOptions}</select></td>
+                        <tr className={this.state.addButtonVisibility}><td></td><td/><td>Add Part  <span onClick={this.showAddPartForm} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
+                        <tr className={this.state.addPartVisibility}>  <td>{this.state.partNumber}</td><td><select  onChange={this.setPartIdToBeAdded}>{partOptions}</select></td>
                             <td>
                                 <select onChange={this.setQuantityToBeAdded}>
                                     <option value="1">1</option>
@@ -288,8 +305,8 @@ var ProductMainPane=React.createClass({
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
-                                <span onClick={this.hideAddPartForm} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                Cancel <span onClick={this.savePart} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                <span onClick={this.savePart} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                Cancel <span onClick={this.hideAddPartForm} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
                             </td></tr>
 
                         </tbody>

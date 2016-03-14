@@ -43,6 +43,17 @@ var stubAPI = {
         })
     },
 
+    getJobsForCustomer:function(customerid)
+    {
+
+        var jobsToReturn=_.filter(jobs,function(j)
+        {
+            return (this.getCustomerProduct(j.customerProductId).customerId)==customerid;
+        }.bind(this));
+
+        return jobsToReturn;
+    },
+
     deleteJob : function(id) {
         var elements = _.remove(jobs,
             function(job) {
@@ -194,10 +205,22 @@ var stubAPI = {
     addBomItem : function(productId,partId,quantity) {
         boms.push({
             id:boms.length,
+            productId:productId,
             partId:partId,
             quantity:quantity
 
         }) ;
+
+        console.log(
+            "id: "+boms.length+
+            "productId: "+productId+
+            "partId: "+partId+
+            "quantity: "+quantity
+        )
+
+        console.log(
+            boms.length
+        );
     },
 
     getBomForProduct : function(productId) {

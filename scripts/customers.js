@@ -380,7 +380,15 @@ setSerialNumber:function(e)
         var productOptions=products.map(function(product,index){
             return <ProductOption product={product} />
         });
+        var jobsForThisCustomer=[];
+        if(stubApi.getJobsForCustomer(customerDisplayed.id).length!=0)
+        {
 
+            jobsForThisCustomer=stubApi.getJobsForCustomer(customerDisplayed.id).map(function(job,index)
+            {
+                return <SingleJob job={job} index={index}   />
+            });
+        }
 
         if(stubApi.getCustomerProductsForCustomer(customerDisplayed.id).length!=0) {
             customerProducts = stubApi.getCustomerProductsForCustomer(customerDisplayed.id).map(function (sp, index) {
@@ -414,7 +422,8 @@ setSerialNumber:function(e)
 
                 </div>
                 <div className="col-md-6">
-                    Previous Jobs Here
+
+
 
                     <h3><strong>Customer's Products</strong></h3>
 
@@ -447,7 +456,10 @@ setSerialNumber:function(e)
                     </div>
                 </div>
                 <div className="col-md-3">
-
+                    <h3><strong>Previous Jobs</strong></h3>
+                    <ul>
+                        {jobsForThisCustomer}
+                    </ul>
                 </div>
 
             </div>
@@ -467,6 +479,16 @@ var ProductOption=React.createClass({
         );
     }
 
+});
+
+var SingleJob=React.createClass({
+
+    render:function(){
+        var job=this.props.job;
+        return(
+            <li><Link to={"jobs/"+job.id}>{job.date+" "+job.reported_fault}</Link></li>
+        );
+    }
 });
 
 var SingleCustomerProduct=React.createClass({
@@ -612,7 +634,7 @@ var JobForm=React.createClass(
                 ctown=customer.town;
                 mname=manufacturer.name;
                 pnumber=product.product_number;
-                pdescription=product.description.split[0];
+                pdescription=product.description.split(",")[0];
             }
 
 
