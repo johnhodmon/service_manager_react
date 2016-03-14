@@ -292,7 +292,7 @@ var stubAPI = {
     },
 
     getJobHistory:function(partId){
-        var jobPartsToReturn=  _.find(jobParts,function(jp)
+        var jobPartsToReturn=  _.filter(jobParts,function(jp)
         {
             return jp.partId==partId;
         })

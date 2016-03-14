@@ -1383,7 +1383,7 @@ var stubAPI = {
     },
 
     getJobHistory:function(partId){
-        var jobPartsToReturn=  _.find(jobParts,function(jp)
+        var jobPartsToReturn=  _.filter(jobParts,function(jp)
         {
             return jp.partId==partId;
         })
@@ -32911,7 +32911,7 @@ var PartMainPane=React.createClass({displayName: "PartMainPane",
         if(stubApi.getJobHistory(partDisplayed.id)!=null)
         {
             console.log(" history"+stubApi.getJobHistory(partDisplayed.id))
-            whereUsed=stubApi.getJobHistory(partDisplayed.id).map(function(jobPart,index)
+            history=stubApi.getJobHistory(partDisplayed.id).map(function(jobPart,index)
             {
                 return React.createElement(SingleJob, {jobPart: jobPart, index: index})
             });
@@ -32942,7 +32942,7 @@ var PartMainPane=React.createClass({displayName: "PartMainPane",
                     )
                 ), 
                 React.createElement("div", {className: "col-md-3"}, 
-                    React.createElement("h3", null, React.createElement("strong", null, "History")), 
+                    React.createElement("h3", null, React.createElement("strong", null, "History of use on Jobs")), 
                     React.createElement("table", {className: "table table-striped"}, 
                         React.createElement("thead", null, 
                         React.createElement("tr", null, React.createElement("th", null, "Date"), React.createElement("th", null, "Fault"), React.createElement("th", null, "quantity"))
@@ -32967,7 +32967,7 @@ var SingleProduct=React.createClass({displayName: "SingleProduct",
         return(
 
         React.createElement("tr", null, 
-            React.createElement("td", null, manufacturer.name+" "+product.product_number), React.createElement("td", null, product.description), React.createElement("td", null, bom.quantity)
+            React.createElement("td", null, React.createElement(Link, {to: "products/"+product.id}, manufacturer.name+" "+product.product_number)), React.createElement("td", null, product.description), React.createElement("td", null, bom.quantity)
         )
     );
 

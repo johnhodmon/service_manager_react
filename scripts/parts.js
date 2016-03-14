@@ -166,7 +166,7 @@ var PartMainPane=React.createClass({
         if(stubApi.getJobHistory(partDisplayed.id)!=null)
         {
             console.log(" history"+stubApi.getJobHistory(partDisplayed.id))
-            whereUsed=stubApi.getJobHistory(partDisplayed.id).map(function(jobPart,index)
+            history=stubApi.getJobHistory(partDisplayed.id).map(function(jobPart,index)
             {
                 return <SingleJob jobPart={jobPart} index={index}   />
             });
@@ -197,7 +197,7 @@ var PartMainPane=React.createClass({
                     </table>
                 </div>
                 <div className="col-md-3">
-                    <h3><strong>History</strong></h3>
+                    <h3><strong>History of use on Jobs</strong></h3>
                     <table className="table table-striped">
                         <thead>
                         <tr><th>Date</th><th>Fault</th><th>quantity</th></tr>
@@ -222,7 +222,7 @@ var SingleProduct=React.createClass({
         return(
 
         <tr>
-            <td>{manufacturer.name+" "+product.product_number}</td><td>{product.description}</td><td>{bom.quantity}</td>
+            <td><Link to={"products/"+product.id}>{manufacturer.name+" "+product.product_number}</Link></td><td>{product.description}</td><td>{bom.quantity}</td>
         </tr>
     );
 
