@@ -238,9 +238,15 @@ var ProductMainPane=React.createClass({
             addButtonVisibility:"",
             partIdToBeAdded:0,
             quantityToBeAdded:"1",
+
         });
 
     },
+
+
+
+
+
 
     showAddPartForm:function()
     {
@@ -318,14 +324,18 @@ var ProductMainPane=React.createClass({
         var bom=[];
         if(stubApi.getBomForProduct(this.props.productDisplayed.id).length!=0) {
             bom = stubApi.getBomForProduct(productDisplayed.id).map(function (bi, index) {
-                    return (<SingleBomItem addButtonVisibility={this.props.addButtonVisibility}
-                                           deleteBomItem={this.deleteBomItem} bi={bi}/>);
+                    return (<SingleBomItem
+                        addButtonVisibility={this.props.addButtonVisibility}
+                        deleteBomItem={this.deleteBomItem} bi={bi}
+                       qtyVisibility={this.state.qtyVisibility}
+
+                    />);
                 }.bind(this)
             );
         }
         return(
             <div>
-                <div className="col-md-8">
+                <div className="col-md-3">
                     <h3><strong>Manufacturer Details</strong></h3>
                     <p>
                         {manufacturer.name}<br/>
@@ -337,8 +347,8 @@ var ProductMainPane=React.createClass({
                     </p>
 
 
-
-
+</div>
+                <div className="col-md-6">
 
                     <h3><strong>Bill of Material</strong></h3>
 
@@ -377,16 +387,16 @@ var ProductMainPane=React.createClass({
 
                 </div>
 
-                <div className="col-md-4">
-                    <h3>Product Details</h3>
+                <div className="col-md-3">
+                    <h3><strong>Product Details</strong></h3>
                     <p>
                         {manufacturer.name} {productDisplayed.product_number}<br/>
                         {productDisplayed.description}<br/>
 
                     </p>
 
-                    <h3>Exploded View</h3>
-                    <img src={productDisplayed.image_url} />
+                    <h3><strong>Exploded View</strong></h3>
+                    <img className="productImages" src={productDisplayed.image_url} />
                 </div>
 
             </div>
@@ -411,21 +421,91 @@ var PartOption=React.createClass(
 var SingleBomItem=React.createClass(
     {
 
+        getInitialState:function()
+        {
+
+            return ({qtyVisibility:"",
+                editedQuantity:"1",
+                editPartVisibility:"invisible",
+                qty:this.props.bi.quantity
+
+            })
+
+
+
+        },
         deleteBomItem:function()
         {
             var bi=this.props.bi;
 
             this.props.deleteBomItem(bi.id);
         },
+
+        editBiQuantity:function()
+        {
+            this.props.editBom(this.props.bi.id);
+        },
+
+        editBiQuantity:function()
+        {
+            stubApi.updateBomQuantity(this.props.bi.id,this.state.editedQuantity)
+            this.setState(
+                {
+                   qty:this.state.editedQuantity
+                });
+            this.hideEditPartForm();
+
+
+        },
+
+        hideEditPartForm:function()
+        {
+            this.setState(
+                {
+                    qtyVisibility:"",
+                    editPartVisibility:"invisible"
+                }
+            );
+        },
+
+        showEditPartForm:function()
+        {
+            this.setState(
+                {
+                    qtyVisibility:"invisible",
+                    editPartVisibility:""
+                }
+            );
+        },
+
+        setQuantityOfEditedPart:function(e)
+        {
+            e.preventDefault();
+            console.log("qty: "+e.target.value);
+            this.setState({
+                editedQuantity:e.target.value
+            })
+        },
+
+
         render:function(){
             var bi=this.props.bi;
             var part = stubApi.getPart(bi.partId);
-
-            return(
+            console.log(this.state.editedQuantity);
+                 return(
                 <tr><td><Link to={"parts/"+part.id}>{part.part_number}</Link></td><td>{part.description}</td>
-                    <td>{bi.quantity}
-                        <span className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
+                    <td  className={this.state.qtyVisibility}>{this.state.qty}
+                        <span onClick={this.showEditPartForm} className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
                         <span onClick={this.deleteBomItem} className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
+
+                    </td>
+                    <td className={this.state.editPartVisibility}>
+                        <input placeholder= {bi.quantity} type="number" onChange={this.setQuantityOfEditedPart}>
+
+                        </input>
+
+                        <span onClick={this.hideEditPartForm} className={"glyphicon glyphicon-remove "} aria-hidden="true"></span>
+                        <span onClick={this.editBiQuantity} className={"glyphicon glyphicon-ok "} aria-hidden="true"></span>
 
                     </td>
 

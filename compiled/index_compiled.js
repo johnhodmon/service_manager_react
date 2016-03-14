@@ -1339,13 +1339,17 @@ var stubAPI = {
     },
 
 
-    updateBomQuanity : function(id,quantity) {
+    updateBomQuantity : function(id,quantity) {
         var bomToUpdate=_.find(boms,function(bi){
             return bi.id==id;
         })
+
+
         if (bomToUpdate) {
+            console.log("in function bomToUpdate: "+bomToUpdate.id);
             boms.splice(id, 1,
                 {
+                    id:id,
                     productId:bomToUpdate.productId,
                     partId: bomToUpdate.partId,
                     quantity:quantity
@@ -32524,40 +32528,12 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
             partNumber:"",
             partId:boms[0].partId,
             quantityOfNewJobPart:"1",
-            editedQuantity:"1",
-            qtyVisibility:"",
             partsUsedVisibility:puv,
             addPartVisibility:"invisible",
-            editPartVisibility:"invisible",
+
             addButtonVisibility:""});
     },
 
-    showEditPartForm:function()
-    {
-        this.setState ({
-
-
-            addButtonVisibility:"invisible",
-            editPartVisibility:"",
-            qtyVisibility:"invisible",
-
-
-
-        })
-    },
-
-    hideEditPartForm:function()
-    {
-        this.setState ({
-
-
-            addButtonVisibility:"",
-            editPartVisibility:"invisible",
-            qtyVisibility:"",
-
-
-        })
-    },
 
     showAddPartForm:function()
     {
@@ -32597,14 +32573,7 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
         })
     },
 
-    setQuantityOfEditedPart:function(e)
-    {
-        e.preventDefault();
-        console.log("qty: "+e.target.value);
-        this.setState({
-            editedQuantity:e.target.value
-        })
-    },
+
 
 
     save:function(e)
@@ -32629,13 +32598,7 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
 
     },
 
-    editJobPart:function(jpId)
-    {
-        stubApi.updateJobPartQuanity(jpId,this.state.editedQuantity)
-        this.hideEditPartForm();
 
-
-    },
 
 
     render:function(){
@@ -32657,18 +32620,18 @@ var JobMainPane=React.createClass({displayName: "JobMainPane",
             jobPartsToDisplay=jobParts.map(function(jp,index)
             {
                 return React.createElement(SingleJobPart, {
-                    editPartVisibility: this.state.editPartVisibility, 
-                    setQuantityOfEditedPart: this.setQuantityOfEditedPart, 
+
                     deleteJobPart: this.deleteJobPart, 
-                    qtyVisibility: this.state.qtyVisibility, 
-                    editJobPart: this.editJobPart, 
-                    hideEditPartForm: this.hideEditPartForm, 
-                    showEditPartForm: this.showEditPartForm, 
                     addButtonVisibility: this.state.addButtonVisibility, 
                     jobPart: jp, 
                     index: index})
             }.bind(this));
         }
+
+
+
+
+
 
         var selectOptions=boms.map(function(bomItem,index){
             return React.createElement(SelectOption, {bomItem: bomItem})
@@ -32780,17 +32743,69 @@ var SelectOption=React.createClass(
 
 var SingleJobPart=React.createClass(
     {displayName: "SingleJobPart",
+
+
+        getInitialState:function()
+        {
+
+            return ({qtyVisibility:"",
+                editedQuantity:"1",
+                editPartVisibility:"invisible",
+                qty:this.props.jobPart.quantity
+
+            })
+
+
+
+        },
+
         deleteJobPart:function()
         {
             var jobPart=this.props.jobPart;
             this.props.deleteJobPart(jobPart.id)
         },
 
-        editJobPartQuantity:function()
+        editJobPart:function()
         {
-            this.props.editJobPart(this.props.jobPart.id);
+            stubApi.updateJobPartQuanity(this.props.jobPart.id,this.state.editedQuantity)
+            this.setState(
+                {
+                    qty:this.state.editedQuantity
+                });
+            this.hideEditPartForm();
+
+
         },
 
+
+        hideEditPartForm:function()
+        {
+            this.setState(
+                {
+                    qtyVisibility:"",
+                    editPartVisibility:"invisible"
+                }
+            );
+        },
+
+        showEditPartForm:function()
+        {
+            this.setState(
+                {
+                    qtyVisibility:"invisible",
+                    editPartVisibility:""
+                }
+            );
+        },
+
+        setQuantityOfEditedPart:function(e)
+        {
+            e.preventDefault();
+            console.log("qty: "+e.target.value);
+            this.setState({
+                editedQuantity:e.target.value
+            })
+        },
 
 
 
@@ -32802,18 +32817,18 @@ var SingleJobPart=React.createClass(
 
             return(
                 React.createElement("tr", null, React.createElement("td", null, React.createElement(Link, {to: "parts/"+part.id}, part.part_number)), React.createElement("td", null, part.description), 
-                    React.createElement("td", {className: this.props.qtyVisibility}, jobPart.quantity, 
-                        React.createElement("span", {onClick: this.props.showEditPartForm, className: "glyphicon glyphicon-pencil "+this.props.addButtonVisibility, "aria-hidden": "true"}), 
+                    React.createElement("td", {className: this.state.qtyVisibility}, this.state.qty, 
+                        React.createElement("span", {onClick: this.showEditPartForm, className: "glyphicon glyphicon-pencil "+this.props.addButtonVisibility, "aria-hidden": "true"}), 
                         React.createElement("span", {onClick: this.deleteJobPart, className: "glyphicon glyphicon-trash "+this.props.addButtonVisibility, "aria-hidden": "true"})
 
                     ), 
-                    React.createElement("td", {className: this.props.editPartVisibility}, 
-                        React.createElement("input", {placeholder: jobPart.quantity, type: "number", onChange: this.props.setQuantityOfEditedPart}
+                    React.createElement("td", {className: this.state.editPartVisibility}, 
+                        React.createElement("input", {placeholder: jobPart.quantity, type: "number", onChange: this.setQuantityOfEditedPart}
 
                             ), 
 
-                        React.createElement("span", {onClick: this.props.hideEditPartForm, className: "glyphicon glyphicon-remove ", "aria-hidden": "true"}), 
-                        React.createElement("span", {onClick: this.editJobPartQuantity, className: "glyphicon glyphicon-ok ", "aria-hidden": "true"})
+                        React.createElement("span", {onClick: this.hideEditPartForm, className: "glyphicon glyphicon-remove ", "aria-hidden": "true"}), 
+                        React.createElement("span", {onClick: this.editJobPart, className: "glyphicon glyphicon-ok ", "aria-hidden": "true"})
 
                     )
 
@@ -33386,9 +33401,15 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
             addButtonVisibility:"",
             partIdToBeAdded:0,
             quantityToBeAdded:"1",
+
         });
 
     },
+
+
+
+
+
 
     showAddPartForm:function()
     {
@@ -33466,14 +33487,18 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
         var bom=[];
         if(stubApi.getBomForProduct(this.props.productDisplayed.id).length!=0) {
             bom = stubApi.getBomForProduct(productDisplayed.id).map(function (bi, index) {
-                    return (React.createElement(SingleBomItem, {addButtonVisibility: this.props.addButtonVisibility, 
-                                           deleteBomItem: this.deleteBomItem, bi: bi}));
+                    return (React.createElement(SingleBomItem, {
+                        addButtonVisibility: this.props.addButtonVisibility, 
+                        deleteBomItem: this.deleteBomItem, bi: bi, 
+                       qtyVisibility: this.state.qtyVisibility}
+
+                    ));
                 }.bind(this)
             );
         }
         return(
             React.createElement("div", null, 
-                React.createElement("div", {className: "col-md-8"}, 
+                React.createElement("div", {className: "col-md-3"}, 
                     React.createElement("h3", null, React.createElement("strong", null, "Manufacturer Details")), 
                     React.createElement("p", null, 
                         manufacturer.name, React.createElement("br", null), 
@@ -33482,11 +33507,11 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
                         manufacturer.county, React.createElement("br", null), 
                         manufacturer.phone, React.createElement("br", null), 
                         manufacturer.email, React.createElement("br", null)
-                    ), 
+                    )
 
 
-
-
+), 
+                React.createElement("div", {className: "col-md-6"}, 
 
                     React.createElement("h3", null, React.createElement("strong", null, "Bill of Material")), 
 
@@ -33525,16 +33550,16 @@ var ProductMainPane=React.createClass({displayName: "ProductMainPane",
 
                 ), 
 
-                React.createElement("div", {className: "col-md-4"}, 
-                    React.createElement("h3", null, "Product Details"), 
+                React.createElement("div", {className: "col-md-3"}, 
+                    React.createElement("h3", null, React.createElement("strong", null, "Product Details")), 
                     React.createElement("p", null, 
                         manufacturer.name, " ", productDisplayed.product_number, React.createElement("br", null), 
                         productDisplayed.description, React.createElement("br", null)
 
                     ), 
 
-                    React.createElement("h3", null, "Exploded View"), 
-                    React.createElement("img", {src: productDisplayed.image_url})
+                    React.createElement("h3", null, React.createElement("strong", null, "Exploded View")), 
+                    React.createElement("img", {className: "productImages", src: productDisplayed.image_url})
                 )
 
             )
@@ -33559,21 +33584,91 @@ var PartOption=React.createClass(
 var SingleBomItem=React.createClass(
     {displayName: "SingleBomItem",
 
+        getInitialState:function()
+        {
+
+            return ({qtyVisibility:"",
+                editedQuantity:"1",
+                editPartVisibility:"invisible",
+                qty:this.props.bi.quantity
+
+            })
+
+
+
+        },
         deleteBomItem:function()
         {
             var bi=this.props.bi;
 
             this.props.deleteBomItem(bi.id);
         },
+
+        editBiQuantity:function()
+        {
+            this.props.editBom(this.props.bi.id);
+        },
+
+        editBiQuantity:function()
+        {
+            stubApi.updateBomQuantity(this.props.bi.id,this.state.editedQuantity)
+            this.setState(
+                {
+                   qty:this.state.editedQuantity
+                });
+            this.hideEditPartForm();
+
+
+        },
+
+        hideEditPartForm:function()
+        {
+            this.setState(
+                {
+                    qtyVisibility:"",
+                    editPartVisibility:"invisible"
+                }
+            );
+        },
+
+        showEditPartForm:function()
+        {
+            this.setState(
+                {
+                    qtyVisibility:"invisible",
+                    editPartVisibility:""
+                }
+            );
+        },
+
+        setQuantityOfEditedPart:function(e)
+        {
+            e.preventDefault();
+            console.log("qty: "+e.target.value);
+            this.setState({
+                editedQuantity:e.target.value
+            })
+        },
+
+
         render:function(){
             var bi=this.props.bi;
             var part = stubApi.getPart(bi.partId);
-
-            return(
+            console.log(this.state.editedQuantity);
+                 return(
                 React.createElement("tr", null, React.createElement("td", null, React.createElement(Link, {to: "parts/"+part.id}, part.part_number)), React.createElement("td", null, part.description), 
-                    React.createElement("td", null, bi.quantity, 
-                        React.createElement("span", {className: "glyphicon glyphicon-pencil "+this.props.addButtonVisibility, "aria-hidden": "true"}), 
+                    React.createElement("td", {className: this.state.qtyVisibility}, this.state.qty, 
+                        React.createElement("span", {onClick: this.showEditPartForm, className: "glyphicon glyphicon-pencil "+this.props.addButtonVisibility, "aria-hidden": "true"}), 
                         React.createElement("span", {onClick: this.deleteBomItem, className: "glyphicon glyphicon-trash "+this.props.addButtonVisibility, "aria-hidden": "true"})
+
+                    ), 
+                    React.createElement("td", {className: this.state.editPartVisibility}, 
+                        React.createElement("input", {placeholder: bi.quantity, type: "number", onChange: this.setQuantityOfEditedPart}
+
+                        ), 
+
+                        React.createElement("span", {onClick: this.hideEditPartForm, className: "glyphicon glyphicon-remove ", "aria-hidden": "true"}), 
+                        React.createElement("span", {onClick: this.editBiQuantity, className: "glyphicon glyphicon-ok ", "aria-hidden": "true"})
 
                     )
 

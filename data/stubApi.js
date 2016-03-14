@@ -248,13 +248,17 @@ var stubAPI = {
     },
 
 
-    updateBomQuanity : function(id,quantity) {
+    updateBomQuantity : function(id,quantity) {
         var bomToUpdate=_.find(boms,function(bi){
             return bi.id==id;
         })
+
+
         if (bomToUpdate) {
+            console.log("in function bomToUpdate: "+bomToUpdate.id);
             boms.splice(id, 1,
                 {
+                    id:id,
                     productId:bomToUpdate.productId,
                     partId: bomToUpdate.partId,
                     quantity:quantity

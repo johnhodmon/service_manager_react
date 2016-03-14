@@ -283,40 +283,12 @@ var JobMainPane=React.createClass({
             partNumber:"",
             partId:boms[0].partId,
             quantityOfNewJobPart:"1",
-            editedQuantity:"1",
-            qtyVisibility:"",
             partsUsedVisibility:puv,
             addPartVisibility:"invisible",
-            editPartVisibility:"invisible",
+
             addButtonVisibility:""});
     },
 
-    showEditPartForm:function()
-    {
-        this.setState ({
-
-
-            addButtonVisibility:"invisible",
-            editPartVisibility:"",
-            qtyVisibility:"invisible",
-
-
-
-        })
-    },
-
-    hideEditPartForm:function()
-    {
-        this.setState ({
-
-
-            addButtonVisibility:"",
-            editPartVisibility:"invisible",
-            qtyVisibility:"",
-
-
-        })
-    },
 
     showAddPartForm:function()
     {
@@ -356,14 +328,7 @@ var JobMainPane=React.createClass({
         })
     },
 
-    setQuantityOfEditedPart:function(e)
-    {
-        e.preventDefault();
-        console.log("qty: "+e.target.value);
-        this.setState({
-            editedQuantity:e.target.value
-        })
-    },
+
 
 
     save:function(e)
@@ -388,13 +353,7 @@ var JobMainPane=React.createClass({
 
     },
 
-    editJobPart:function(jpId)
-    {
-        stubApi.updateJobPartQuanity(jpId,this.state.editedQuantity)
-        this.hideEditPartForm();
 
-
-    },
 
 
     render:function(){
@@ -416,18 +375,18 @@ var JobMainPane=React.createClass({
             jobPartsToDisplay=jobParts.map(function(jp,index)
             {
                 return <SingleJobPart
-                    editPartVisibility={this.state.editPartVisibility}
-                    setQuantityOfEditedPart={this.setQuantityOfEditedPart}
+
                     deleteJobPart={this.deleteJobPart}
-                    qtyVisibility={this.state.qtyVisibility}
-                    editJobPart={this.editJobPart}
-                    hideEditPartForm={this.hideEditPartForm}
-                    showEditPartForm={this.showEditPartForm}
                     addButtonVisibility={this.state.addButtonVisibility}
                     jobPart={jp}
                     index={index}  />
             }.bind(this));
         }
+
+
+
+
+
 
         var selectOptions=boms.map(function(bomItem,index){
             return <SelectOption bomItem={bomItem} />
@@ -539,17 +498,69 @@ var SelectOption=React.createClass(
 
 var SingleJobPart=React.createClass(
     {
+
+
+        getInitialState:function()
+        {
+
+            return ({qtyVisibility:"",
+                editedQuantity:"1",
+                editPartVisibility:"invisible",
+                qty:this.props.jobPart.quantity
+
+            })
+
+
+
+        },
+
         deleteJobPart:function()
         {
             var jobPart=this.props.jobPart;
             this.props.deleteJobPart(jobPart.id)
         },
 
-        editJobPartQuantity:function()
+        editJobPart:function()
         {
-            this.props.editJobPart(this.props.jobPart.id);
+            stubApi.updateJobPartQuanity(this.props.jobPart.id,this.state.editedQuantity)
+            this.setState(
+                {
+                    qty:this.state.editedQuantity
+                });
+            this.hideEditPartForm();
+
+
         },
 
+
+        hideEditPartForm:function()
+        {
+            this.setState(
+                {
+                    qtyVisibility:"",
+                    editPartVisibility:"invisible"
+                }
+            );
+        },
+
+        showEditPartForm:function()
+        {
+            this.setState(
+                {
+                    qtyVisibility:"invisible",
+                    editPartVisibility:""
+                }
+            );
+        },
+
+        setQuantityOfEditedPart:function(e)
+        {
+            e.preventDefault();
+            console.log("qty: "+e.target.value);
+            this.setState({
+                editedQuantity:e.target.value
+            })
+        },
 
 
 
@@ -561,18 +572,18 @@ var SingleJobPart=React.createClass(
 
             return(
                 <tr><td><Link to={"parts/"+part.id}>{part.part_number}</Link></td><td>{part.description}</td>
-                    <td  className={this.props.qtyVisibility}>{jobPart.quantity}
-                        <span onClick={this.props.showEditPartForm} className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
+                    <td  className={this.state.qtyVisibility}>{this.state.qty}
+                        <span onClick={this.showEditPartForm} className={"glyphicon glyphicon-pencil "+this.props.addButtonVisibility} aria-hidden="true"></span>
                         <span onClick={this.deleteJobPart} className={"glyphicon glyphicon-trash "+this.props.addButtonVisibility } aria-hidden="true"></span>
 
                     </td>
-                    <td className={this.props.editPartVisibility}>
-                        <input placeholder= {jobPart.quantity} type="number" onChange={this.props.setQuantityOfEditedPart}>
+                    <td className={this.state.editPartVisibility}>
+                        <input placeholder= {jobPart.quantity} type="number" onChange={this.setQuantityOfEditedPart}>
 
                             </input>
 
-                        <span onClick={this.props.hideEditPartForm} className={"glyphicon glyphicon-remove "} aria-hidden="true"></span>
-                        <span onClick={this.editJobPartQuantity} className={"glyphicon glyphicon-ok "} aria-hidden="true"></span>
+                        <span onClick={this.hideEditPartForm} className={"glyphicon glyphicon-remove "} aria-hidden="true"></span>
+                        <span onClick={this.editJobPart} className={"glyphicon glyphicon-ok "} aria-hidden="true"></span>
 
                     </td>
 
