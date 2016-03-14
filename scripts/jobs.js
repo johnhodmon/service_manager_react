@@ -94,7 +94,9 @@ var JobSideBar=React.createClass({
 
     setSearchParameter:function(value)
     {
+
         this.setState({ searchParameter:value})
+
     },
 
 
@@ -102,9 +104,11 @@ var JobSideBar=React.createClass({
 
     render:function(){
         var jobs=this.props.jobs;
-        var list=[];
-        if(this.state.searchParameter=="customerName") {
+        var list=jobs;
+          if(this.state.searchParameter=="customerName") {
+            console.log("search text"+this.state.searchBoxContent);
             list = jobs.filter(function (job) {
+                console.log("cname"+stubApi.getCustomerNameForJob(job.id));
                 return stubApi.getCustomerNameForJob(job.id).toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
             }.bind(this));
         }
@@ -168,8 +172,8 @@ var JobSearchbox=React.createClass({
                     <input onChange={this.setSearchText} type="text"  placeholder="Search"/>
                 </div>
                 <div className="row">
-                    <select onChange={this.setSearchParameter} id="sort" >
-                        <option value="" disabled selected>Search by: </option>
+                 <p className="search_by" >Search by..</p>
+                    <select  onChange={this.setSearchParameter} id="sort" >
                         <option value="date">Date</option>
                         <option value="customerName">Customer Name</option>
 
@@ -227,10 +231,7 @@ var SingleJob=React.createClass({
     selectNewJob:function()
     {
         var job=this.props.job;
-        var customerProduct=stubApi.getCustomerProduct(job.id);
-        var product=stubApi.getProduct(customerProduct.productId);
-        var manufacturer=stubApi.getManufacturer(product.manufacturerId);
-        var customer =stubApi.getCustomer(customerProduct.customerId);
+
         this.props.selectNewJob(job);
     },
 
@@ -239,7 +240,7 @@ var SingleJob=React.createClass({
         var job=this.props.job;
         var jobDisplayed=this.props.jobDisplayed;
         var job=this.props.job;
-        var customerProduct=stubApi.getCustomerProduct(job.id);
+        var customerProduct=stubApi.getCustomerProduct(job.customerProductId);
         var product=stubApi.getProduct(customerProduct.productId);
         var manufacturer=stubApi.getManufacturer(product.manufacturerId);
         var customer =stubApi.getCustomer(customerProduct.customerId);

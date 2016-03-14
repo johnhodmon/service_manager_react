@@ -32022,17 +32022,11 @@ var Navbar=React.createClass({displayName: "Navbar",
                             React.createElement("li", {className: (this.state.activeTab === "jobs") ? "active" : ""}, " ", React.createElement(Link, {to: "/jobs/0"}, "Jobs")), 
                             React.createElement("li", {className: (this.state.activeTab === "customers") ? "active" : ""}, " ", React.createElement(Link, {to: "/customers/0"}, "Customers")), 
                             React.createElement("li", {className: (this.state.activeTab === "products") ? "active" : ""}, "   ", React.createElement(Link, {to: "/products/0"}, "Products")), 
-                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts/0"}, "Stock Control")), 
-                            React.createElement("li", {role: "presentation", className: "dropdown"}, 
-                                React.createElement("a", {className: "dropdown-toggle", "data-toggle": "dropdown", href: "#", role: "button", "aria-haspopup": "true", "aria-expanded": "false"}, 
-                                    "John Hodmon", React.createElement("span", {className: "caret"})
-                                ), 
-                                React.createElement("ul", {className: "dropdown-menu"}, 
-                                    React.createElement("li", null, "Logout")
+                            React.createElement("li", {className: (this.state.activeTab === "parts") ? "active" : ""}, "   ", React.createElement(Link, {to: "/parts/0"}, "Stock Control"))
 
 
-                                )
-                            )
+
+
                         )
                         )
 
@@ -32161,7 +32155,9 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
 
     setSearchParameter:function(value)
     {
+
         this.setState({ searchParameter:value})
+
     },
 
 
@@ -32169,9 +32165,11 @@ var JobSideBar=React.createClass({displayName: "JobSideBar",
 
     render:function(){
         var jobs=this.props.jobs;
-        var list=[];
-        if(this.state.searchParameter=="customerName") {
+        var list=jobs;
+          if(this.state.searchParameter=="customerName") {
+            console.log("search text"+this.state.searchBoxContent);
             list = jobs.filter(function (job) {
+                console.log("cname"+stubApi.getCustomerNameForJob(job.id));
                 return stubApi.getCustomerNameForJob(job.id).toLowerCase().search(this.state.searchBoxContent.toLowerCase()) != -1;
             }.bind(this));
         }
@@ -32235,8 +32233,8 @@ var JobSearchbox=React.createClass({displayName: "JobSearchbox",
                     React.createElement("input", {onChange: this.setSearchText, type: "text", placeholder: "Search"})
                 ), 
                 React.createElement("div", {className: "row"}, 
+                 React.createElement("p", {className: "search_by"}, "Search by.."), 
                     React.createElement("select", {onChange: this.setSearchParameter, id: "sort"}, 
-                        React.createElement("option", {value: "", disabled: true, selected: true}, "Search by: "), 
                         React.createElement("option", {value: "date"}, "Date"), 
                         React.createElement("option", {value: "customerName"}, "Customer Name")
 
@@ -32294,10 +32292,7 @@ var SingleJob=React.createClass({displayName: "SingleJob",
     selectNewJob:function()
     {
         var job=this.props.job;
-        var customerProduct=stubApi.getCustomerProduct(job.id);
-        var product=stubApi.getProduct(customerProduct.productId);
-        var manufacturer=stubApi.getManufacturer(product.manufacturerId);
-        var customer =stubApi.getCustomer(customerProduct.customerId);
+
         this.props.selectNewJob(job);
     },
 
@@ -32306,7 +32301,7 @@ var SingleJob=React.createClass({displayName: "SingleJob",
         var job=this.props.job;
         var jobDisplayed=this.props.jobDisplayed;
         var job=this.props.job;
-        var customerProduct=stubApi.getCustomerProduct(job.id);
+        var customerProduct=stubApi.getCustomerProduct(job.customerProductId);
         var product=stubApi.getProduct(customerProduct.productId);
         var manufacturer=stubApi.getManufacturer(product.manufacturerId);
         var customer =stubApi.getCustomer(customerProduct.customerId);

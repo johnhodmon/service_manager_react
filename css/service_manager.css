@@ -101,6 +101,7 @@ span
 
 
 
+
 .nav-pills > li > a,
 .nav-pills > li > a:focus {
 
@@ -168,8 +169,16 @@ ul
 {
     margin-left:10px;
     margin-top: 10px;
+    margin-bottom: 10px;
+    padding-right: 3px;
 }
 
+
+
+.search_by
+{
+    color:white;
+}
 
 
 

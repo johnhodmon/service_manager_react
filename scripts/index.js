@@ -147,16 +147,10 @@ var Navbar=React.createClass({
                             <li className={(this.state.activeTab === "customers") ? "active" : ""}> <Link to="/customers/0">Customers</Link></li>
                             <li className={(this.state.activeTab === "products") ? "active" : ""}>   <Link to="/products/0">Products</Link></li>
                             <li className={(this.state.activeTab === "parts") ? "active" : ""}>   <Link to="/parts/0">Stock Control</Link></li>
-                            <li role="presentation" className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                    John Hodmon<span className="caret"></span>
-                                </a>
-                                <ul className="dropdown-menu">
-                                    <li>Logout</li>
 
 
-                                </ul>
-                            </li>
+
+
                         </ul>
                         </div>
 
