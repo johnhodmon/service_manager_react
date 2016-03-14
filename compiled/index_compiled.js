@@ -1220,20 +1220,15 @@ var stubAPI = {
 
 //customers##########################################
 
-    addCustomer : function(name,street,town,county,phone,email)
+    addCustomer : function(customer)
     {
-        customers.push
-        ({
-            id:customers.length,
-            name:name,
-            street:street,
-            town:town,
-            county:county,
-            phone:phone,
-            email:email
+        var customer=customer;
+        customer.id=customers.length;
+        customers.push(customer);
+        return customer.id;
 
 
-        }) ;
+
     },
 
     getAllCustomers : function() {
@@ -31488,7 +31483,7 @@ var CustomerSideBar=React.createClass({displayName: "CustomerSideBar",
                     React.createElement(CustomerSearchbox, {setSearchParameter: this.setSearchParameter, setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("p", null, React.createElement(Link, {to: "customer/new"}, "New Customer +")), 
+                    React.createElement("p", null, React.createElement(Link, {to: "new_customer"}, "New Customer +")), 
                     React.createElement(CustomerList, {selectNewCustomer: this.props.selectNewCustomer, customerDisplayed: this.props.customerDisplayed, customers: list})
                 )
             )
@@ -31897,90 +31892,6 @@ var SingleCustomerProduct=React.createClass({displayName: "SingleCustomerProduct
 
 
 
-var CustomerForm=React.createClass(
-    {displayName: "CustomerForm",
-        render:function()
-        {
-
-
-            return(
-                React.createElement("div", {className: "container-fluid"}, 
-
-                    React.createElement(Navbar, {activeTab: "jobs"}), 
-                    React.createElement("div", {className: "row"}, 
-                        React.createElement("div", {className: "col-md-2 side-pane"}
-                        ), 
-                        React.createElement("div", {className: "col-md-10 main-pane"}, 
-                            React.createElement("div", {className: "row"}, 
-                                React.createElement("div", {className: "col-md-3"}
-                                ), 
-                                React.createElement("div", {className: "col-md-6"}, 
-                                    React.createElement("form", null, 
-
-
-                                        React.createElement("label", null, "Name"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "name"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "Street"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "street"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "Town"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "town"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "County"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "county"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "Phone Number"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "phone"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "email"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "email"}
-
-                                            )
-                                        ), 
-
-                                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
-
-                                    )
-                                ), 
-                                React.createElement("div", {className: "col-md-3"}
-                                )
-                            )
-                        )
-
-
-                    )
-                )
-
-
-            );
-
-        }
-
-    }
-);
 
 
 var JobForm=React.createClass(
@@ -32055,7 +31966,6 @@ var JobForm=React.createClass(
     });
 
 exports.customerPageContent=CustomerPageContent;
-exports.customerForm=CustomerForm;
 
 },{"../data/ProductData.js":8,"../data/stubApi.js":9,"lodash":56,"react":211,"react-dom":58,"react-router":78}],215:[function(require,module,exports){
 ReactDOM = require('react-dom');
@@ -32070,8 +31980,6 @@ var JobPageContent=require('./jobs.js').jobPageContent;
 var CustomerPageContent=require('./customers.js').customerPageContent;
 var ProductPageContent=require('./products.js').productPageContent;
 var PartPageContent=require('./parts.js').partPageContent;
-var CustomerForm=require('./customers.js').customerForm;
-var ProductForm=require('./products.js').productForm;
 var stubApi=require('../data/stubApi.js').stubApi;
 
 $(document).ready(function() {
@@ -32225,6 +32133,158 @@ var Navbar=React.createClass({displayName: "Navbar",
 
 
 
+var CustomerForm=React.createClass(
+    {displayName: "CustomerForm",
+
+      customerToSave:
+      {
+
+          name:"",
+          street:"",
+          town:"",
+          county:"",
+          phone:"",
+          email:""
+      },
+
+        setName:function(e)
+        {
+
+            this.customerToSave.name=e.target.value;
+
+        },
+
+        setStreet:function(e)
+        {
+            this.customerToSave.street=e.target.value;
+        },
+
+        setTown:function(e)
+        {
+            this.customerToSave.town=e.target.value;
+        },
+
+        setCounty:function(e)
+        {
+            this.customerToSave.county=e.target.value;
+        },
+
+        setPhone:function(e)
+        {
+            this.customerToSave.phone=e.target.value;
+        },
+
+        setEmail:function(e)
+        {
+            this.customerToSave.email=e.target.value;
+        },
+
+        saveCustomer:function(e)
+        {
+
+           e.preventDefault();
+            console.log("submitting");
+           var id= stubApi.addCustomer(this.customerToSave);
+            this.props.history.push('customers/'+id);
+
+        },
+
+
+
+        cancelCustomerSave:function()
+        {
+
+        },
+
+
+        render:function()
+        {
+
+
+            return(
+                React.createElement("div", {className: "container-fluid"}, 
+
+                    React.createElement(Navbar, {activeTab: "customers"}), 
+                    React.createElement("div", {className: "row"}, 
+                        React.createElement("div", {className: "col-md-2 side-pane"}
+                        ), 
+                        React.createElement("div", {className: "col-md-10 main-pane"}, 
+                            React.createElement("div", {className: "row"}, 
+                                React.createElement("div", {className: "col-md-3"}
+                                ), 
+                                React.createElement("div", {className: "col-md-6"}, 
+                                    React.createElement("h3", null, React.createElement("strong", null, "New Customer")), 
+                                    React.createElement("form", null, 
+
+
+                                        React.createElement("label", null, "Name"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {onChange: this.setName, required: true, type: "text", name: "name"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Street"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {onChange: this.setStreet, required: true, type: "text", name: "street"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Town"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {onChange: this.setTown, required: true, type: "text", name: "town"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "County"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {onChange: this.setCounty, required: true, type: "text", name: "county"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "Phone Number"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {required: true, type: "number", name: "phone"}
+
+                                            )
+                                        ), 
+                                        React.createElement("label", null, "email"), 
+                                        React.createElement("div", {className: "form-group"}, 
+
+                                            React.createElement("input", {onChange: this.setEmail, required: true, type: "email", name: "email"}
+
+                                            )
+                                        ), 
+                                        React.createElement("input", {type: "button", onClick: this.saveCustomer, value: "Submit", className: "btn btn-sm btn-primary form-button"}), 
+                                        React.createElement("input", {type: "button", value: "Cancel", onClick: this.cancelCustomerSave, className: "btn btn-sm btn-primary form-button"})
+
+
+
+                                    )
+
+                                ), 
+                                React.createElement("div", {className: "col-md-3"}
+                                )
+                            )
+                        )
+
+
+                    )
+                )
+
+
+            );
+
+        }
+
+    }
+);
+
+
 
 ReactDOM.render( (
         React.createElement(Router, null, 
@@ -32232,7 +32292,6 @@ ReactDOM.render( (
                 React.createElement(IndexRoute, {component: JobPage}), 
                 React.createElement(Route, {path: "jobs/:id", component: JobPage}), 
                 React.createElement(Route, {path: "new_customer", component: CustomerForm}), 
-                React.createElement(Route, {path: "new_product", component: ProductForm}), 
                 React.createElement(Route, {path: "customers/:id", component: CustomerPage}), 
                 React.createElement(Route, {path: "products/:id", component: ProductPage}), 
                 React.createElement(Route, {path: "parts/:id", component: PartPage})
@@ -32838,6 +32897,8 @@ var SingleJobPart=React.createClass(
     }
 );
 
+
+
 exports.jobPageContent=JobPageContent;
 
 },{"../data/stubApi.js":9,"lodash":56,"react":211,"react-dom":58,"react-router":78}],217:[function(require,module,exports){
@@ -33274,7 +33335,7 @@ var ProductSideBar=React.createClass({displayName: "ProductSideBar",
                     React.createElement(ProductSearchbox, {setSearchParameter: this.setSearchParameter, setSearchText: this.setSearchText})
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("p", null, React.createElement(Link, {to: "product/new"}, "New Product +")), 
+
                     React.createElement(ProductList, {selectNewProduct: this.props.selectNewProduct, products: list, productDisplayed: this.props.productDisplayed})
                 )
             )
@@ -33682,72 +33743,6 @@ var SingleBomItem=React.createClass(
 
 
 
-var ProductForm=React.createClass(
-    {displayName: "ProductForm",
-        render:function()
-        {
-
-
-            var manOptions=manufacturers.map(function(man,index){
-                return React.createElement(ManOption, {man: man})});
-            return(
-                React.createElement("div", {className: "container-fluid"}, 
-
-                    React.createElement(Navbar, {activeTab: "jobs"}), 
-                    React.createElement("div", {className: "row"}, 
-                        React.createElement("div", {className: "col-md-2 side-pane"}
-                        ), 
-                        React.createElement("div", {className: "col-md-10 main-pane"}, 
-                            React.createElement("div", {className: "row"}, 
-                                React.createElement("div", {className: "col-md-3"}
-                                ), 
-                                React.createElement("div", {className: "col-md-6"}, 
-                                    React.createElement("form", null, 
-
-
-                                        React.createElement("label", null, "Manufacturer"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("select", {name: "manufacturer"}, 
-                                                manOptions
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "Product Number"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "product_number"}
-
-                                            )
-                                        ), 
-                                        React.createElement("label", null, "Description"), 
-                                        React.createElement("div", {className: "form-group"}, 
-
-                                            React.createElement("input", {type: "text", name: "description"}
-
-                                            )
-                                        ), 
-
-
-                                        React.createElement("input", {className: "btn btn-sm btn-primary", type: "submit", value: "Submit"})
-
-                                    )
-                                ), 
-                                React.createElement("div", {className: "col-md-3"}
-                                )
-                            )
-                        )
-
-
-                    )
-                )
-
-
-            );
-
-        }
-
-    }
-);
 
 
 var ManOption=React.createClass(
@@ -33762,7 +33757,6 @@ var ManOption=React.createClass(
     });
 
 exports.productPageContent=ProductPageContent;
-exports.productForm=ProductForm;
 
 },{"../data/PartData.js":7,"../data/ProductData.js":8,"../data/stubApi.js":9,"lodash":56,"react":211,"react-dom":58,"react-router":78}],219:[function(require,module,exports){
 // shim for using process in browser

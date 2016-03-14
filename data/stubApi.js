@@ -129,20 +129,15 @@ var stubAPI = {
 
 //customers##########################################
 
-    addCustomer : function(name,street,town,county,phone,email)
+    addCustomer : function(customer)
     {
-        customers.push
-        ({
-            id:customers.length,
-            name:name,
-            street:street,
-            town:town,
-            county:county,
-            phone:phone,
-            email:email
+        var customer=customer;
+        customer.id=customers.length;
+        customers.push(customer);
+        return customer.id;
 
 
-        }) ;
+
     },
 
     getAllCustomers : function() {

@@ -111,7 +111,7 @@ var ProductSideBar=React.createClass({
                     <ProductSearchbox setSearchParameter={this.setSearchParameter} setSearchText={this.setSearchText}  />
                 </div>
                 <div className="row">
-                    <p><Link to="product/new">New Product +</Link></p>
+
                     <ProductList selectNewProduct={this.props.selectNewProduct}  products={list} productDisplayed={this.props.productDisplayed}/>
                 </div>
             </div>
@@ -519,72 +519,6 @@ var SingleBomItem=React.createClass(
 
 
 
-var ProductForm=React.createClass(
-    {
-        render:function()
-        {
-
-
-            var manOptions=manufacturers.map(function(man,index){
-                return <ManOption man={man} />});
-            return(
-                <div className="container-fluid">
-
-                    <Navbar activeTab="jobs" />
-                    <div className="row">
-                        <div className="col-md-2 side-pane">
-                        </div>
-                        <div className="col-md-10 main-pane">
-                            <div className="row">
-                                <div className="col-md-3">
-                                </div>
-                                <div className="col-md-6">
-                                    <form>
-
-
-                                        <label>Manufacturer</label>
-                                        <div className="form-group">
-
-                                            <select name="manufacturer">
-                                                {manOptions}
-                                            </select>
-                                        </div>
-                                        <label>Product Number</label>
-                                        <div className="form-group">
-
-                                            <input type="text" name="product_number">
-
-                                            </input>
-                                        </div>
-                                        <label>Description</label>
-                                        <div className="form-group">
-
-                                            <input type="text" name="description">
-
-                                            </input>
-                                        </div>
-
-
-                                        <input className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
-
-                                    </form>
-                                </div>
-                                <div className="col-md-3">
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-
-            );
-
-        }
-
-    }
-);
 
 
 var ManOption=React.createClass(
@@ -599,4 +533,3 @@ var ManOption=React.createClass(
     });
 
 exports.productPageContent=ProductPageContent;
-exports.productForm=ProductForm;

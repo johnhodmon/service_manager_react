@@ -116,7 +116,7 @@ var CustomerSideBar=React.createClass({
                     <CustomerSearchbox setSearchParameter={this.setSearchParameter} setSearchText={this.setSearchText}/>
                 </div>
                 <div className="row">
-                    <p><Link to="customer/new">New Customer +</Link></p>
+                    <p><Link to="new_customer">New Customer +</Link></p>
                     <CustomerList selectNewCustomer={this.props.selectNewCustomer} customerDisplayed={this.props.customerDisplayed} customers={list}/>
                 </div>
             </div>
@@ -525,90 +525,6 @@ var SingleCustomerProduct=React.createClass({
 
 
 
-var CustomerForm=React.createClass(
-    {
-        render:function()
-        {
-
-
-            return(
-                <div className="container-fluid">
-
-                    <Navbar activeTab="jobs" />
-                    <div className="row">
-                        <div className="col-md-2 side-pane">
-                        </div>
-                        <div className="col-md-10 main-pane">
-                            <div className="row">
-                                <div className="col-md-3">
-                                </div>
-                                <div className="col-md-6">
-                                    <form>
-
-
-                                        <label>Name</label>
-                                        <div className="form-group">
-
-                                            <input type="text" name="name">
-
-                                            </input>
-                                        </div>
-                                        <label>Street</label>
-                                        <div className="form-group">
-
-                                            <input type="text" name="street">
-
-                                            </input>
-                                        </div>
-                                        <label>Town</label>
-                                        <div className="form-group">
-
-                                            <input type="text" name="town">
-
-                                            </input>
-                                        </div>
-                                        <label>County</label>
-                                        <div className="form-group">
-
-                                            <input type="text" name="county">
-
-                                            </input>
-                                        </div>
-                                        <label>Phone Number</label>
-                                        <div className="form-group">
-
-                                            <input type="text" name="phone">
-
-                                            </input>
-                                        </div>
-                                        <label>email</label>
-                                        <div className="form-group">
-
-                                            <input type="text" name="email">
-
-                                            </input>
-                                        </div>
-
-                                        <input className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
-
-                                    </form>
-                                </div>
-                                <div className="col-md-3">
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-
-            );
-
-        }
-
-    }
-);
 
 
 var JobForm=React.createClass(
@@ -683,4 +599,3 @@ var JobForm=React.createClass(
     });
 
 exports.customerPageContent=CustomerPageContent;
-exports.customerForm=CustomerForm;
