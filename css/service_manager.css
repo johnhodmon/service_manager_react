@@ -35,6 +35,11 @@ span
     display:none;
 }
 
+.form-button
+{
+    margin:6px;
+}
+
 .top-nav-div
 {
     margin-top:22px;

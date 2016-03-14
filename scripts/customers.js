@@ -229,9 +229,10 @@ var CustomerMainPane=React.createClass({
 getInitialState:function()
 
 {
+    console.log("cp for cust length"+stubApi.getCustomerProductsForCustomer(this.props.customerDisplayed.id).length);
 
-    var cpv=""
-    if(stubApi.getCustomerProductsForCustomer(this.props.customerDisplayed.id)!=null) {
+    var cpv="";
+    if(stubApi.getCustomerProductsForCustomer(this.props.customerDisplayed.id).length!=0) {
         cpv="invisible";
     }
     return({
@@ -253,6 +254,7 @@ getInitialState:function()
             addCpVisibility:"invisible",
             addButtonVisibility:"",
             createJobButtonVisibility:"",
+
 
 
 
@@ -286,12 +288,7 @@ getInitialState:function()
         }
         var today = dd+'/'+mm+'/'+yyyy;
         stubApi.addJob(today,this.state.reportedFaultFromForm,this.state.customerProductForForm.id);
-        this.setState( {
-            createJobFormVisibility:"invisible",
-            addButtonVisibility:"",
-            createJobButtonVisibility:"",
-
-        });
+        this.hideAddCustomerProductForm();
     },
 
     cancelJobSave:function()
@@ -306,20 +303,14 @@ getInitialState:function()
     {
         var product=stubApi.getProduct(customerProduct.productId);
         var manufacturer=stubApi.getManufacturer(product.manufacturerId);
+        console.log(manufacturer.name);
         this.setState( {
             createJobFormVisibility:"",
             addButtonVisibility:"invisible",
             createJobButtonVisibility:"invisible",
             customerProductForForm:customerProduct
-
-
-
-
-
         });
     },
-
-
 
     setReportedFaultFromForm:function(e)
     {
@@ -333,31 +324,33 @@ getInitialState:function()
         this.setState({productId:e.target.value})
     },
 
+    showAddCustomerProductForm:function(){
+
+        this.setState(
+            {addButtonVisibility:"invisible",
+            createJobButtonVisibility:"invisible",
+            addCpVisibility:""}
+        );
+
+    },
+
+    hideAddCustomerProductForm:function(){
+
+        this.setState(
+            {addButtonVisibility:"",
+                createJobButtonVisibility:"",
+                addCpVisibility:"invisible"}
+        );
+
+    },
+
 setSerialNumber:function(e)
 {
     e.preventDefault();
     this.setState({serialNumber:e.target.value})
 },
 
-renderJobForm:function()
-{
-    var jobForm=null;
-    if(this.state.customerProductForForm!="")
-    {
-        return(   <JobForm
-            customerProductForForm={this.state.customerProductForForm}
 
-            setReportedFaultFromForm={this.setReportedFaultFromForm}
-            saveJob={this.saveJob}
-            cancelJobSave={this.cancelJobSave}
-        />);
-    }
-
-    else
-    {
-        return(<div></div>);
-    }
-},
 
     saveCustomerProduct:function(e)
     {
@@ -365,11 +358,18 @@ renderJobForm:function()
         var customerDisplayed=this.props.customerDisplayed;
         stubApi.addCustomerProduct(customerDisplayed.id,this.state.productId,this.state.serialNumber);
         this.hideCustomerProductForm();
+
     },
 
-    deleteCustomerProduct:function(id)
-    {
+    deleteCustomerProduct:function(id) {
         stubApi.deleteCustomerProduct(id);
+        if (stubApi.getCustomerProductsForCustomer(this.props.customerDisplayed.id).length != 0){
+            this.setState({cpVisibility: "invisible"});
+    }
+        else
+        {
+            this.setState({cpVisibility: ""});
+        }
     },
 
 
@@ -382,11 +382,11 @@ renderJobForm:function()
         });
 
 
-        if(stubApi.getCustomerProductsForCustomer(customerDisplayed.id)!=null) {
+        if(stubApi.getCustomerProductsForCustomer(customerDisplayed.id).length!=0) {
             customerProducts = stubApi.getCustomerProductsForCustomer(customerDisplayed.id).map(function (sp, index) {
                     return (<SingleCustomerProduct
                         customerDisplayed={customerDisplayed}
-                        createJob={this.showCreateJobForm}
+                        showCreateJobForm={this.showCreateJobForm}
                         createJobButtonVisibility={this.state.createJobButtonVisibility}
                         showCustomerProductForm={this.showCustomerProductForm}
                         sp={sp}
@@ -426,20 +426,23 @@ renderJobForm:function()
                         </thead>
 
                         <tbody>
-                        <tr className={this.props.cpVisibility}><td></td><td>This customer has no registered products</td><td> Add Product  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
+                        <tr className={this.state.cpVisibility}><td>This customer has no registered products</td><td></td><td></td><td></td></tr>
                         {customerProducts}
-                        <tr className={this.props.addButtonVisibility}><td></td><td></td><td></td><td>  Add Product  <span onClick={this.makeVisible} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
-                        <tr className={this.props.addCpVisibility}>  <td></td><td><select onChange={this.setProductId}  >{productOptions}</select></td>
-                            <td>
-
-
-                            </td><input onChange={this.setSerialNumber} placeholder="serial number" type="text"></input><td>  <span onClick={this.undo} className="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                Cancel <span onClick={this.saveCustomerProduct} className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></td></tr>
+                        <tr className={this.state.addButtonVisibility}><td></td><td></td><td></td><td>  Add Product  <span onClick={this.showAddCustomerProductForm} className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></td></tr>
+                        <tr className={this.state.addCpVisibility}>  <td></td><td><select onChange={this.setProductId}  >{productOptions}</select></td>
+                            <td><input onChange={this.setSerialNumber} placeholder="serial number" type="text"></input></td><td>  <span onClick={this.saveCustomerProduct}  className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                Cancel <span onClick={this.hideAddCustomerProductForm}  className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></td></tr>
 
                         </tbody>
                     </table>
-                    <div className={this.props.createJobFormVisibility}>
-                        {this.renderJobForm}
+                    <div className={this.state.createJobFormVisibility}>
+                         <JobForm
+                        customerProductForForm={this.state.customerProductForForm}
+
+                        setReportedFaultFromForm={this.setReportedFaultFromForm}
+                        saveJob={this.saveJob}
+                        cancelJobSave={this.cancelJobSave}
+                    />
 
                     </div>
                 </div>
@@ -593,10 +596,25 @@ var JobForm=React.createClass(
 
         render:function(){
             var customerProduct=this.props.customerProductForForm;
+            var mname="";
+            var pnumber="";
+            var pdescription="";
+            var cname="";
+            var ctown="";
+
+            if(customerProduct!="") {
 
                 var customer = stubApi.getCustomer(customerProduct.customerId);
+                console.log("cname"+customer.name);
                 var product = stubApi.getProduct(customerProduct.productId);
                 var manufacturer = stubApi.getManufacturer(product.manufacturerId);
+                cname=customer.name;
+                ctown=customer.town;
+                mname=manufacturer.name;
+                pnumber=product.product_number;
+                pdescription=product.description.split[0];
+            }
+
 
 
 
@@ -610,15 +628,15 @@ var JobForm=React.createClass(
                         <div className="form-group">
                             <input type="text" name="customerProduct" disabled
 
-                                   value={  manufacturer.name+" "
-                        +product.product_number
-                        +product.description.split(",")[0]}>
+                                   value={mname+" "
+                        +pnumber
+                        +pdescription}>
                             </input>
                         </div>
                         <label>Customer</label>
                         <div className="form-group">
                             <input type="text" name="customer" disabled
-                                   value={ customer.name+", "+customer.town    } >
+                                   value={ cname+", "+ctown    } >
 
                             </input>
                         </div>
@@ -626,12 +644,12 @@ var JobForm=React.createClass(
                         <label>Reported Fault</label>
                         <div className="form-group">
 
-                            <input onChange={this.props.setReportedFault} value="reported_fault" type="text" name="reported fault">
+                            <input onChange={this.props.setReportedFaultFromForm}  type="text" name="reported fault">
 
                             </input>
                         </div>
-                        <input onClick={this.props.saveJob} className="btn btn-sm btn-primary" type="cancel" value="Cancel"></input>
-                        <input onClick={this.props.cancelJobSave} className="btn btn-sm btn-primary" type="submit" value="Submit"></input>
+                        <button onClick={this.props.saveJob} className="btn btn-sm btn-primary form-button">Save</button>
+                        <button onClick={this.props.cancelJobSave}  className="btn btn-sm btn-primary form-button">Cancel</button>
 
                     </form>
                 </div>
